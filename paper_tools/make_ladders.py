@@ -164,6 +164,19 @@ def main() -> None:
         "a ladder other than Qwen2.5 is mostly negative; rewrite the sentence on skew"
     m["LadNegMin"] = str(min(rep[k]["n_negative"] for k in others))
     m["LadNegMax"] = str(max(rep[k]["n_negative"] for k in others))
+    # sec:three says most wrappers give a positive slope on EVERY ladder, Qwen2.5 included, and
+    # quotes the negative count over all renderings the table prints.
+    assert all(rep[k]["n_positive"] > rep[k]["n_negative"] for k in keys), \
+        "a ladder is mostly negative; rewrite 'on every ladder most wrappers give a positive slope'"
+    m["LadNegAllMin"] = str(min(rep[k]["n_negative"] for k in keys))
+    m["LadNegAllMax"] = str(max(rep[k]["n_negative"] for k in keys))
+    # The abstract and introduction say model x wrapper is at least twice model x item on every
+    # ladder. Unit: each rendering the table prints, 3-way crossed shares.
+    mwmh = min(gt[k]["shares"]["s_mt"] / gt[k]["shares"]["s_mh"] for k in keys)
+    assert mwmh >= 2.0, "model x wrapper is no longer twice model x item everywhere; rewrite"
+    m["LadMWMHMin"] = f"{mwmh:.1f}"
+    # Largest parameter count over the ladders, counted from the weights as in the table.
+    m["LadParamMax"] = fmt_b(max(max(rep[k]["params_b"]) for k in keys))
     ks = [gt[k]["k_for_080"] for k in keys if not gt[k]["k_for_080_unreachable"]]
     m["LadKMin"] = str(min(ks))
     m["LadModelMax"] = f"{100 * max(gt[k]['shares']['s_m'] for k in keys):.1f}\%"
@@ -231,6 +244,16 @@ def main() -> None:
     m["LayHeldBand"] = f"{lr['held_out_g']['interior']:.3f}"
     m["LayHeldTrunk"] = f"{lr['held_out_g']['trunk']:.3f}"
     assert lr["holdout_diff_spans_zero"], "the layer-rule interval no longer spans zero; rewrite"
+
+    # app:reliability: probability that all six evaluation framings span both signs when every
+    # slope is noise symmetric about zero, (1 - 2 (1/2)^6)^6, computed exactly. The stored
+    # slope_reliability.json field null_prob_6of6 was computed from the rounded 0.969.
+    m["RelNullExact"] = f"{(1 - 2 * 0.5 ** 6) ** 6:.3f}"
+    # app:imbalance. Unit: the four Qwen2.5 checkpoints. File results/imbalance_hazard.json,
+    # field artefact_alone: the statistic of the answer-letter component v scored on its own.
+    imb = json.loads((res / "imbalance_hazard.json").read_text(encoding="utf-8"))
+    art = list(imb["artefact_alone"].values())
+    m["ImbArtLo"], m["ImbArtHi"] = f"{min(art):.2f}", f"{max(art):.2f}"
 
     for k, v in list(m.items()):
         if v[:1] in "+-":
