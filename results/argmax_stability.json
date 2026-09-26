@@ -1,0 +1,92 @@
+{
+  "models": [
+    {
+      "model": "qwen2.5-0.5b",
+      "params_b": 0.5,
+      "layers": 24,
+      "n_layers_probed": 24,
+      "naive_peak_layer": 6,
+      "naive_peak_relative_depth": 0.2608695652173913,
+      "naive_peak_value": 0.37301967099860867,
+      "curve_min": 0.17609519652194444,
+      "curve_max": 0.37301967099860867,
+      "curve_range": 0.19692447447666422,
+      "argmax_relative_depth_ci": [
+        0.13043478260869565,
+        0.2608695652173913
+      ],
+      "argmax_ci_width_fraction_of_depth": 0.13043478260869565,
+      "argmax_modal_layer": 6,
+      "distinct_argmax_layers": 2,
+      "selection_bias_in_peak_value": 0.0013643457823329097,
+      "insample_peak_mean": 0.3742300001239334,
+      "heldout_at_selected_layer_mean": 0.3728656543416005
+    },
+    {
+      "model": "qwen2.5-1.5b",
+      "params_b": 1.5,
+      "layers": 28,
+      "n_layers_probed": 28,
+      "naive_peak_layer": 27,
+      "naive_peak_relative_depth": 1.0,
+      "naive_peak_value": 0.35712225255039004,
+      "curve_min": 0.2295747032871953,
+      "curve_max": 0.35712225255039004,
+      "curve_range": 0.12754754926319475,
+      "argmax_relative_depth_ci": [
+        0.4074074074074074,
+        1.0
+      ],
+      "argmax_ci_width_fraction_of_depth": 0.5925925925925926,
+      "argmax_modal_layer": 27,
+      "distinct_argmax_layers": 4,
+      "selection_bias_in_peak_value": 0.008951679004011337,
+      "insample_peak_mean": 0.3599517064983094,
+      "heldout_at_selected_layer_mean": 0.35100002749429804
+    },
+    {
+      "model": "qwen2.5-3b",
+      "params_b": 3.0,
+      "layers": 36,
+      "n_layers_probed": 36,
+      "naive_peak_layer": 34,
+      "naive_peak_relative_depth": 0.9714285714285714,
+      "naive_peak_value": 0.6074609292878045,
+      "curve_min": 0.25149238694597176,
+      "curve_max": 0.6074609292878045,
+      "curve_range": 0.3559685423418327,
+      "argmax_relative_depth_ci": [
+        0.9428571428571428,
+        0.9714285714285714
+      ],
+      "argmax_ci_width_fraction_of_depth": 0.02857142857142858,
+      "argmax_modal_layer": 34,
+      "distinct_argmax_layers": 2,
+      "selection_bias_in_peak_value": 0.0038739805640999325,
+      "insample_peak_mean": 0.6097945202964324,
+      "heldout_at_selected_layer_mean": 0.6059205397323325
+    },
+    {
+      "model": "qwen2.5-7b",
+      "params_b": 7.0,
+      "layers": 28,
+      "n_layers_probed": 28,
+      "naive_peak_layer": 27,
+      "naive_peak_relative_depth": 1.0,
+      "naive_peak_value": 0.6722251273967602,
+      "curve_min": 0.20771943958545175,
+      "curve_max": 0.6722251273967602,
+      "curve_range": 0.46450568781130847,
+      "argmax_relative_depth_ci": [
+        1.0,
+        1.0
+      ],
+      "argmax_ci_width_fraction_of_depth": 0.0,
+      "argmax_modal_layer": 27,
+      "distinct_argmax_layers": 1,
+      "selection_bias_in_peak_value": 0.0033992153671051906,
+      "insample_peak_mean": 0.6746757104264366,
+      "heldout_at_selected_layer_mean": 0.6712764950593314
+    }
+  ]
+}

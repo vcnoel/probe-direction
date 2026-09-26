@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "repository_revision": "4bfd36c39494b5425276de0b893aea969503a49b",
+  "artifact_inventory": [],
+  "empirical_artifacts_present": false,
+  "claims": [
+    {
+      "claim_id": "legacy-headline-separability",
+      "claim_text": "Historical runs reported that framed conditions were separable by a spectral probe.",
+      "source_files": ["README.md", "main.tex"],
+      "required_artifact": "group-disjoint probe predictions, split manifest, configuration, and checksummed result summary",
+      "status": "reported-unverified",
+      "mathematical_validity": "invalid for basis-dependent features produced from the legacy random-walk Laplacian; other features remain unaudited",
+      "permitted_wording": "A historical, unverified run reported separability; this repository asserts no result."
+    },
+    {
+      "claim_id": "legacy-length-position-controls",
+      "claim_text": "Historical runs reported that length, task-span, and absolute-position controls reduced but did not remove separability.",
+      "source_files": ["README.md", "main.tex", "docs/experiment_design.md"],
+      "required_artifact": "rendered prompts, tokenizer revision, span hashes, paired predictions, and negative-control outputs",
+      "status": "reported-unverified",
+      "mathematical_validity": "unverified; fixed wrappers can still encode template-family shortcuts",
+      "permitted_wording": "The future protocol must test length, position, wording, and template-family shortcuts."
+    },
+    {
+      "claim_id": "legacy-selectivity",
+      "claim_text": "Historical runs reported a positive target-versus-negative-control selectivity contrast.",
+      "source_files": ["README.md", "main.tex", "docs/theory.md"],
+      "required_artifact": "out-of-fold predictions for both contrasts with paired task bootstrap and complete-pipeline permutations",
+      "status": "reported-unverified",
+      "mathematical_validity": "legacy signed raw-AUC subtraction is orientation-sensitive and is not accepted by the corrected protocol",
+      "permitted_wording": "Selectivity is a planned orientation-invariant paired interaction estimate."
+    },
+    {
+      "claim_id": "legacy-fiedler-stability",
+      "claim_text": "Historical runs reported little frame-linked rotation of the Fiedler vector.",
+      "source_files": ["README.md"],
+      "required_artifact": "symmetric-operator eigenpairs, eigengap audit, paired vectors, and permutation outputs",
+      "status": "reported-unverified",
+      "mathematical_validity": "invalid where eigenvectors came from a non-symmetric random-walk operator",
+      "permitted_wording": "Fiedler stability is untested under the corrected symmetric operator."
+    },
+    {
+      "claim_id": "legacy-cue-transfer",
+      "claim_text": "Historical runs reported limited or reversed transfer between explicit and subtle evaluation cues.",
+      "source_files": ["README.md", "main.tex"],
+      "required_artifact": "disjoint source-task and template-family transfer manifests with no shared negative rows",
+      "status": "reported-unverified",
+      "mathematical_validity": "legacy transfer reused negative examples and does not identify cue-general recognition",
+      "permitted_wording": "Cross-cue transfer remains a planned test on fully disjoint rows and source tasks."
+    },
+    {
+      "claim_id": "legacy-cross-model-transfer",
+      "claim_text": "Historical runs reported weak cross-architecture probe transfer.",
+      "source_files": ["main.tex", "docs/laws.md"],
+      "required_artifact": "family-held-out transfer manifest, aligned or dimension-agnostic features, predictions, and uncertainty",
+      "status": "reported-unverified",
+      "mathematical_validity": "unverified; width mismatch alone does not preclude aligned activation transfer",
+      "permitted_wording": "Cross-family transfer is a planned confirmation analysis."
+    },
+    {
+      "claim_id": "legacy-scaling-law",
+      "claim_text": "Historical documents described a crystallization or scaling law for evaluation-cue geometry.",
+      "source_files": ["README.md", "main.tex", "docs/laws.md", "docs/theory.md"],
+      "required_artifact": "multi-family, multi-size, multi-task hierarchical analysis with uncertainty and preregistered evidence threshold",
+      "status": "conjecture",
+      "mathematical_validity": "insufficient family and task replication for law language",
+      "permitted_wording": "A candidate scale-dependent pattern is a conjecture with explicit alternatives."
+    },
+    {
+      "claim_id": "legacy-frequency-mechanism",
+      "claim_text": "A historical prediction assigned the negative-control shift to lower graph frequencies than the evaluation-cue shift.",
+      "source_files": ["README.md", "main.tex", "docs/theory.md"],
+      "required_artifact": "none for the current conclusion; any retest requires symmetric reference-graph decompositions",
+      "status": "falsified",
+      "mathematical_validity": "the fixed-graph algebra does not entail the empirical ordering, and the historical test reportedly failed",
+      "permitted_wording": "The proposed frequency-ordering mechanism was not supported and is not used as an explanation."
+    },
+    {
+      "claim_id": "legacy-verbalized-recognition",
+      "claim_text": "Historical prompt-only classification was described as verbalized evaluation awareness.",
+      "source_files": ["README.md", "main.tex"],
+      "required_artifact": "stochastic, task- and template-disjoint recognition labels and calibrated endpoint validation",
+      "status": "reported-unverified",
+      "mathematical_validity": "fixed-frame classification measures cue sensitivity, not a latent belief or stochastic recognition state",
+      "permitted_wording": "A cue classifier is not a recognition measure without independent labels."
+    },
+    {
+      "claim_id": "dc-shift-energy-proposition",
+      "claim_text": "For a fixed combinatorial graph, ordinary token-uniform residual shifts leave raw Dirichlet energy unchanged.",
+      "source_files": ["docs/mathematical-notes.md", "main.tex"],
+      "required_artifact": "not empirical; proof assumptions and synthetic invariant test",
+      "status": "planned",
+      "mathematical_validity": "valid only for a fixed combinatorial Laplacian with the ordinary uniform vector in its nullspace",
+      "permitted_wording": "State as a proposition with fixed-graph and operator assumptions."
+    },
+    {
+      "claim_id": "graph-signal-separation",
+      "claim_text": "Graph-only, fixed-reference signal-only, and joint graph-plus-signal changes are distinct estimands.",
+      "source_files": ["docs/mathematical-notes.md", "main.tex"],
+      "required_artifact": "typed outputs preserving the comparison mode and reference graph",
+      "status": "planned",
+      "mathematical_validity": "definitional; no fixed-graph theorem may be used to explain a joint graph-and-signal comparison",
+      "permitted_wording": "State as a design distinction, not a finding."
+    }
+  ]
+}

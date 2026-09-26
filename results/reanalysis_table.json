@@ -1,0 +1,79 @@
+{
+  "chaudhary": {
+    "n_models": 15,
+    "r_reported": 0.6001874094196689,
+    "n_main": 10,
+    "r_main": 0.7788163679518153,
+    "n_qwen_released": 5,
+    "r_corrected": 0.5613412776733497,
+    "r_floor": 0.14629789590581876,
+    "floor_share_median": 0.3023196155233162,
+    "l_eff_lo": 4.025045207198229,
+    "l_eff_hi": 44.46411352112457,
+    "correction": "layer-selection floor only; the direction question is untested for this set"
+  },
+  "manek_depth": {
+    "n_models": 11,
+    "depth_lo": 0.02127659574468085,
+    "depth_hi": 1.0,
+    "span_median": 0.2592592592592593,
+    "span_hi": 0.8292682926829268,
+    "n_span_over_third": 5,
+    "distinct_lo": 1,
+    "distinct_hi": 11,
+    "peak_lo": 0.674875,
+    "peak_hi": 0.873175
+  },
+  "manek_sevenb": {
+    "published": 0.1904,
+    "floor_system": 0.22033950000000002,
+    "floor_user": 0.20260525000000001,
+    "below_both": true
+  },
+  "sign": {
+    "n_wrappers": 36,
+    "n_positive": 21,
+    "n_negative": 15,
+    "r_lo": -0.9881946316887565,
+    "r_hi": 0.9387908201136272,
+    "published": {
+      "Chaudhary et al., as released": 0.733,
+      "Chaudhary et al., 3B/7B un-transposed": 0.975,
+      "Manek et al.": -0.089
+    }
+  },
+  "rendering_floor": {
+    "model": "qwen2.5-0.5b",
+    "gap": 0.058449125000000046,
+    "floor_system": 0.14779625,
+    "floor_user": 0.20624537500000004,
+    "published": 0.2115,
+    "z_system": 2.0694733648988506,
+    "z_user": 0.18137593364466037,
+    "gap_median": 0.03007543750000001
+  },
+  "floor_fraction": {
+    "lo": 0.6955497606019151,
+    "hi": 1.1572452731092437,
+    "n_cells": 8,
+    "n_over_one": 2
+  },
+  "conventions": {
+    "kind": "derived",
+    "sources": [
+      "reanalysis_scaling_law.json",
+      "reanalysis_probe_depth.json",
+      "slope_distribution_deploy_peak_lf.json",
+      "released_label_permuted.json"
+    ],
+    "source_hashes": {
+      "reanalysis_scaling_law.json": "beeb3b64111c",
+      "reanalysis_probe_depth.json": "cfae40517f92",
+      "slope_distribution_deploy_peak_lf.json": "e53d45b6f1a1",
+      "released_label_permuted.json": "b464f5b96c71"
+    },
+    "producer": "scripts/reanalysis_table.py",
+    "producer_sha12": "220695b4a612",
+    "backfilled_from": "reanalysis_table.py reads exactly those four"
+  }
+}

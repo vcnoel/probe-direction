@@ -1,0 +1,143 @@
+{
+  "_comment": "Single source of truth for the generalizability-study ladder. Adding a rung is an edit here plus a rerun of scripts/extract_model.py; no analysis code changes. `family` is the nesting level: model is nested WITHIN family, not crossed with it, so cross-family and within-family comparisons carry different error denominators and the k-requirement differs between them. `system_role` records whether the chat template accepts a system turn -- Gemma does not, which is why the system-versus-user-only implementation level cannot be crossed with it, and why components are estimated by REML rather than by balanced-design moment estimators.",
+  "models": {
+    "qwen2.5-0.5b": {
+      "hf_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "family": "qwen2.5",
+      "params_b": 0.494,
+      "system_role": true,
+      "vlm": false,
+      "enabled": true,
+      "params_b_source": "safetensors total_size / dtype bytes",
+      "revision": "7ae557604adf67be50417f59c2c2f167def9a775"
+    },
+    "qwen2.5-1.5b": {
+      "hf_id": "Qwen/Qwen2.5-1.5B-Instruct",
+      "family": "qwen2.5",
+      "params_b": 1.5437,
+      "system_role": true,
+      "vlm": false,
+      "enabled": true,
+      "params_b_source": "safetensors total_size / dtype bytes",
+      "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306"
+    },
+    "qwen2.5-3b": {
+      "hf_id": "Qwen/Qwen2.5-3B-Instruct",
+      "family": "qwen2.5",
+      "params_b": 3.0859,
+      "system_role": true,
+      "vlm": false,
+      "enabled": true,
+      "params_b_source": "safetensors total_size / dtype bytes",
+      "revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1"
+    },
+    "qwen2.5-7b": {
+      "hf_id": "Qwen/Qwen2.5-7B-Instruct",
+      "family": "qwen2.5",
+      "params_b": 7.6156,
+      "system_role": true,
+      "vlm": false,
+      "enabled": true,
+      "params_b_source": "safetensors total_size / dtype bytes",
+      "revision": "a09a35458c702b33eeacc393d103063234e8bc28"
+    },
+    "gemma2-2b": {
+      "hf_id": "google/gemma-2-2b-it",
+      "family": "gemma2",
+      "params_b": 2.6143,
+      "system_role": false,
+      "vlm": false,
+      "enabled": true,
+      "params_b_source": "safetensors total_size / dtype bytes",
+      "revision": "299a8560bedf22ed1c72a8a11e7dce4a7f9f51f8"
+    },
+    "llama3.2-1b": {
+      "hf_id": "meta-llama/Llama-3.2-1B-Instruct",
+      "family": "llama3.2",
+      "params_b": 1.2358,
+      "system_role": true,
+      "vlm": false,
+      "enabled": true,
+      "params_b_source": "safetensors total_size / dtype bytes",
+      "revision": "9213176726f574b556790deb65791e0c5aa438b6"
+    },
+    "llama3.2-3b": {
+      "hf_id": "meta-llama/Llama-3.2-3B-Instruct",
+      "family": "llama3.2",
+      "params_b": 3.2127,
+      "system_role": true,
+      "vlm": false,
+      "enabled": true,
+      "params_b_source": "safetensors total_size / dtype bytes",
+      "revision": "0cb88a4f764b7a12671c53f0838cd831a0843b95"
+    },
+    "qwen3.5-2b": {
+      "hf_id": "Qwen/Qwen3.5-2B",
+      "family": "qwen3.5",
+      "params_b": 2.0,
+      "system_role": true,
+      "vlm": true,
+      "enabled": false,
+      "note": "Qwen3.5 repos carry no -Instruct suffix; the plain id IS the post-trained release. Small tiers are Qwen3_5ForConditionalGeneration vision-language models, so text-only forward passes and hidden_states shapes must be verified before any number is trusted. Also mixes Gated-DeltaNet with softmax layers, so relative depth is not comparable to a pure-softmax stack."
+    },
+    "qwen3.5-9b": {
+      "hf_id": "Qwen/Qwen3.5-9B",
+      "family": "qwen3.5",
+      "params_b": 9.0,
+      "system_role": true,
+      "vlm": true,
+      "enabled": false,
+      "note": "bf16 exceeds 16GB; deferred to the 80GB-GPU run."
+    },
+    "smollm2-135m": {
+      "hf_id": "HuggingFaceTB/SmolLM2-135M-Instruct",
+      "family": "smollm2",
+      "params_b": 0.1345,
+      "system_role": true,
+      "vlm": false,
+      "enabled": true,
+      "params_b_source": "safetensors total_size / dtype bytes",
+      "revision": "12fd25f77366fa6b3b4b768ec3050bf629380bac"
+    },
+    "smollm2-360m": {
+      "hf_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+      "family": "smollm2",
+      "params_b": 0.3618,
+      "system_role": true,
+      "vlm": false,
+      "enabled": true,
+      "params_b_source": "safetensors total_size / dtype bytes",
+      "revision": "a10cc1512eabd3dde888204e902eca88bddb4951"
+    },
+    "smollm2-1.7b": {
+      "hf_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "family": "smollm2",
+      "params_b": 1.7114,
+      "system_role": true,
+      "vlm": false,
+      "enabled": true,
+      "params_b_source": "safetensors total_size / dtype bytes",
+      "revision": "31b70e2e869a7173562077fd711b654946d38674"
+    }
+  },
+  "sad": {
+    "structs_dir": "${EAS_REANALYSIS_ROOT}/manek/notebooks/sad/sad/stages/oversight/structs/batch",
+    "testing_file": "oversight.yaml",
+    "deployment_file": "deploy_oversight.yaml",
+    "_comment": "Raw item bodies from the SAD repository's own struct files, which are authoritative. The previously used split was recovered from released CSVs and had been round-tripped to CRLF, which changed BPE token boundaries and broke reproduction; see docs/preregistered-analysis-rules.md P2. Bodies are read from this local checkout and never copied into this repository."
+  },
+  "pooling": {
+    "_comment": "Every extraction stores both conventions so no analysis needs a re-run to switch. `validated` matches the reference implementation and is the pre-registered default.",
+    "validated": {
+      "drop_bos_and_whitespace": true,
+      "newlines": "lf",
+      "truncate": null
+    },
+    "alltokens": {
+      "drop_bos_and_whitespace": false,
+      "newlines": "lf",
+      "truncate": null
+    }
+  },
+  "_params_note": "params_b is derived from safetensors byte totals, not from the model name; nominal names understate several models and the 7B entry was wrong by 0.037 in log10"
+}

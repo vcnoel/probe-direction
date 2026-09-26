@@ -1,0 +1,209 @@
+{
+  "ladders": {
+    "qwen3_nothink": {
+      "models": [
+        "qwen3-0.6b",
+        "qwen3-1.7b",
+        "qwen3-4b",
+        "qwen3-8b",
+        "qwen3-14b",
+        "qwen3-32b"
+      ],
+      "params_b": [
+        0.752,
+        2.032,
+        4.022,
+        8.191,
+        14.77,
+        32.76
+      ],
+      "decades": 1.6391260524967386,
+      "n_wrappers": 36,
+      "r_min": -0.622455403916056,
+      "r_max": 0.9987314747937277,
+      "n_positive": 24,
+      "n_negative": 12,
+      "positive_fraction": 0.6666666666666666,
+      "n_eval_framings": 6,
+      "n_eval_framings_spanning": 2,
+      "n_deploy_framings": 6,
+      "n_deploy_framings_spanning": 6,
+      "statistic_median": 0.21921250000000003,
+      "expected_spanning_from_marginal": 5.465020576131687
+    },
+    "qwen3_think": {
+      "models": [
+        "qwen3-0.6b",
+        "qwen3-1.7b",
+        "qwen3-4b",
+        "qwen3-8b",
+        "qwen3-14b",
+        "qwen3-32b"
+      ],
+      "params_b": [
+        0.752,
+        2.032,
+        4.022,
+        8.191,
+        14.77,
+        32.76
+      ],
+      "decades": 1.6391260524967386,
+      "n_wrappers": 36,
+      "r_min": -0.653547436457075,
+      "r_max": 0.977021682764645,
+      "n_positive": 24,
+      "n_negative": 12,
+      "positive_fraction": 0.6666666666666666,
+      "n_eval_framings": 6,
+      "n_eval_framings_spanning": 2,
+      "n_deploy_framings": 6,
+      "n_deploy_framings_spanning": 6,
+      "statistic_median": 0.22263750000000004,
+      "expected_spanning_from_marginal": 5.465020576131687
+    },
+    "qwen3.5_nothink": {
+      "models": [
+        "qwen3.5-0.8b",
+        "qwen3.5-2b",
+        "qwen3.5-4b",
+        "qwen3.5-9b",
+        "qwen3.5-27b"
+      ],
+      "params_b": [
+        0.752,
+        1.882,
+        4.206,
+        8.954,
+        26.9
+      ],
+      "decades": 1.5535344394107657,
+      "n_wrappers": 36,
+      "r_min": -0.56597075123287,
+      "r_max": 0.992740820616394,
+      "n_positive": 27,
+      "n_negative": 9,
+      "positive_fraction": 0.75,
+      "n_eval_framings": 6,
+      "n_eval_framings_spanning": 5,
+      "n_deploy_framings": 6,
+      "n_deploy_framings_spanning": 4,
+      "statistic_median": 0.225825,
+      "expected_spanning_from_marginal": 4.9306640625
+    },
+    "qwen3.5_think": {
+      "models": [
+        "qwen3.5-0.8b",
+        "qwen3.5-2b",
+        "qwen3.5-4b",
+        "qwen3.5-9b",
+        "qwen3.5-27b"
+      ],
+      "params_b": [
+        0.752,
+        1.882,
+        4.206,
+        8.954,
+        26.9
+      ],
+      "decades": 1.5535344394107657,
+      "n_wrappers": 36,
+      "r_min": -0.5593256385767273,
+      "r_max": 0.9898911388559644,
+      "n_positive": 31,
+      "n_negative": 5,
+      "positive_fraction": 0.8611111111111112,
+      "n_eval_framings": 6,
+      "n_eval_framings_spanning": 3,
+      "n_deploy_framings": 6,
+      "n_deploy_framings_spanning": 2,
+      "statistic_median": 0.23468750000000005,
+      "expected_spanning_from_marginal": 3.5536755568380354
+    },
+    "qwen2.5_paper": {
+      "models": [
+        "qwen2.5-0.5b",
+        "qwen2.5-1.5b",
+        "qwen2.5-3b",
+        "qwen2.5-7b"
+      ],
+      "params_b": [
+        0.494,
+        1.544,
+        3.086,
+        7.616
+      ],
+      "decades": 1.187999986452771,
+      "n_wrappers": 36,
+      "r_min": -0.9881956958563449,
+      "r_max": 0.9387746962475548,
+      "n_positive": 21,
+      "n_negative": 15,
+      "positive_fraction": 0.5833333333333334,
+      "n_eval_framings": 6,
+      "n_eval_framings_spanning": 6,
+      "n_deploy_framings": 6,
+      "n_deploy_framings_spanning": 6,
+      "statistic_median": 0.19077499999999997,
+      "expected_spanning_from_marginal": 5.732200842335391
+    },
+    "olmo2": {
+      "models": [
+        "olmo-2-0425-1b-instruct",
+        "olmo-2-1124-7b-instruct",
+        "olmo-2-1124-13b-instruct",
+        "olmo-2-0325-32b-instruct"
+      ],
+      "params_b": [
+        1.49,
+        7.3,
+        13.72,
+        32.23
+      ],
+      "decades": 1.3350740371000605,
+      "n_wrappers": 36,
+      "r_min": -0.8429468523608534,
+      "r_max": 0.9950418080348453,
+      "n_positive": 30,
+      "n_negative": 6,
+      "positive_fraction": 0.8333333333333334,
+      "n_eval_framings": 6,
+      "n_eval_framings_spanning": 3,
+      "n_deploy_framings": 6,
+      "n_deploy_framings_spanning": 4,
+      "statistic_median": 0.245925,
+      "expected_spanning_from_marginal": 3.99048353909465
+    }
+  },
+  "conventions": {
+    "kind": "measured",
+    "pooling": "validated for scoring and for the direction arrays",
+    "layers": "ALL",
+    "scoring_array": "results/pod_*/*.npz",
+    "data_root": "pod",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "olmo-2-0325-32b-instruct",
+      "olmo-2-0425-1b-instruct",
+      "olmo-2-1124-13b-instruct",
+      "olmo-2-1124-7b-instruct",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b",
+      "qwen3-0.6b",
+      "qwen3-1.7b",
+      "qwen3-14b",
+      "qwen3-32b",
+      "qwen3-4b",
+      "qwen3-8b",
+      "qwen3.5-0.8b",
+      "qwen3.5-27b",
+      "qwen3.5-2b",
+      "qwen3.5-4b",
+      "qwen3.5-9b"
+    ],
+    "producer": "scripts/pod_ladders.py",
+    "producer_sha12": "825b421ca3e7"
+  }
+}

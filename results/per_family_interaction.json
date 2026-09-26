@@ -1,0 +1,58 @@
+{
+  "n_wrappers": 36,
+  "statistic": "peak",
+  "pooling": "validated",
+  "families": {
+    "gemma2": {
+      "n_models": 1,
+      "mean_log10_params": 0.414973347970818,
+      "sigma2_model_x_wrapper": NaN,
+      "df": 0,
+      "models": [
+        "gemma2-2b"
+      ]
+    },
+    "qwen2.5": {
+      "n_models": 4,
+      "mean_log10_params": 0.2993201395314048,
+      "sigma2_model_x_wrapper": 0.0009578092683531748,
+      "df": 105,
+      "models": [
+        "qwen2.5-0.5b",
+        "qwen2.5-1.5b",
+        "qwen2.5-3b",
+        "qwen2.5-7b"
+      ]
+    },
+    "llama3.2": {
+      "n_models": 2,
+      "mean_log10_params": 0.2921656121837654,
+      "sigma2_model_x_wrapper": 0.0011209094074900803,
+      "df": 35,
+      "models": [
+        "llama3.2-1b",
+        "llama3.2-3b"
+      ]
+    },
+    "smollm2": {
+      "n_models": 3,
+      "mean_log10_params": -0.3609716031198109,
+      "sigma2_model_x_wrapper": 0.00024154344791666653,
+      "df": 70,
+      "models": [
+        "smollm2-135m",
+        "smollm2-360m",
+        "smollm2-1.7b"
+      ]
+    }
+  },
+  "matched_pair": [
+    "qwen2.5",
+    "llama3.2"
+  ],
+  "ratio_at_matched_scale": 1.1702845697216258,
+  "ratio_vs_small_family": 4.302991229471108,
+  "within_family_scale_corr": 0.8957126394655736,
+  "within_family_span_decades": 1.146128035678238,
+  "scale_conjecture_supported": false
+}

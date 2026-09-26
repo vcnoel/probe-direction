@@ -1,0 +1,59 @@
+{
+  "components": {
+    "modelxtemplatexitemximpl": 0.00028907103600823053,
+    "modelxtemplatexitem": 0.0002776899026553009,
+    "modelxtemplateximpl": 0.0002500378907995296,
+    "modelxitemximpl": 0.00021049106104252408,
+    "templatexitemximpl": 2.251118187830685e-05,
+    "modelxtemplate": 0.0008791332134528709,
+    "modelxitem": 0.0001063018411718594,
+    "modelximpl": 0.0002999980959974529,
+    "templatexitem": 0.00010179028980501667,
+    "templateximpl": 2.3821443562610227e-05,
+    "itemximpl": 0.00026909659247011607,
+    "model": 0.0001376511975553598,
+    "template": 0.0002645162622966879,
+    "item": 0.0009023055641044459,
+    "impl": 0.0006845727291054272
+  },
+  "truncated": [],
+  "dims": {
+    "model": 4,
+    "template": 36,
+    "item": 4,
+    "impl": 9
+  },
+  "n_models": 4,
+  "n_templates": 36,
+  "n_impls": 9,
+  "impls": [
+    "all/alltok",
+    "all/wsfilt",
+    "all/wsfilt_lf",
+    "trunk/alltok",
+    "trunk/wsfilt",
+    "trunk/wsfilt_lf",
+    "interior/alltok",
+    "interior/wsfilt",
+    "interior/wsfilt_lf"
+  ],
+  "share": {
+    "modelxtemplatexitemximpl": 0.06125699355760019,
+    "modelxtemplatexitem": 0.05884521954486669,
+    "modelxtemplateximpl": 0.05298548646508682,
+    "modelxitemximpl": 0.04460512456822966,
+    "templatexitemximpl": 0.00477034068281454,
+    "modelxtemplate": 0.1862969681653666,
+    "modelxitem": 0.02252640489253384,
+    "modelximpl": 0.06357254496187248,
+    "templatexitem": 0.021570362817790664,
+    "templateximpl": 0.005047998011139391,
+    "itemximpl": 0.05702421266046427,
+    "model": 0.029169641615718788,
+    "template": 0.056053595680638654,
+    "item": 0.1912074170092887,
+    "impl": 0.1450676893665886
+  },
+  "g_field_design": 0.05806480161201865,
+  "g_all_facets": 0.5965374762499671
+}

@@ -1,0 +1,36 @@
+{
+  "n_splits": 20,
+  "n_wrappers": 36,
+  "models": [
+    "qwen2.5-0.5b",
+    "qwen2.5-1.5b",
+    "qwen2.5-3b",
+    "qwen2.5-7b"
+  ],
+  "slope_split_half_mean": 0.7764022933284932,
+  "slope_split_half_sd": 0.08453084260873514,
+  "spearman_brown": 0.87412890226991,
+  "r_split_half_mean": 0.6126449835945154,
+  "sign_agreement_mean": 0.7,
+  "sign_agreement_top50": 0.9249999999999998,
+  "sign_agreement_top25": 0.9777777777777779,
+  "null_prob_6of6": 0.8278328619275975,
+  "verdict": "reliable: the per-wrapper slope reproduces on independent items, so the slope is a property of the wrapper and 'determines' is the right word",
+  "conventions": {
+    "kind": "measured",
+    "pooling": "lf for scoring; all-token for the direction arrays",
+    "layers": "ALL",
+    "scoring_array": "results/gstudy/*/sad_filtered_lf.npz",
+    "data_root": "gstudy",
+    "statistic": "folded max over layers, refit on 20 disjoint label-stratified item halves",
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/slope_reliability.py",
+    "producer_sha12": "7330ac93ef41",
+    "backfilled_from": "slope_reliability.py, same array/statistic/cols as wrapper_curves.py; models from its own LADDER, recorded in the payload"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:anonymous:eval-awareness-spectral:results-manifest:v1",
+  "title": "Eval-awareness spectral results manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "run_id", "dataset", "models", "tokenizer_revision",
+    "config_hash", "code_commit", "environment_lock_hash", "seed",
+    "feature_definitions", "split_manifest", "metrics", "generated_at"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "dataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["location", "revision", "checksum"],
+      "properties": {
+        "location": {"type": "string", "minLength": 1},
+        "revision": {"type": "string", "minLength": 1},
+        "checksum": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "models": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["model_id", "revision", "family"],
+        "properties": {
+          "model_id": {"type": "string", "minLength": 1},
+          "revision": {"type": "string", "minLength": 1},
+          "family": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "tokenizer_revision": {"type": "string", "minLength": 1},
+    "config_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "code_commit": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"},
+    "environment_lock_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "seed": {"type": "integer"},
+    "feature_definitions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "split_manifest": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "checksum", "group_keys", "confirmation_locked"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "checksum": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "group_keys": {"type": "array", "minItems": 1, "items": {"enum": ["source_task_id", "template_family", "rendered_text_hash"]}},
+        "confirmation_locked": {"const": true}
+      }
+    },
+    "metrics": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["claim_id", "definition", "split", "sample_size", "result_path", "checksum"],
+        "properties": {
+          "claim_id": {"type": "string", "minLength": 1},
+          "definition": {"type": "string", "minLength": 1},
+          "split": {"enum": ["development", "confirmation"]},
+          "sample_size": {"type": "integer", "minimum": 1},
+          "result_path": {"type": "string", "minLength": 1},
+          "checksum": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "generated_at": {"type": "string", "format": "date-time"}
+  }
+}

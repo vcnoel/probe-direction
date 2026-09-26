@@ -1,0 +1,69 @@
+{
+  "layerset": "trunk",
+  "pooling": "validated",
+  "models": [
+    "qwen2.5-0.5b",
+    "qwen2.5-1.5b",
+    "qwen2.5-3b",
+    "qwen2.5-7b",
+    "gemma2-2b",
+    "llama3.2-1b",
+    "llama3.2-3b"
+  ],
+  "n_eval": 6,
+  "n_deploy": 6,
+  "n_item_blocks": 4,
+  "components": {
+    "modelxevalxdeployxitem": 0.0003356991936507936,
+    "modelxevalxdeploy": 0.00024410303703703692,
+    "modelxevalxitem": 0.00022226638306878314,
+    "modelxdeployxitem": 0.00010649442539682526,
+    "evalxdeployxitem": 9.207726137566146e-05,
+    "modelxeval": 0.00045658787301587324,
+    "modelxdeploy": 6.185685714285704e-05,
+    "modelxitem": 0.00015390841058201047,
+    "evalxdeploy": 3.9213682539682446e-05,
+    "evalxitem": 0.00042125456931216943,
+    "deployxitem": 6.073543703703735e-05,
+    "model": 5.097768253968255e-05,
+    "eval": 0.00015305066666666646,
+    "deploy": 2.4818042328042647e-05,
+    "item": 0.0003420328380952362
+  },
+  "truncated": [],
+  "share": {
+    "modelxevalxdeployxitem": 0.12140684377934804,
+    "modelxevalxdeploy": 0.08828075802424523,
+    "modelxevalxitem": 0.08038345208151707,
+    "modelxdeployxitem": 0.03851409926522841,
+    "evalxdeployxitem": 0.03330007905557775,
+    "modelxeval": 0.16512667774962314,
+    "modelxdeploy": 0.022370759101781778,
+    "modelxitem": 0.05566154078789736,
+    "evalxdeploy": 0.014181772015397035,
+    "evalxitem": 0.15234825896251655,
+    "deployxitem": 0.021965193410313666,
+    "model": 0.018436265732489368,
+    "eval": 0.05535133455713357,
+    "deploy": 0.008975535970349204,
+    "item": 0.12369742950658177
+  },
+  "g_k1_flat": 0.12281608843900187,
+  "g_k1_arms": 0.050070527115434436,
+  "g_full_flat_WRONG": 0.6293836375863114,
+  "g_full_arms_CORRECT": 0.25659154995339045,
+  "balanced_080": [
+    56,
+    47
+  ],
+  "identities": {
+    "recon_flat_s_mt": 0.0006884842343159486,
+    "observed_flat_s_mt": 0.0006884842343159486,
+    "recon_ratio": 1.0,
+    "predicted_bias": 7.406353287981863e-05,
+    "observed_gap": 7.406353287981867e-05,
+    "bias_ratio": 0.9999999999999994,
+    "bias_coefficient_eval": 0.14285714285714288,
+    "bias_coefficient_deploy": 0.14285714285714288
+  }
+}

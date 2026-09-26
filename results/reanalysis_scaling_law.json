@@ -1,0 +1,167 @@
+[
+  {
+    "model": "GPT-OSS-20B",
+    "params_b": 20.0,
+    "n_layers": 23,
+    "lag1_autocorr": 0.6186402281447346,
+    "l_eff": 5.4189155812126515,
+    "reported_max_distance": 0.312,
+    "null_selection_floor": 0.06263130656807457,
+    "excess_over_floor": 0.24936869343192541,
+    "median_layer_distance": 0.0887
+  },
+  {
+    "model": "gemma-3-12B",
+    "params_b": 12.0,
+    "n_layers": 47,
+    "lag1_autocorr": 0.42354941455734196,
+    "l_eff": 19.032129997559412,
+    "reported_max_distance": 0.29400000000000004,
+    "null_selection_floor": 0.07739858577252348,
+    "excess_over_floor": 0.21660141422747656,
+    "median_layer_distance": 0.05779999999999996
+  },
+  {
+    "model": "gemma-3-1B",
+    "params_b": 1.0,
+    "n_layers": 25,
+    "lag1_autocorr": 0.0,
+    "l_eff": 25.0,
+    "reported_max_distance": 0.17979999999999996,
+    "null_selection_floor": 0.08024652625184332,
+    "excess_over_floor": 0.09955347374815664,
+    "median_layer_distance": 0.05410000000000004
+  },
+  {
+    "model": "gemma-3-270m",
+    "params_b": 0.27,
+    "n_layers": 17,
+    "lag1_autocorr": 0.3884725489136202,
+    "l_eff": 7.487340442274174,
+    "reported_max_distance": 0.1503,
+    "null_selection_floor": 0.06674494682420322,
+    "excess_over_floor": 0.08355505317579677,
+    "median_layer_distance": 0.04909999999999998
+  },
+  {
+    "model": "gemma-3-27B",
+    "params_b": 27.0,
+    "n_layers": 61,
+    "lag1_autocorr": 0.15679159409577997,
+    "l_eff": 44.46411352112457,
+    "reported_max_distance": 0.1985,
+    "null_selection_floor": 0.0859495725505013,
+    "excess_over_floor": 0.11255042744949871,
+    "median_layer_distance": 0.055400000000000005
+  },
+  {
+    "model": "gemma-3-4B",
+    "params_b": 4.0,
+    "n_layers": 33,
+    "lag1_autocorr": 0.0,
+    "l_eff": 33.0,
+    "reported_max_distance": 0.2459,
+    "null_selection_floor": 0.08304522368455142,
+    "excess_over_floor": 0.1628547763154486,
+    "median_layer_distance": 0.057099999999999984
+  },
+  {
+    "model": "Llama-3.1-70B",
+    "params_b": 70.0,
+    "n_layers": 79,
+    "lag1_autocorr": 0.7949935205929225,
+    "l_eff": 9.02260185753173,
+    "reported_max_distance": 0.3425,
+    "null_selection_floor": 0.06900661836526358,
+    "excess_over_floor": 0.27349338163473647,
+    "median_layer_distance": 0.1281
+  },
+  {
+    "model": "Llama-3.1-8B",
+    "params_b": 8.0,
+    "n_layers": 31,
+    "lag1_autocorr": 0.770161883681394,
+    "l_eff": 4.025045207198229,
+    "reported_max_distance": 0.21889999999999998,
+    "null_selection_floor": 0.05859353845593324,
+    "excess_over_floor": 0.16030646154406675,
+    "median_layer_distance": 0.054300000000000015
+  },
+  {
+    "model": "Phi-3-medium",
+    "params_b": 14.0,
+    "n_layers": 39,
+    "lag1_autocorr": 0.3318505270736916,
+    "l_eff": 19.56513055663959,
+    "reported_max_distance": 0.32889999999999997,
+    "null_selection_floor": 0.07769173932652657,
+    "excess_over_floor": 0.2512082606734734,
+    "median_layer_distance": 0.04570000000000002
+  },
+  {
+    "model": "Phi-3-mini",
+    "params_b": 3.8,
+    "n_layers": 31,
+    "lag1_autocorr": 0.6779056740808799,
+    "l_eff": 5.950825638015823,
+    "reported_max_distance": 0.2112,
+    "null_selection_floor": 0.06384990279852439,
+    "excess_over_floor": 0.14735009720147563,
+    "median_layer_distance": 0.12430000000000002
+  },
+  {
+    "model": "Qwen2.5-0.5B",
+    "params_b": 0.5,
+    "n_layers": 23,
+    "lag1_autocorr": 0.17019240568877386,
+    "l_eff": 16.309774851020723,
+    "reported_max_distance": 0.17190000000000005,
+    "null_selection_floor": 0.07573932608717399,
+    "excess_over_floor": 0.09616067391282607,
+    "median_layer_distance": 0.0806
+  },
+  {
+    "model": "Qwen2.5-1.5B",
+    "params_b": 1.5,
+    "n_layers": 23,
+    "lag1_autocorr": 0.6186402281447346,
+    "l_eff": 5.4189155812126515,
+    "reported_max_distance": 0.312,
+    "null_selection_floor": 0.06263130656807457,
+    "excess_over_floor": 0.24936869343192541,
+    "median_layer_distance": 0.0887
+  },
+  {
+    "model": "Qwen2.5-32B",
+    "params_b": 32.0,
+    "n_layers": 63,
+    "lag1_autocorr": 0.3444264199989736,
+    "l_eff": 30.72026473571993,
+    "reported_max_distance": 0.23399999999999999,
+    "null_selection_floor": 0.08233270578730063,
+    "excess_over_floor": 0.15166729421269937,
+    "median_layer_distance": 0.08629999999999999
+  },
+  {
+    "model": "Qwen2.5-3B",
+    "params_b": 3.0,
+    "n_layers": 27,
+    "lag1_autocorr": 0.17377158281370028,
+    "l_eff": 19.00554383038835,
+    "reported_max_distance": 0.28869999999999996,
+    "null_selection_floor": 0.07738371951608677,
+    "excess_over_floor": 0.21131628048391318,
+    "median_layer_distance": 0.11750000000000005
+  },
+  {
+    "model": "Qwen2.5-7B",
+    "params_b": 7.0,
+    "n_layers": 35,
+    "lag1_autocorr": 0.15992380789854838,
+    "l_eff": 25.34879146658785,
+    "reported_max_distance": 0.23970000000000002,
+    "null_selection_floor": 0.08038850539911993,
+    "excess_over_floor": 0.1593114946008801,
+    "median_layer_distance": 0.08930000000000005
+  }
+]

@@ -1,0 +1,524 @@
+{
+  "surface_baseline.json": {
+    "kind": "measured",
+    "pooling": "lf",
+    "layers": "single mid layer for the diffuseness rows; the classifier rows use no activations",
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "scoring_array": "results/gstudy/*/sad_filtered_lf.npz",
+    "data_root": "gstudy",
+    "statistic": "AUROC, unfolded",
+    "producer": "scripts/surface_baseline.py",
+    "producer_sha12": "335fa4827c6a",
+    "backfilled_from": "surface_baseline.py loads gstudy/<m>/sad_filtered_lf.npz at L=int(0.5*(n-1))"
+  },
+  "two_concept_floor.json": {
+    "kind": "derived",
+    "sources": [
+      "null_control.json",
+      "refusal_decomposition_last.json"
+    ],
+    "source_hashes": {
+      "null_control.json": "16be739ba09a",
+      "refusal_decomposition_last.json": "8213894c664d"
+    },
+    "producer": "scripts/two_concept_floor.py",
+    "producer_sha12": "fa2b34723aa5",
+    "backfilled_from": "two_concept_floor.py reads exactly those two files"
+  },
+  "corrected_decomposition_validated.json": {
+    "kind": "measured",
+    "pooling": "validated",
+    "layers": "interior (1..L-1)",
+    "scoring_array": "results/gstudy_v11/*/pooled.npz",
+    "data_root": "gstudy_v11",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "gemma2-2b",
+      "llama3.2-1b",
+      "llama3.2-3b",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/corrected_decomposition.py",
+    "producer_sha12": "845509024bcc",
+    "backfilled_from": "corrected_decomposition.py: V11/<m>/pooled.npz sad_validated; cols=range(1, shape[1]-1)"
+  },
+  "direction_geometry_v11_validated.json": {
+    "kind": "measured",
+    "pooling": "validated",
+    "layers": "all, with interior means reported",
+    "scoring_array": "results/gstudy_v11/*/pooled.npz",
+    "data_root": "gstudy_v11",
+    "statistic": "cosine between directions",
+    "model_population": [
+      "gemma2-2b",
+      "llama3.2-1b",
+      "llama3.2-3b",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b",
+      "smollm2-1.7b",
+      "smollm2-135m",
+      "smollm2-360m"
+    ],
+    "producer": "scripts/direction_geometry.py",
+    "producer_sha12": "80e3c91a0399",
+    "backfilled_from": "direction_geometry.py reports per-layer cosines and interior-layer means"
+  },
+  "direction_geometry_v11_lasttoken.json": {
+    "kind": "measured",
+    "pooling": "lasttoken",
+    "layers": "all, with interior means reported",
+    "scoring_array": "results/gstudy_v11/*/pooled.npz",
+    "data_root": "gstudy_v11",
+    "statistic": "cosine between directions",
+    "model_population": [
+      "gemma2-2b",
+      "llama3.2-1b",
+      "llama3.2-3b",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b",
+      "smollm2-1.7b",
+      "smollm2-135m",
+      "smollm2-360m"
+    ],
+    "producer": "scripts/direction_geometry.py",
+    "producer_sha12": "80e3c91a0399",
+    "backfilled_from": "same script, --pooling lasttoken"
+  },
+  "direction_geometry_v11_validated_smollm2.json": {
+    "kind": "measured",
+    "pooling": "validated",
+    "layers": "all, with interior means reported",
+    "scoring_array": "results/gstudy_v11/*/pooled.npz",
+    "data_root": "gstudy_v11",
+    "statistic": "cosine between directions",
+    "model_population": [
+      "smollm2-1.7b",
+      "smollm2-135m",
+      "smollm2-360m"
+    ],
+    "producer": "scripts/direction_geometry.py",
+    "producer_sha12": "80e3c91a0399",
+    "backfilled_from": "same script, --models smollm2-* --suffix _smollm2"
+  },
+  "slope_distribution_deploy_peak_lf.json": {
+    "kind": "measured",
+    "pooling": "lf for scoring; all-token for the direction arrays",
+    "layers": "ALL",
+    "scoring_array": "results/gstudy/*/sad_filtered_lf.npz",
+    "data_root": "gstudy",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/slope_distribution.py",
+    "producer_sha12": "a94bb36e48f5",
+    "backfilled_from": "slope_distribution.py overrides d['sad'] with SADFILE['lf']; cell_statistic uses auc_cols over every column"
+  },
+  "arm_decomposition_trunk_peak_validated.json": {
+    "kind": "measured",
+    "pooling": "validated",
+    "layers": "trunk",
+    "scoring_array": "results/gstudy_v2/*/pooled.npz",
+    "data_root": "gstudy_v2",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "gemma2-2b",
+      "llama3.2-1b",
+      "llama3.2-3b",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/arm_decomposition.py",
+    "producer_sha12": "db432961697c",
+    "backfilled_from": "arm_decomposition.py: gstudy_v2/pooled.npz; cols=layer_mask(..., 'trunk')"
+  },
+  "counterbalance_saturation.json": {
+    "kind": "measured",
+    "pooling": "lf",
+    "layers": "interior (1..L-1)",
+    "scoring_array": "results/field_construction/*.npz for directions; results/gstudy/*/sad_filtered_lf.npz for scoring",
+    "data_root": "field_construction + gstudy",
+    "statistic": "cosine to the full-set direction",
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/counterbalance_saturation.py",
+    "producer_sha12": "d706b2df1b1b",
+    "backfilled_from": "counterbalance_saturation.py: FC=results/field_construction"
+  },
+  "null_control.json": {
+    "kind": "measured",
+    "pooling": "lf",
+    "layers": "interior (1..L-1)",
+    "scoring_array": "results/gstudy/*/sad_filtered_lf.npz",
+    "data_root": "gstudy",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/null_control.py",
+    "producer_sha12": "157ba6676c22",
+    "backfilled_from": "null_control.py: sad_filtered_lf.npz; peak() ranges range(1, nlay-1)"
+  },
+  "gstudy_gtheory_deploy_peak_lf.json": {
+    "kind": "measured",
+    "pooling": "lf for scoring; all-token for the direction arrays",
+    "layers": "ALL",
+    "scoring_array": "results/gstudy/*/sad_filtered_lf.npz",
+    "data_root": "gstudy",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/gstudy_gtheory.py",
+    "producer_sha12": "8c4f472398f3",
+    "backfilled_from": "gstudy_gtheory.py passes the full projection to cell_statistic, which maxes over auc_cols of every layer"
+  },
+  "reml_components_validated_interior.json": {
+    "kind": "measured",
+    "pooling": "validated",
+    "layers": "interior",
+    "scoring_array": "results/gstudy_v2/*/pooled.npz",
+    "data_root": "gstudy_v2",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "gemma2-2b",
+      "llama3.2-1b",
+      "llama3.2-3b",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/reml_components.py",
+    "producer_sha12": "5b75938ea0a3",
+    "backfilled_from": "reml_components.py: V2 root, LAYERSET='interior'"
+  },
+  "reml_components_validated_interior_fourfam.json": {
+    "kind": "measured",
+    "pooling": "validated",
+    "layers": "interior",
+    "scoring_array": "results/gstudy_v11/*/pooled.npz",
+    "data_root": "gstudy_v11",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "gemma2-2b",
+      "llama3.2-1b",
+      "llama3.2-3b",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b",
+      "smollm2-1.7b",
+      "smollm2-135m",
+      "smollm2-360m"
+    ],
+    "producer": "scripts/reml_components.py",
+    "producer_sha12": "5b75938ea0a3",
+    "backfilled_from": "same script, --data v11 --suffix _fourfam"
+  },
+  "k_requirement.json": {
+    "kind": "derived",
+    "sources": [
+      "gstudy_gtheory_deploy_peak.json",
+      "gstudy_gtheory_deploy_tilt.json"
+    ],
+    "source_hashes": {
+      "gstudy_gtheory_deploy_peak.json": "8d2af6287eb2",
+      "gstudy_gtheory_deploy_tilt.json": "9cd8a97603df"
+    },
+    "producer": "scripts/k_requirement.py",
+    "producer_sha12": "d7cf6143b19a",
+    "backfilled_from": "k_requirement.py reads gstudy_gtheory_deploy_<stat>.json and solves the D-study equation"
+  },
+  "implementation_facet.json": {
+    "kind": "crossed",
+    "crossed_levels": [
+      "layers: all, trunk, interior, fixed75",
+      "pooling: wsfilt, wsfilt_lf"
+    ],
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "scoring_array": "results/gstudy/*/{sad_filtered,sad_filtered_lf}.npz",
+    "data_root": "gstudy",
+    "statistic": "folded max over layers",
+    "producer": "scripts/implementation_facet.py",
+    "producer_sha12": "194b45dbaa5f",
+    "backfilled_from": "implementation_facet.py crosses --layersets with the two filtered arrays; the conventions are the facet under study"
+  },
+  "concordance_equivalence_peak_lf.json": {
+    "kind": "measured",
+    "pooling": "lf",
+    "layers": "ALL",
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "scoring_array": "results/gstudy/*/sad_filtered_lf.npz",
+    "data_root": "gstudy",
+    "statistic": "folded max over layers; Kendall W of the model ranking",
+    "producer": "scripts/concordance_equivalence.py",
+    "producer_sha12": "f2310f7cf561",
+    "backfilled_from": "same statistic path as gstudy_gtheory.py, from which it takes per-model means"
+  },
+  "field_construction.json": {
+    "kind": "measured",
+    "pooling": "answer-token, as the released implementations build directions",
+    "layers": "interior means reported",
+    "scoring_array": "results/field_construction/*.npz",
+    "data_root": "field_construction",
+    "statistic": "cosine between directions",
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/field_construction_check.py",
+    "producer_sha12": "07413e1d7c9c",
+    "backfilled_from": "field_construction.py writes the contrastive-direction cache the two scripts above read"
+  },
+  "imbalance_hazard.json": {
+    "kind": "measured",
+    "pooling": "lf",
+    "layers": "interior (1..L-1)",
+    "scoring_array": "results/field_construction/*.npz for directions; results/gstudy/*/sad_filtered_lf.npz for scoring",
+    "data_root": "field_construction + gstudy",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/imbalance_hazard.py",
+    "producer_sha12": "5673fe70991e",
+    "backfilled_from": "imbalance_hazard.py: FC directions, sad_filtered_lf scoring, range(1, nlay-1)"
+  },
+  "label_permuted_control_validated.json": {
+    "kind": "measured",
+    "pooling": "validated",
+    "layers": "interior (1..L-1)",
+    "scoring_array": "results/gstudy_v11/*/pooled.npz",
+    "data_root": "gstudy_v11",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "gemma2-2b",
+      "llama3.2-1b",
+      "llama3.2-3b",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/label_permuted_control.py",
+    "producer_sha12": "9681e6fcdfa3",
+    "backfilled_from": "label_permuted_control.py: cols=range(1, sad.shape[1]-1)"
+  },
+  "released_label_permuted.json": {
+    "kind": "measured",
+    "pooling": "lf",
+    "layers": "interior (1..L-1)",
+    "scoring_array": "results/gstudy/*/sad_filtered_lf.npz",
+    "data_root": "gstudy",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/released_label_permuted.py",
+    "producer_sha12": "9a55fafa9ffd",
+    "backfilled_from": "released_label_permuted.py: peak() over range(1, nlay-1) on sad_filtered_lf.npz"
+  },
+  "reanalysis_table.json": {
+    "kind": "derived",
+    "sources": [
+      "reanalysis_scaling_law.json",
+      "reanalysis_probe_depth.json",
+      "slope_distribution_deploy_peak_lf.json",
+      "released_label_permuted.json"
+    ],
+    "source_hashes": {
+      "reanalysis_scaling_law.json": "beeb3b64111c",
+      "reanalysis_probe_depth.json": "cfae40517f92",
+      "slope_distribution_deploy_peak_lf.json": "e53d45b6f1a1",
+      "released_label_permuted.json": "b464f5b96c71"
+    },
+    "producer": "scripts/reanalysis_table.py",
+    "producer_sha12": "220695b4a612",
+    "backfilled_from": "reanalysis_table.py reads exactly those four"
+  },
+  "qwen_anomaly_test.json": {
+    "kind": "derived",
+    "sources": [
+      "wrapper_curves.json"
+    ],
+    "source_hashes": {
+      "wrapper_curves.json": "5065405bd0a9"
+    },
+    "producer": "scripts/qwen_anomaly_test.py",
+    "producer_sha12": "b6dd2f5ad020",
+    "backfilled_from": "qwen_anomaly_test.py reads the 4x36 matrix only"
+  },
+  "slope_reliability.json": {
+    "kind": "measured",
+    "pooling": "lf for scoring; all-token for the direction arrays",
+    "layers": "ALL",
+    "scoring_array": "results/gstudy/*/sad_filtered_lf.npz",
+    "data_root": "gstudy",
+    "statistic": "folded max over layers, refit on 20 disjoint label-stratified item halves",
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/slope_reliability.py",
+    "producer_sha12": "7330ac93ef41",
+    "backfilled_from": "slope_reliability.py, same array/statistic/cols as wrapper_curves.py; models from its own LADDER, recorded in the payload"
+  },
+  "pod_replication.json": {
+    "kind": "measured",
+    "pooling": "validated for scoring and for the direction arrays",
+    "layers": "ALL",
+    "scoring_array": "results/pod_*/*.npz",
+    "data_root": "pod",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "olmo-2-0325-32b-instruct",
+      "olmo-2-0425-1b-instruct",
+      "olmo-2-1124-13b-instruct",
+      "olmo-2-1124-7b-instruct",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b",
+      "qwen3-0.6b",
+      "qwen3-1.7b",
+      "qwen3-14b",
+      "qwen3-32b",
+      "qwen3-4b",
+      "qwen3-8b",
+      "qwen3.5-0.8b",
+      "qwen3.5-27b",
+      "qwen3.5-2b",
+      "qwen3.5-4b",
+      "qwen3.5-9b"
+    ],
+    "producer": "scripts/pod_ladders.py",
+    "producer_sha12": "825b421ca3e7"
+  },
+  "pod_gtheory.json": {
+    "kind": "measured",
+    "pooling": "validated for scoring and for the direction arrays",
+    "layers": "ALL",
+    "scoring_array": "results/pod_*/*.npz",
+    "data_root": "pod",
+    "statistic": "folded max over layers, 3-way crossed model x wrapper x item-block, one observation per cell",
+    "model_population": [
+      "olmo-2-0325-32b-instruct",
+      "olmo-2-0425-1b-instruct",
+      "olmo-2-1124-13b-instruct",
+      "olmo-2-1124-7b-instruct",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b",
+      "qwen3-0.6b",
+      "qwen3-1.7b",
+      "qwen3-14b",
+      "qwen3-32b",
+      "qwen3-4b",
+      "qwen3-8b",
+      "qwen3.5-0.8b",
+      "qwen3.5-27b",
+      "qwen3.5-2b",
+      "qwen3.5-4b",
+      "qwen3.5-9b"
+    ],
+    "producer": "scripts/pod_ladders.py",
+    "producer_sha12": "825b421ca3e7"
+  },
+  "pod_slope_reliability.json": {
+    "kind": "measured",
+    "pooling": "validated for scoring and for the direction arrays",
+    "layers": "ALL",
+    "scoring_array": "results/pod_*/*.npz",
+    "data_root": "pod",
+    "statistic": "folded max over layers, slopes refit on 20 disjoint label-stratified item halves",
+    "model_population": [
+      "olmo-2-0325-32b-instruct",
+      "olmo-2-0425-1b-instruct",
+      "olmo-2-1124-13b-instruct",
+      "olmo-2-1124-7b-instruct",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b",
+      "qwen3-0.6b",
+      "qwen3-1.7b",
+      "qwen3-14b",
+      "qwen3-32b",
+      "qwen3-4b",
+      "qwen3-8b",
+      "qwen3.5-0.8b",
+      "qwen3.5-27b",
+      "qwen3.5-2b",
+      "qwen3.5-4b",
+      "qwen3.5-9b"
+    ],
+    "producer": "scripts/pod_ladders.py",
+    "producer_sha12": "825b421ca3e7"
+  },
+  "wrapper_curves.json": {
+    "kind": "measured",
+    "pooling": "lf for scoring; all-token for the direction arrays",
+    "layers": "ALL",
+    "scoring_array": "results/gstudy/*/sad_filtered_lf.npz",
+    "data_root": "gstudy",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/wrapper_curves.py",
+    "producer_sha12": "c3e8862d2221",
+    "backfilled_from": "wrapper_curves.py, aligned to gstudy_gtheory.py: cols=range(sad.shape[1])"
+  }
+}

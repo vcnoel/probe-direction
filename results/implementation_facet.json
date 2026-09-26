@@ -1,0 +1,81 @@
+{
+  "components": {
+    "modelxtemplatexitemximpl": 0.00037349825098204265,
+    "modelxtemplatexitem": 0.0002493593191972638,
+    "modelxtemplateximpl": 0.00035770289702581365,
+    "modelxitemximpl": 0.0002556916262626264,
+    "templatexitemximpl": 2.1247912978996326e-05,
+    "modelxtemplate": 0.0008662598905991127,
+    "modelxitem": 0.00016187399028646298,
+    "modelximpl": 0.00021035934764309798,
+    "templatexitem": 9.047931909037469e-05,
+    "templateximpl": 2.3973853094436397e-05,
+    "itemximpl": 0.00022210561115119487,
+    "model": 0.00010015633695419814,
+    "template": 0.00028511956562984333,
+    "item": 0.000986073098137459,
+    "impl": 0.0015935772790604443
+  },
+  "truncated": [],
+  "dims": {
+    "model": 4,
+    "template": 36,
+    "item": 4,
+    "impl": 12
+  },
+  "n_models": 4,
+  "n_templates": 36,
+  "n_impls": 12,
+  "impls": [
+    "all/alltok",
+    "all/wsfilt",
+    "all/wsfilt_lf",
+    "trunk/alltok",
+    "trunk/wsfilt",
+    "trunk/wsfilt_lf",
+    "interior/alltok",
+    "interior/wsfilt",
+    "interior/wsfilt_lf",
+    "fixed75/alltok",
+    "fixed75/wsfilt",
+    "fixed75/wsfilt_lf"
+  ],
+  "share": {
+    "modelxtemplatexitemximpl": 0.06442426030380762,
+    "modelxtemplatexitem": 0.04301168652572123,
+    "modelxtemplateximpl": 0.061699738857746544,
+    "modelxitemximpl": 0.04410393849110507,
+    "templatexitemximpl": 0.003665026738605332,
+    "modelxtemplate": 0.14942011786124354,
+    "modelxitem": 0.027921448250991972,
+    "modelximpl": 0.03628462873457921,
+    "templatexitem": 0.01560666800945695,
+    "templateximpl": 0.0041352208428828,
+    "itemximpl": 0.03831072748029766,
+    "model": 0.017275845083738705,
+    "template": 0.049179928060034545,
+    "item": 0.17008655271064171,
+    "impl": 0.274874212049147
+  },
+  "g_field_design": 0.04082188443271996,
+  "g_all_facets": 0.5262515036739215,
+  "conventions": {
+    "kind": "crossed",
+    "crossed_levels": [
+      "layers: all, trunk, interior, fixed75",
+      "pooling: wsfilt, wsfilt_lf"
+    ],
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "scoring_array": "results/gstudy/*/{sad_filtered,sad_filtered_lf}.npz",
+    "data_root": "gstudy",
+    "statistic": "folded max over layers",
+    "producer": "scripts/implementation_facet.py",
+    "producer_sha12": "194b45dbaa5f",
+    "backfilled_from": "implementation_facet.py crosses --layersets with the two filtered arrays; the conventions are the facet under study"
+  }
+}

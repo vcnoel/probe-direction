@@ -1,0 +1,34 @@
+{
+  "models": [
+    "qwen2.5-0.5b",
+    "qwen2.5-1.5b",
+    "qwen2.5-3b",
+    "qwen2.5-7b"
+  ],
+  "n_pairs": 42,
+  "template_range": 0.2834375,
+  "model_range": 0.11466011904761905,
+  "statistics": {
+    "max|AUROC-0.5|": {
+      "var_model": 0.0005674950534141498,
+      "var_template": 0.003138250003992451,
+      "var_interaction": 0.0023701218377068815,
+      "g_one_template": 0.09340149532744996,
+      "templates_for_g80": 39
+    },
+    "peak AUROC": {
+      "var_model": 0.0005674950534141493,
+      "var_template": 0.00313825000399245,
+      "var_interaction": 0.0023701218377068815,
+      "g_one_template": 0.0934014953274499,
+      "templates_for_g80": 39
+    },
+    "peak rel depth": {
+      "var_model": 0.019099025804751552,
+      "var_template": 0.03187041076632445,
+      "var_interaction": 0.09237288079395391,
+      "g_one_template": 0.13324066581199973,
+      "templates_for_g80": 27
+    }
+  }
+}

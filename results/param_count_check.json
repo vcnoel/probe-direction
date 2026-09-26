@@ -1,0 +1,33 @@
+{
+  "nominal": {
+    "qwen2.5-0.5b": 0.5,
+    "qwen2.5-1.5b": 1.5,
+    "qwen2.5-3b": 3.0,
+    "qwen2.5-7b": 7.0
+  },
+  "actual_params_b": {
+    "qwen2.5-0.5b": 0.494048912,
+    "qwen2.5-1.5b": 1.543733572,
+    "qwen2.5-3b": 3.085938688,
+    "qwen2.5-7b": 7.615616512
+  },
+  "actual_source": "safetensors total_size / dtype bytes",
+  "n_wrappers": 36,
+  "r_range_nominal": [
+    -0.9875743015630783,
+    0.9368720412118059
+  ],
+  "r_range_actual": [
+    -0.9881957974510149,
+    0.9387959821160841
+  ],
+  "max_abs_dr": 0.010338470327471006,
+  "median_abs_dr": 0.005635635297392139,
+  "max_abs_dslope": 0.0059185344140872675,
+  "sign_flips": 0,
+  "n_positive_nominal": 21,
+  "n_positive_actual": 21,
+  "median_r_nominal": 0.07551788912000545,
+  "median_r_actual": 0.08314333317197503,
+  "material": false
+}

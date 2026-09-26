@@ -1,0 +1,129 @@
+{
+  "pooling": "lf",
+  "cells": [
+    {
+      "concept": "eval-awareness",
+      "model": "qwen2.5-0.5b",
+      "statistic": 0.20987500000000003,
+      "published": 0.2115,
+      "floor_mean": 0.20324166666666663,
+      "floor_sd": 0.04142226732357838,
+      "z": 0.16013931061561137
+    },
+    {
+      "concept": "eval-awareness",
+      "model": "qwen2.5-1.5b",
+      "statistic": 0.29037500000000005,
+      "published": 0.2912,
+      "floor_mean": 0.18442750000000002,
+      "floor_sd": 0.036907144909068525,
+      "z": 2.8706501210275808
+    },
+    {
+      "concept": "eval-awareness",
+      "model": "qwen2.5-3b",
+      "statistic": 0.2913,
+      "published": 0.2924,
+      "floor_mean": 0.21648166666666666,
+      "floor_sd": 0.042384194884280864,
+      "z": 1.7652413485169542
+    },
+    {
+      "concept": "eval-awareness",
+      "model": "qwen2.5-7b",
+      "statistic": 0.20955000000000001,
+      "published": 0.1904,
+      "floor_mean": 0.25290375,
+      "floor_sd": 0.04836512081600346,
+      "z": -0.8963846108217457
+    },
+    {
+      "concept": "refusal",
+      "model": "qwen2.5-0.5b",
+      "statistic": 0.4926722222222221,
+      "published": null,
+      "floor_mean": 0.34646374999999996,
+      "floor_sd": 0.05312568790576296,
+      "z": 2.7521238403834727
+    },
+    {
+      "concept": "refusal",
+      "model": "qwen2.5-1.5b",
+      "statistic": 0.4990722222222222,
+      "published": null,
+      "floor_mean": 0.43155875000000005,
+      "floor_sd": 0.036238897823478666,
+      "z": 1.8630111917609462
+    },
+    {
+      "concept": "refusal",
+      "model": "qwen2.5-3b",
+      "statistic": 0.49999444444444446,
+      "published": null,
+      "floor_mean": 0.45092750000000004,
+      "floor_sd": 0.034803262759175474,
+      "z": 1.4098374851797049
+    },
+    {
+      "concept": "refusal",
+      "model": "qwen2.5-7b",
+      "statistic": 0.4998555555555555,
+      "published": null,
+      "floor_mean": 0.43190125,
+      "floor_sd": 0.034054905816891794,
+      "z": 1.9954336658846088
+    },
+    {
+      "concept": "refusal",
+      "model": "gemma2-2b",
+      "statistic": 0.4996777777777777,
+      "published": null,
+      "floor_mean": 0.43255375,
+      "floor_sd": 0.04456364924331913,
+      "z": 1.5062506979910486
+    },
+    {
+      "concept": "refusal",
+      "model": "llama3.2-1b",
+      "statistic": 0.5,
+      "published": null,
+      "floor_mean": 0.3981462499999999,
+      "floor_sd": 0.048587705069097244,
+      "z": 2.096286495835777
+    },
+    {
+      "concept": "refusal",
+      "model": "llama3.2-3b",
+      "statistic": 0.4998166666666666,
+      "published": null,
+      "floor_mean": 0.40493125,
+      "floor_sd": 0.05901766064570931,
+      "z": 1.6077461496868886
+    }
+  ],
+  "z_min": -0.8963846108217457,
+  "z_max": 2.8706501210275808,
+  "z_median": 1.7652413485169542,
+  "n_cells": 11,
+  "n_at_or_below_floor": 1,
+  "n_clearing_2sd": 3,
+  "floor_provenance": {
+    "eval-awareness": "results/gstudy/*/sad_filtered_lf.npz; rho from released vectors",
+    "refusal": "results/refusal_v1/*/pooled.npz score_last; rho from wrapper directions",
+    "alternative_eval_estimate": "gstudy_v11 array, rho from wrapper directions, floors 0.216-0.276 vs 0.184-0.253"
+  },
+  "conventions": {
+    "kind": "derived",
+    "sources": [
+      "null_control.json",
+      "refusal_decomposition_last.json"
+    ],
+    "source_hashes": {
+      "null_control.json": "16be739ba09a",
+      "refusal_decomposition_last.json": "8213894c664d"
+    },
+    "producer": "scripts/two_concept_floor.py",
+    "producer_sha12": "fa2b34723aa5",
+    "backfilled_from": "two_concept_floor.py reads exactly those two files"
+  }
+}

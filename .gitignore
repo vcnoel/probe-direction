@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+build/
+dist/
+.coverage
+htmlcov/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Generated manuscript macros, tables and figures (paper_tools/*.py write here)
+paper_tools/out/
+
+# Activation caches are large and regenerable; the result JSONs are tracked.
+results/**/*.npz
+results/**/*.npy
+results/**/*.pt
+results/**/*.pkl
+results/**/*.csv
+results/**/*.log
+*.part
+
+# Rendered prompts embed SAD benchmark question text verbatim and must never be committed.
+# data/rendered/manifest.json (hashes, counts, template ids; no question text) is tracked.
+data/rendered/prompts_rendered_*.json
+data/sad_*.json
+data/sad/
+*.zip
+
+# Model caches
+hf/

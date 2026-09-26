@@ -1,0 +1,97 @@
+{
+  "models": [
+    "qwen2.5-0.5b",
+    "qwen2.5-1.5b",
+    "qwen2.5-3b",
+    "qwen2.5-7b"
+  ],
+  "n_pairs": 36,
+  "n_blocks": 4,
+  "components": {
+    "s_mth": 0.0005979452804232806,
+    "s_mt": 0.0008932182380952381,
+    "s_mh": 6.672120105820134e-05,
+    "s_th": 0.00012717739682539678,
+    "s_m": 1.9625465608465313e-05,
+    "s_t": 0.00013341181481481463,
+    "s_h": 0.0004965890846560846
+  },
+  "truncated_components": [],
+  "share": {
+    "s_mth": 0.2561135179987067,
+    "s_mt": 0.3825856191008595,
+    "s_mh": 0.02857820286836009,
+    "s_th": 0.054472961953663336,
+    "s_m": 0.008406031795733165,
+    "s_t": 0.057143304502088384,
+    "s_h": 0.2127003617805888
+  },
+  "g_k1": 0.018188394652577974,
+  "phi_k1": 0.014342286892404427,
+  "ratio_smt_smh": 13.387322529102526,
+  "g_k1_ci": [
+    0.0,
+    0.028974673927371165,
+    0.26280387551853973
+  ],
+  "phi_k1_ci": [
+    0.0,
+    0.01988949257629839,
+    0.18708725078092123
+  ],
+  "model_share_ci": [
+    0.0,
+    0.008985310944336725,
+    0.1057257663026797
+  ],
+  "asymptote_k_inf": 0.5405605731361802,
+  "asymptote_n_inf": 0.021499261624786832,
+  "design_for_grho_0.8": [
+    376,
+    27
+  ],
+  "design_for_grho_0.9": [
+    831,
+    61
+  ],
+  "fraction_cells_above_null": 1.0,
+  "mean_null_floor": 0.05538728030158094,
+  "kendall_w": 0.06574074074074074,
+  "kendall_chi2": 7.1,
+  "kendall_p_chi2": 0.06877781936579971,
+  "kendall_p_permutation": 0.06929653517324134,
+  "per_model_mean": {
+    "qwen2.5-0.5b": 0.20329583333333334,
+    "qwen2.5-1.5b": 0.18354166666666666,
+    "qwen2.5-3b": 0.19527499999999998,
+    "qwen2.5-7b": 0.20688888888888887
+  },
+  "n_layers": 24,
+  "s_m": 1.9625465608465313e-05,
+  "s_mt": 0.0008932182380952381,
+  "s_mh": 6.672120105820134e-05,
+  "s_mth": 0.0005979452804232806,
+  "max_correlation_implied": 0.1348643564941381,
+  "reliability_lower_bound_from_r060": 0.36,
+  "contrast": [
+    "deploy"
+  ],
+  "statistic": "peak",
+  "conventions": {
+    "kind": "measured",
+    "pooling": "lf for scoring; all-token for the direction arrays",
+    "layers": "ALL",
+    "scoring_array": "results/gstudy/*/sad_filtered_lf.npz",
+    "data_root": "gstudy",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/gstudy_gtheory.py",
+    "producer_sha12": "8c4f472398f3",
+    "backfilled_from": "gstudy_gtheory.py passes the full projection to cell_statistic, which maxes over auc_cols of every layer"
+  }
+}

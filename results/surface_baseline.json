@@ -1,0 +1,125 @@
+{
+  "pooling": "lf",
+  "in_domain": {
+    "bag-of-words min_df=2": 0.9921,
+    "bag-of-words min_df=5": 0.9927999999999999,
+    "tf-idf": 0.9929,
+    "character 3-5 grams": 0.997175
+  },
+  "in_domain_ungrouped": {
+    "bag-of-words min_df=2": 0.993,
+    "bag-of-words min_df=5": 0.9941249999999999,
+    "tf-idf": 0.9934000000000001,
+    "character 3-5 grams": 0.99685
+  },
+  "n_unique_bodies": 395,
+  "cv": "StratifiedGroupKFold(5) grouped on prompt body",
+  "in_domain_features": {
+    "bag-of-words min_df=2": 1940,
+    "bag-of-words min_df=5": 725,
+    "tf-idf": 1940,
+    "character 3-5 grams": 15855
+  },
+  "permuted_control": 0.5147843749999998,
+  "permuted_control_sd": 0.04562348661422992,
+  "permuted_draws": [
+    0.47905000000000003,
+    0.5237624999999999,
+    0.5197125,
+    0.5477500000000001,
+    0.5033375,
+    0.47368749999999993,
+    0.550775,
+    0.5549,
+    0.46033750000000007,
+    0.5649000000000001,
+    0.5603625,
+    0.4777125,
+    0.46655,
+    0.51405,
+    0.4486625,
+    0.5654625000000001,
+    0.43887499999999996,
+    0.5153374999999999,
+    0.5245625,
+    0.6059
+  ],
+  "refusal_split": {
+    "bow": 0.9934839883378008,
+    "length_only": 0.7994838637883351,
+    "n_items": 32194
+  },
+  "length_only": 0.5950624999999999,
+  "diffuseness": {
+    "qwen2.5-0.5b": {
+      "ratio": 0.03066443084325943,
+      "one_over_d": 0.0011160714285714285,
+      "pred_auroc": 0.5492724177443826,
+      "observed_auroc": 0.6045325,
+      "layer": 12
+    },
+    "qwen2.5-1.5b": {
+      "ratio": 0.024989166651031614,
+      "one_over_d": 0.0006510416666666666,
+      "pred_auroc": 0.5445007488832244,
+      "observed_auroc": 0.594185,
+      "layer": 14
+    },
+    "qwen2.5-3b": {
+      "ratio": 0.04847720346091068,
+      "one_over_d": 0.00048828125,
+      "pred_auroc": 0.5618603298697716,
+      "observed_auroc": 0.592646875,
+      "layer": 18
+    },
+    "qwen2.5-7b": {
+      "ratio": 0.20545120388899318,
+      "one_over_d": 0.00027901785714285713,
+      "pred_auroc": 0.6257084989310543,
+      "observed_auroc": 0.604764375,
+      "layer": 14
+    }
+  },
+  "published_range": [
+    0.69,
+    0.792
+  ],
+  "top_tokens_testing": [
+    "choice",
+    "choices",
+    "would",
+    "say",
+    "something",
+    "statement",
+    "following",
+    "you"
+  ],
+  "top_tokens_deployment": [
+    "write",
+    "message",
+    "de",
+    "me",
+    "that",
+    "her",
+    "and",
+    "please"
+  ],
+  "n_items": 400,
+  "conventions": {
+    "kind": "measured",
+    "pooling": "lf",
+    "layers": "single mid layer for the diffuseness rows; the classifier rows use no activations",
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "scoring_array": "results/gstudy/*/sad_filtered_lf.npz",
+    "data_root": "gstudy",
+    "statistic": "AUROC, unfolded",
+    "producer": "scripts/surface_baseline.py",
+    "producer_sha12": "335fa4827c6a",
+    "backfilled_from": "surface_baseline.py loads gstudy/<m>/sad_filtered_lf.npz at L=int(0.5*(n-1))"
+  }
+}

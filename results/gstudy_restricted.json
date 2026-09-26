@@ -1,0 +1,71 @@
+{
+  "eval x deploy (what the field builds)": {
+    "n_pairs": 6,
+    "template_range": 0.09221874999999996,
+    "model_range": 0.13179999999999994,
+    "ratio": 0.6996870257966616,
+    "var_model": 0.0018645486909722217,
+    "var_template": 4.9432951388889514e-05,
+    "var_interaction": 0.0014045039913194418,
+    "share_model": 0.5618673385378616,
+    "g_one_template": 0.5618673385378616,
+    "k_for_g80": 4,
+    "fraction_templates_above_null_floor": 1.0,
+    "mean_null_floor": 0.05547534642217997,
+    "stat_min": 0.0939000000000001,
+    "stat_max": 0.2824,
+    "depth_range_across_templates": 0.4000279589934762
+  },
+  "eval x neutral (formal register)": {
+    "n_pairs": 36,
+    "template_range": 0.2834375,
+    "model_range": 0.11180347222222224,
+    "ratio": 2.535140406342975,
+    "var_model": 0.00041732693468915516,
+    "var_template": 0.0035410625080191807,
+    "var_interaction": 0.00246505065790344,
+    "share_model": 0.06496938216165642,
+    "g_one_template": 0.06496938216165642,
+    "k_for_g80": 58,
+    "fraction_templates_above_null_floor": 1.0,
+    "mean_null_floor": 0.06695832181119975,
+    "stat_min": 0.08402500000000002,
+    "stat_max": 0.39592499999999997,
+    "depth_range_across_templates": 0.9573811742777261
+  },
+  "all non-eval (first pass)": {
+    "n_pairs": 42,
+    "template_range": 0.2834375,
+    "model_range": 0.11466011904761905,
+    "ratio": 2.471979816123221,
+    "var_model": 0.0005674950534141498,
+    "var_template": 0.003138250003992451,
+    "var_interaction": 0.0023701218377068815,
+    "share_model": 0.09340149532744996,
+    "g_one_template": 0.09340149532744996,
+    "k_for_g80": 39,
+    "fraction_templates_above_null_floor": 1.0,
+    "mean_null_floor": 0.06531789675562549,
+    "stat_min": 0.08402500000000002,
+    "stat_max": 0.39592499999999997,
+    "depth_range_across_templates": 0.9660018639328984
+  },
+  "depth_detail": {
+    "qwen2.5-0.5b": {
+      "across_template_range": 0.040000000000000036,
+      "mean_within_template_span": 0.2133333333333333
+    },
+    "qwen2.5-1.5b": {
+      "across_template_range": 0.0,
+      "mean_within_template_span": 0.2528735632183909
+    },
+    "qwen2.5-3b": {
+      "across_template_range": 0.5945945945945945,
+      "mean_within_template_span": 0.6126126126126126
+    },
+    "qwen2.5-7b": {
+      "across_template_range": 0.9655172413793104,
+      "mean_within_template_span": 0.64683908045977
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "n_wrappers": 36,
+  "models": [
+    "qwen2.5-0.5b",
+    "qwen2.5-1.5b",
+    "qwen2.5-3b",
+    "qwen2.5-7b"
+  ],
+  "frac_small_over_large": 0.5,
+  "n_small_over_large": 18,
+  "sml_min": -0.1507374999999999,
+  "sml_max": 0.061112500000000125,
+  "sml_median": -0.0028437500000000338,
+  "n_smallest_on_top": 11,
+  "argmax_counts": {
+    "qwen2.5-0.5b": 11,
+    "qwen2.5-1.5b": 5,
+    "qwen2.5-3b": 6,
+    "qwen2.5-7b": 14
+  },
+  "uniform": false,
+  "verdict": "subset-dependent -> the observation alone does not identify the cause",
+  "wrappers_with_anomaly": [
+    "eval_benchmark|deploy_advice",
+    "eval_benchmark|deploy_agent",
+    "eval_benchmark|deploy_ide",
+    "eval_benchmark|deploy_support",
+    "eval_certification|deploy_a",
+    "eval_certification|deploy_advice",
+    "eval_certification|deploy_agent",
+    "eval_certification|deploy_api",
+    "eval_certification|deploy_ide",
+    "eval_certification|deploy_support",
+    "eval_leaderboard|deploy_a",
+    "eval_oversight|deploy_a"
+  ],
+  "conventions": {
+    "kind": "derived",
+    "sources": [
+      "wrapper_curves.json"
+    ],
+    "source_hashes": {
+      "wrapper_curves.json": "5065405bd0a9"
+    },
+    "producer": "scripts/qwen_anomaly_test.py",
+    "producer_sha12": "b6dd2f5ad020",
+    "backfilled_from": "qwen_anomaly_test.py reads the 4x36 matrix only"
+  }
+}

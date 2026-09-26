@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "description": "Compact token-level fixture derived from the repeated suffix in the actual 4,096-token Qwen3-0.6B calibration failure.",
+  "source_artifact": "artifact://anonymous/experiments/exp_01ky5kxdbgfvt8rhn7d03hs4ca/qwen3-0.6b/adaptive-shards-v1/short/stages_v1/cap4096_v1/rollouts.jsonl",
+  "source_sha256": "a2f10a9b51e1bc6123f3d8e3623aeb9bd71417630b16a9709ca42b754306ccfb",
+  "source_rollout_id": "rollout_5c97ee23f500b778fdf15e03be3ea571c851062ce471ca9761c564df2b57dc29",
+  "source_generated_token_count": 4096,
+  "source_close_marker_span": [220, 221],
+  "source_terminal_token_id": null,
+  "derivation": "The source row's eight-token suffix unit was copied verbatim and retained for six adjacent copies. The omitted 281-token prefix is represented only by prefix_token_count; no source text is stored in this fixture.",
+  "source_slice_span": [281, 329],
+  "prefix_token_count": 281,
+  "repeated_unit_token_ids": [1112, 9, 2303, 9, 2610, 3129, 537, 1052],
+  "token_ids": [1112, 9, 2303, 9, 2610, 3129, 537, 1052, 1112, 9, 2303, 9, 2610, 3129, 537, 1052, 1112, 9, 2303, 9, 2610, 3129, 537, 1052, 1112, 9, 2303, 9, 2610, 3129, 537, 1052, 1112, 9, 2303, 9, 2610, 3129, 537, 1052, 1112, 9, 2303, 9, 2610, 3129, 537, 1052]
+}

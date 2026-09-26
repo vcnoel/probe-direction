@@ -1,0 +1,30 @@
+{
+  "peak": {
+    "s_m": 5.399196119929434e-05,
+    "threshold_n4": 0.00014472855731922452,
+    "s_m_implied_chaudhary": 0.0005629022301587302,
+    "k_at_implied": 9.226146925592063,
+    "multiple_implied": 10.425667407800834
+  },
+  "tilt": {
+    "s_m": 0.0006065190364103785,
+    "threshold_n4": 0.0003974158770629614,
+    "s_m_implied_chaudhary": 0.0011311114554692137,
+    "k_at_implied": 10.421274963164029,
+    "multiple_implied": 1.8649232547812222
+  },
+  "conventions": {
+    "kind": "derived",
+    "sources": [
+      "gstudy_gtheory_deploy_peak.json",
+      "gstudy_gtheory_deploy_tilt.json"
+    ],
+    "source_hashes": {
+      "gstudy_gtheory_deploy_peak.json": "8d2af6287eb2",
+      "gstudy_gtheory_deploy_tilt.json": "9cd8a97603df"
+    },
+    "producer": "scripts/k_requirement.py",
+    "producer_sha12": "d7cf6143b19a",
+    "backfilled_from": "k_requirement.py reads gstudy_gtheory_deploy_<stat>.json and solves the D-study equation"
+  }
+}

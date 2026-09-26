@@ -1,0 +1,92 @@
+{
+  "pooling": "validated",
+  "layerset": "interior",
+  "n_obs": 1440,
+  "models": [
+    "qwen2.5-0.5b",
+    "qwen2.5-1.5b",
+    "qwen2.5-3b",
+    "qwen2.5-7b",
+    "gemma2-2b",
+    "llama3.2-1b",
+    "llama3.2-3b",
+    "smollm2-135m",
+    "smollm2-360m",
+    "smollm2-1.7b"
+  ],
+  "families": {
+    "qwen2.5-0.5b": "qwen2.5",
+    "qwen2.5-1.5b": "qwen2.5",
+    "qwen2.5-3b": "qwen2.5",
+    "qwen2.5-7b": "qwen2.5",
+    "gemma2-2b": "gemma2",
+    "llama3.2-1b": "llama3.2",
+    "llama3.2-3b": "llama3.2",
+    "smollm2-135m": "smollm2",
+    "smollm2-360m": "smollm2",
+    "smollm2-1.7b": "smollm2"
+  },
+  "n_templates": 36,
+  "n_item_blocks": 4,
+  "components": {
+    "family": 0.0008892204697011727,
+    "model(family)": 0.0003373712985190252,
+    "template": 3.218545037421665e-05,
+    "item": 0.0008298358846906858,
+    "family:template": 0.0003378419691242275,
+    "model:template": 0.0005602214154477734,
+    "model:item": 0.0003043302526508846,
+    "template:item": 0.00019677515628848964,
+    "residual": 0.0006499195159020365
+  },
+  "share": {
+    "family": 0.2149068724418285,
+    "model(family)": 0.08153592172785602,
+    "template": 0.007778582155648117,
+    "item": 0.20055480130681694,
+    "family:template": 0.08164967343641523,
+    "model:template": 0.1353943553607968,
+    "model:item": 0.07355055918653336,
+    "template:item": 0.047556635112575095,
+    "residual": 0.1570725992715299
+  },
+  "neg2_reml": -8184.821277346646,
+  "g_cross_family_k1": 0.639937667467698,
+  "g_within_family_k1": 0.29694122031325604,
+  "k_for_080_cross_family": 5.647147890731849,
+  "k_for_080_within_family": null,
+  "joint_080": {
+    "cross-family": [
+      5,
+      1
+    ],
+    "within-family": [
+      14,
+      8
+    ]
+  },
+  "boundary_components": [],
+  "conventions": {
+    "kind": "measured",
+    "pooling": "validated",
+    "layers": "interior",
+    "scoring_array": "results/gstudy_v11/*/pooled.npz",
+    "data_root": "gstudy_v11",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "gemma2-2b",
+      "llama3.2-1b",
+      "llama3.2-3b",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b",
+      "smollm2-1.7b",
+      "smollm2-135m",
+      "smollm2-360m"
+    ],
+    "producer": "scripts/reml_components.py",
+    "producer_sha12": "5b75938ea0a3",
+    "backfilled_from": "same script, --data v11 --suffix _fourfam"
+  }
+}

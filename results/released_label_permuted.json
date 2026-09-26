@@ -1,0 +1,139 @@
+{
+  "draws": 200,
+  "pooling": "lf",
+  "per_model": {
+    "qwen2.5-0.5b": {
+      "published": 0.2115,
+      "released_statistic": 0.20987500000000003,
+      "ar1_mean": 0.20324166666666663,
+      "ar1_sd": 0.04142226732357838,
+      "variants": {
+        "system": {
+          "rebuilt_statistic": 0.2047,
+          "perm_mean": 0.14779625,
+          "perm_sd": 0.030782589948005274,
+          "n_items": 204,
+          "z_published_vs_perm": 2.0694733648988506,
+          "z_released_vs_perm": 2.0166837847256183,
+          "perm_minus_ar1": -0.055445416666666636
+        },
+        "user": {
+          "rebuilt_statistic": 0.16405000000000003,
+          "perm_mean": 0.20624537500000004,
+          "perm_sd": 0.028970905314783756,
+          "n_items": 204,
+          "z_published_vs_perm": 0.18137593364466037,
+          "z_released_vs_perm": 0.12528517699265035,
+          "perm_minus_ar1": 0.0030037083333334103
+        }
+      }
+    },
+    "qwen2.5-1.5b": {
+      "published": 0.2912,
+      "released_statistic": 0.29037500000000005,
+      "ar1_mean": 0.18442750000000002,
+      "ar1_sd": 0.036907144909068525,
+      "variants": {
+        "system": {
+          "rebuilt_statistic": 0.29585000000000006,
+          "perm_mean": 0.229591875,
+          "perm_sd": 0.03880892374727084,
+          "n_items": 204,
+          "z_published_vs_perm": 1.5874731647082196,
+          "z_released_vs_perm": 1.5662151673112168,
+          "perm_minus_ar1": 0.04516437499999998
+        },
+        "user": {
+          "rebuilt_statistic": 0.31375,
+          "perm_mean": 0.208059875,
+          "perm_sd": 0.037438887212870864,
+          "n_items": 204,
+          "z_published_vs_perm": 2.2206889998433987,
+          "z_released_vs_perm": 2.1986530884844644,
+          "perm_minus_ar1": 0.023632374999999983
+        }
+      }
+    },
+    "qwen2.5-3b": {
+      "published": 0.2924,
+      "released_statistic": 0.2913,
+      "ar1_mean": 0.21648166666666666,
+      "ar1_sd": 0.042384194884280864,
+      "variants": {
+        "system": {
+          "rebuilt_statistic": 0.2843,
+          "perm_mean": 0.241997625,
+          "perm_sd": 0.04992349647194492,
+          "n_items": 204,
+          "z_published_vs_perm": 1.0095922473764272,
+          "z_released_vs_perm": 0.9875585342406065,
+          "perm_minus_ar1": 0.02551595833333334
+        },
+        "user": {
+          "rebuilt_statistic": 0.22467499999999996,
+          "perm_mean": 0.20337874999999997,
+          "perm_sd": 0.02689330932349805,
+          "n_items": 204,
+          "z_published_vs_perm": 3.310163465907769,
+          "z_released_vs_perm": 3.2692610991975903,
+          "perm_minus_ar1": -0.013102916666666686
+        }
+      }
+    },
+    "qwen2.5-7b": {
+      "published": 0.1904,
+      "released_statistic": 0.20955000000000001,
+      "ar1_mean": 0.25290375,
+      "ar1_sd": 0.04836512081600346,
+      "variants": {
+        "system": {
+          "rebuilt_statistic": 0.241475,
+          "perm_mean": 0.22033950000000002,
+          "perm_sd": 0.048231300524153975,
+          "n_items": 204,
+          "z_published_vs_perm": -0.6207483454651294,
+          "z_released_vs_perm": -0.2237032773892689,
+          "perm_minus_ar1": -0.03256424999999996
+        },
+        "user": {
+          "rebuilt_statistic": 0.25997500000000007,
+          "perm_mean": 0.20260525000000001,
+          "perm_sd": 0.04956082486950989,
+          "n_items": 204,
+          "z_published_vs_perm": -0.24626809646803804,
+          "z_released_vs_perm": 0.14012579528861818,
+          "perm_minus_ar1": -0.05029849999999997
+        }
+      }
+    }
+  },
+  "estimator": "released paired difference-in-means at the answer token",
+  "control": "per-item sign flip of the answer label (paired, Hewitt & Liang analogue)",
+  "scoring_array": "results/gstudy/*/sad_filtered_lf.npz, layers 1..L-1",
+  "summary": {
+    "n_cells": 8,
+    "n_perm_below_ar1": 4,
+    "median_perm_minus_ar1": -0.005049604166666638,
+    "seven_b_below_perm_floor": [
+      "system",
+      "user"
+    ]
+  },
+  "conventions": {
+    "kind": "measured",
+    "pooling": "lf",
+    "layers": "interior (1..L-1)",
+    "scoring_array": "results/gstudy/*/sad_filtered_lf.npz",
+    "data_root": "gstudy",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/released_label_permuted.py",
+    "producer_sha12": "9a55fafa9ffd",
+    "backfilled_from": "released_label_permuted.py: peak() over range(1, nlay-1) on sad_filtered_lf.npz"
+  }
+}

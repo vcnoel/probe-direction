@@ -1,0 +1,140 @@
+{
+  "head": "unknown",
+  "inputs": [
+    {
+      "file": "arm_decomposition_trunk_peak_validated.json",
+      "sha256_12": "a975b281caa3",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "concordance_equivalence_peak_lf.json",
+      "sha256_12": "c6cf8c40ebbc",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "corrected_decomposition_validated.json",
+      "sha256_12": "481dd2ea081f",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "counterbalance_saturation.json",
+      "sha256_12": "4e645f252f4e",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "direction_geometry_v11_lasttoken.json",
+      "sha256_12": "4d82ef894080",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "direction_geometry_v11_validated.json",
+      "sha256_12": "be00a59e820a",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "direction_geometry_v11_validated_smollm2.json",
+      "sha256_12": "41edec31daf4",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "field_construction.json",
+      "sha256_12": "1abaa1457b8d",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "gstudy_gtheory_deploy_peak_lf.json",
+      "sha256_12": "efb8c53ff707",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "imbalance_hazard.json",
+      "sha256_12": "5ac63a85b7a3",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "implementation_facet.json",
+      "sha256_12": "98fbdf6ea3f8",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "k_requirement.json",
+      "sha256_12": "629798d0e695",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "label_permuted_control_validated.json",
+      "sha256_12": "f8881ff4f187",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "null_control.json",
+      "sha256_12": "24d940d84e85",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "pod_gtheory.json",
+      "sha256_12": "b4f43b2cfe7d",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "pod_replication.json",
+      "sha256_12": "9b9975402a74",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "pod_slope_reliability.json",
+      "sha256_12": "286d70e0a28a",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "qwen_anomaly_test.json",
+      "sha256_12": "2c0baf567507",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "reanalysis_table.json",
+      "sha256_12": "251efb34a60e",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "released_label_permuted.json",
+      "sha256_12": "5164a7ad68e8",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "reml_components_validated_interior.json",
+      "sha256_12": "52d046f1a06c",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "reml_components_validated_interior_fourfam.json",
+      "sha256_12": "f0637c61c561",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "slope_distribution_deploy_peak_lf.json",
+      "sha256_12": "83b0edc5e90c",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "slope_reliability.json",
+      "sha256_12": "427e6ef45c8c",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "surface_baseline.json",
+      "sha256_12": "036a85d901ce",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "two_concept_floor.json",
+      "sha256_12": "fcbd3ae49f8f",
+      "mtime_utc": "2026-09-25T22:03Z"
+    },
+    {
+      "file": "wrapper_curves.json",
+      "sha256_12": "e2ba283bb1f9",
+      "mtime_utc": "2026-09-25T22:03Z"
+    }
+  ]
+}

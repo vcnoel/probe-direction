@@ -1,0 +1,25 @@
+{
+  "seed": 42,
+  "operator": "symmetric-normalized",
+  "symmetry_tolerance": 1e-10,
+  "residual_tolerance": 1e-8,
+  "confirmation_split": "confirmation",
+  "group_keys": [
+    "source_task_id",
+    "template_family"
+  ],
+  "required_conditions": [
+    "target",
+    "matched_nuisance_control"
+  ],
+  "required_metrics": [
+    "orientation_invariant_decodability",
+    "paired_selectivity"
+  ],
+  "min_task_families_for_law": 3,
+  "min_model_families_for_law": 3,
+  "metadata": {
+    "status": "pre-results",
+    "empirical_execution": "separately approved"
+  }
+}

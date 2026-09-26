@@ -1,0 +1,113 @@
+{
+  "ladders": {
+    "qwen3_nothink": {
+      "models": [
+        "qwen3-0.6b",
+        "qwen3-1.7b",
+        "qwen3-4b",
+        "qwen3-8b",
+        "qwen3-14b",
+        "qwen3-32b"
+      ],
+      "n_splits": 20,
+      "slope_split_half_mean": 0.7783916397511608,
+      "slope_split_half_sd": 0.14197445529909658,
+      "spearman_brown": 0.8753883254422814
+    },
+    "qwen3_think": {
+      "models": [
+        "qwen3-0.6b",
+        "qwen3-1.7b",
+        "qwen3-4b",
+        "qwen3-8b",
+        "qwen3-14b",
+        "qwen3-32b"
+      ],
+      "n_splits": 20,
+      "slope_split_half_mean": 0.7782462959732549,
+      "slope_split_half_sd": 0.14084515163159422,
+      "spearman_brown": 0.8752964060552834
+    },
+    "qwen3.5_nothink": {
+      "models": [
+        "qwen3.5-0.8b",
+        "qwen3.5-2b",
+        "qwen3.5-4b",
+        "qwen3.5-9b",
+        "qwen3.5-27b"
+      ],
+      "n_splits": 20,
+      "slope_split_half_mean": 0.6370220633654762,
+      "slope_split_half_sd": 0.17397270122079936,
+      "spearman_brown": 0.7782693680448663
+    },
+    "qwen3.5_think": {
+      "models": [
+        "qwen3.5-0.8b",
+        "qwen3.5-2b",
+        "qwen3.5-4b",
+        "qwen3.5-9b",
+        "qwen3.5-27b"
+      ],
+      "n_splits": 20,
+      "slope_split_half_mean": 0.5956309633499758,
+      "slope_split_half_sd": 0.1872905261912817,
+      "spearman_brown": 0.7465773440488618
+    },
+    "qwen2.5_paper": {
+      "models": [
+        "qwen2.5-0.5b",
+        "qwen2.5-1.5b",
+        "qwen2.5-3b",
+        "qwen2.5-7b"
+      ],
+      "n_splits": 20,
+      "slope_split_half_mean": 0.816651100290596,
+      "slope_split_half_sd": 0.09381279170658753,
+      "spearman_brown": 0.8990731353532468
+    },
+    "olmo2": {
+      "models": [
+        "olmo-2-0425-1b-instruct",
+        "olmo-2-1124-7b-instruct",
+        "olmo-2-1124-13b-instruct",
+        "olmo-2-0325-32b-instruct"
+      ],
+      "n_splits": 20,
+      "slope_split_half_mean": 0.7415964473390518,
+      "slope_split_half_sd": 0.14053538298108273,
+      "spearman_brown": 0.8516283418838173
+    }
+  },
+  "conventions": {
+    "kind": "measured",
+    "pooling": "validated for scoring and for the direction arrays",
+    "layers": "ALL",
+    "scoring_array": "results/pod_*/*.npz",
+    "data_root": "pod",
+    "statistic": "folded max over layers, slopes refit on 20 disjoint label-stratified item halves",
+    "model_population": [
+      "olmo-2-0325-32b-instruct",
+      "olmo-2-0425-1b-instruct",
+      "olmo-2-1124-13b-instruct",
+      "olmo-2-1124-7b-instruct",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b",
+      "qwen3-0.6b",
+      "qwen3-1.7b",
+      "qwen3-14b",
+      "qwen3-32b",
+      "qwen3-4b",
+      "qwen3-8b",
+      "qwen3.5-0.8b",
+      "qwen3.5-27b",
+      "qwen3.5-2b",
+      "qwen3.5-4b",
+      "qwen3.5-9b"
+    ],
+    "producer": "scripts/pod_ladders.py",
+    "producer_sha12": "825b421ca3e7"
+  }
+}

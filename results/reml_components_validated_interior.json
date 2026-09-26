@@ -1,0 +1,82 @@
+{
+  "pooling": "validated",
+  "layerset": "interior",
+  "n_obs": 1008,
+  "models": [
+    "qwen2.5-0.5b",
+    "qwen2.5-1.5b",
+    "qwen2.5-3b",
+    "qwen2.5-7b",
+    "gemma2-2b",
+    "llama3.2-1b",
+    "llama3.2-3b"
+  ],
+  "families": {
+    "qwen2.5-0.5b": "qwen2.5",
+    "qwen2.5-1.5b": "qwen2.5",
+    "qwen2.5-3b": "qwen2.5",
+    "qwen2.5-7b": "qwen2.5",
+    "gemma2-2b": "gemma2",
+    "llama3.2-1b": "llama3.2",
+    "llama3.2-3b": "llama3.2"
+  },
+  "n_templates": 36,
+  "n_item_blocks": 4,
+  "components": {
+    "family": 1.1800265660228294e-08,
+    "model(family)": 0.0003209803743632752,
+    "template": 0.00011661860706852151,
+    "item": 0.0007429740466196569,
+    "family:template": 0.0003468785180860437,
+    "model:template": 0.0007793737621947626,
+    "model:item": 0.00038272897779888563,
+    "template:item": 0.00029329986442439145,
+    "residual": 0.0007488716208357704
+  },
+  "share": {
+    "family": 3.1621370564352775e-06,
+    "model(family)": 0.08601365133528223,
+    "template": 0.03125048448054199,
+    "item": 0.1990960061775623,
+    "family:template": 0.09295362051196504,
+    "model:template": 0.20885009924443984,
+    "model:item": 0.10256052856067961,
+    "template:item": 0.0785960584827942,
+    "residual": 0.20067638906967838
+  },
+  "neg2_reml": -5516.425192131549,
+  "g_cross_family_k1": 2.2093398191028615e-05,
+  "g_within_family_k1": 0.23204726532326833,
+  "k_for_080_cross_family": null,
+  "k_for_080_within_family": null,
+  "joint_080": {
+    "cross-family": null,
+    "within-family": [
+      23,
+      9
+    ]
+  },
+  "boundary_components": [
+    "family"
+  ],
+  "conventions": {
+    "kind": "measured",
+    "pooling": "validated",
+    "layers": "interior",
+    "scoring_array": "results/gstudy_v2/*/pooled.npz",
+    "data_root": "gstudy_v2",
+    "statistic": "folded max over layers",
+    "model_population": [
+      "gemma2-2b",
+      "llama3.2-1b",
+      "llama3.2-3b",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b"
+    ],
+    "producer": "scripts/reml_components.py",
+    "producer_sha12": "5b75938ea0a3",
+    "backfilled_from": "reml_components.py: V2 root, LAYERSET='interior'"
+  }
+}

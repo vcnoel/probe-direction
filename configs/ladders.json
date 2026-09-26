@@ -1,0 +1,362 @@
+{
+  "rejected_families": {
+    "gemma4": "E2B/E4B are effective-parameter models and 26B-A4B is MoE; only 12B and 31B are clean dense, so log10(params) is not well defined across the family and a scaling regression over it is uninterpretable. Same objection as Gemma-3's mid-ladder architecture change."
+  },
+  "ladders": {
+    "qwen3": {
+      "models": [
+        {
+          "repo": "Qwen/Qwen3-0.6B",
+          "architectures": [
+            "Qwen3ForCausalLM"
+          ],
+          "model_type": "qwen3",
+          "num_hidden_layers": 28,
+          "hidden_size": 1024,
+          "torch_dtype": "bfloat16",
+          "weight_bytes": 1503300328,
+          "weight_bytes_source": "sum of safetensors file sizes",
+          "params_b_from_weights": 0.752,
+          "moe_keys_present": {},
+          "system_turn": true,
+          "system_turn_detail": "system turn preserved",
+          "vram_bf16_gb": 1.5
+        },
+        {
+          "repo": "Qwen/Qwen3-1.7B",
+          "architectures": [
+            "Qwen3ForCausalLM"
+          ],
+          "model_type": "qwen3",
+          "num_hidden_layers": 28,
+          "hidden_size": 2048,
+          "torch_dtype": "bfloat16",
+          "weight_bytes": 4063479808,
+          "weight_bytes_source": "safetensors index total_size",
+          "params_b_from_weights": 2.032,
+          "moe_keys_present": {},
+          "system_turn": true,
+          "system_turn_detail": "system turn preserved",
+          "vram_bf16_gb": 4.1
+        },
+        {
+          "repo": "Qwen/Qwen3-4B",
+          "architectures": [
+            "Qwen3ForCausalLM"
+          ],
+          "model_type": "qwen3",
+          "num_hidden_layers": 36,
+          "hidden_size": 2560,
+          "torch_dtype": "bfloat16",
+          "weight_bytes": 8044936192,
+          "weight_bytes_source": "safetensors index total_size",
+          "params_b_from_weights": 4.022,
+          "moe_keys_present": {},
+          "system_turn": true,
+          "system_turn_detail": "system turn preserved",
+          "vram_bf16_gb": 8.0
+        },
+        {
+          "repo": "Qwen/Qwen3-8B",
+          "architectures": [
+            "Qwen3ForCausalLM"
+          ],
+          "model_type": "qwen3",
+          "num_hidden_layers": 36,
+          "hidden_size": 4096,
+          "torch_dtype": "bfloat16",
+          "weight_bytes": 16381470720,
+          "weight_bytes_source": "safetensors index total_size",
+          "params_b_from_weights": 8.191,
+          "moe_keys_present": {},
+          "system_turn": true,
+          "system_turn_detail": "system turn preserved",
+          "vram_bf16_gb": 16.4
+        },
+        {
+          "repo": "Qwen/Qwen3-14B",
+          "architectures": [
+            "Qwen3ForCausalLM"
+          ],
+          "model_type": "qwen3",
+          "num_hidden_layers": 40,
+          "hidden_size": 5120,
+          "torch_dtype": "bfloat16",
+          "weight_bytes": 29536614400,
+          "weight_bytes_source": "safetensors index total_size",
+          "params_b_from_weights": 14.768,
+          "moe_keys_present": {},
+          "system_turn": true,
+          "system_turn_detail": "system turn preserved",
+          "vram_bf16_gb": 29.5
+        },
+        {
+          "repo": "Qwen/Qwen3-32B",
+          "architectures": [
+            "Qwen3ForCausalLM"
+          ],
+          "model_type": "qwen3",
+          "num_hidden_layers": 64,
+          "hidden_size": 5120,
+          "torch_dtype": "bfloat16",
+          "weight_bytes": 65524246528,
+          "weight_bytes_source": "safetensors index total_size",
+          "params_b_from_weights": 32.762,
+          "moe_keys_present": {},
+          "system_turn": true,
+          "system_turn_detail": "system turn preserved",
+          "vram_bf16_gb": 65.5
+        }
+      ],
+      "n_models": 6,
+      "params_b": [
+        0.752,
+        2.032,
+        4.022,
+        8.191,
+        14.768,
+        32.762
+      ],
+      "decades": 1.639,
+      "total_weight_gb": 125.1,
+      "architecture": [
+        "Qwen3ForCausalLM"
+      ]
+    },
+    "olmo2": {
+      "models": [
+        {
+          "repo": "allenai/OLMo-2-0425-1B-Instruct",
+          "architectures": [
+            "Olmo2ForCausalLM"
+          ],
+          "model_type": "olmo2",
+          "num_hidden_layers": 16,
+          "hidden_size": 2048,
+          "torch_dtype": "bfloat16",
+          "weight_bytes": 2969854224,
+          "weight_bytes_source": "sum of safetensors file sizes",
+          "params_b_from_weights": 1.485,
+          "moe_keys_present": {},
+          "system_turn": true,
+          "system_turn_detail": "system turn preserved",
+          "vram_bf16_gb": 3.0
+        },
+        {
+          "repo": "allenai/OLMo-2-1124-7B-Instruct",
+          "architectures": [
+            "Olmo2ForCausalLM"
+          ],
+          "model_type": "olmo2",
+          "num_hidden_layers": 32,
+          "hidden_size": 4096,
+          "torch_dtype": "bfloat16",
+          "weight_bytes": 14597234688,
+          "weight_bytes_source": "safetensors index total_size",
+          "params_b_from_weights": 7.299,
+          "moe_keys_present": {},
+          "system_turn": true,
+          "system_turn_detail": "system turn preserved",
+          "vram_bf16_gb": 14.6
+        },
+        {
+          "repo": "allenai/OLMo-2-1124-13B-Instruct",
+          "architectures": [
+            "Olmo2ForCausalLM"
+          ],
+          "model_type": "olmo2",
+          "num_hidden_layers": 40,
+          "hidden_size": 5120,
+          "torch_dtype": "bfloat16",
+          "weight_bytes": 27432396800,
+          "weight_bytes_source": "safetensors index total_size",
+          "params_b_from_weights": 13.716,
+          "moe_keys_present": {},
+          "system_turn": true,
+          "system_turn_detail": "system turn preserved",
+          "vram_bf16_gb": 27.4
+        },
+        {
+          "repo": "allenai/OLMo-2-0325-32B-Instruct",
+          "architectures": [
+            "Olmo2ForCausalLM"
+          ],
+          "model_type": "olmo2",
+          "num_hidden_layers": 64,
+          "hidden_size": 5120,
+          "torch_dtype": "bfloat16",
+          "weight_bytes": 64468559872,
+          "weight_bytes_source": "safetensors index total_size",
+          "params_b_from_weights": 32.234,
+          "moe_keys_present": {},
+          "system_turn": true,
+          "system_turn_detail": "system turn preserved",
+          "vram_bf16_gb": 64.5
+        }
+      ],
+      "n_models": 4,
+      "params_b": [
+        1.485,
+        7.299,
+        13.716,
+        32.234
+      ],
+      "decades": 1.337,
+      "total_weight_gb": 109.5,
+      "architecture": [
+        "Olmo2ForCausalLM"
+      ]
+    },
+    "qwen3.5": {
+      "models": [
+        {
+          "repo": "Qwen/Qwen3.5-0.8B",
+          "architectures": [
+            "Qwen3_5ForConditionalGeneration"
+          ],
+          "model_type": "qwen3_5",
+          "num_hidden_layers": 24,
+          "hidden_size": 1024,
+          "torch_dtype": "bfloat16",
+          "weight_bytes": 1746882752,
+          "weight_bytes_source": "safetensors index total_size",
+          "params_b_from_weights": 0.752,
+          "moe_keys_present": {},
+          "system_turn": true,
+          "system_turn_detail": "system turn preserved",
+          "vram_bf16_gb": 1.5,
+          "text_model_type": "qwen3_5_text",
+          "layer_types": [
+            "full_attention",
+            "linear_attention"
+          ],
+          "params_source": "safetensors headers, text decoder tensors only (excluded prefixes ['model.visual.', 'visual.', 'mtp.', 'model.mtp.'])",
+          "params_b_all_tensors": 0.873,
+          "weight_bytes_text": 1504791232,
+          "revision": "2fc06364715b967f1860aea9cf38778875588b17"
+        },
+        {
+          "repo": "Qwen/Qwen3.5-2B",
+          "architectures": [
+            "Qwen3_5ForConditionalGeneration"
+          ],
+          "model_type": "qwen3_5",
+          "num_hidden_layers": 24,
+          "hidden_size": 2048,
+          "torch_dtype": "bfloat16",
+          "weight_bytes": 4548144832,
+          "weight_bytes_source": "safetensors index total_size",
+          "params_b_from_weights": 1.882,
+          "moe_keys_present": {},
+          "system_turn": true,
+          "system_turn_detail": "system turn preserved",
+          "vram_bf16_gb": 3.8,
+          "text_model_type": "qwen3_5_text",
+          "layer_types": [
+            "full_attention",
+            "linear_attention"
+          ],
+          "params_source": "safetensors headers, text decoder tensors only (excluded prefixes ['model.visual.', 'visual.', 'mtp.', 'model.mtp.'])",
+          "params_b_all_tensors": 2.274,
+          "weight_bytes_text": 3763655360,
+          "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc"
+        },
+        {
+          "repo": "Qwen/Qwen3.5-4B",
+          "architectures": [
+            "Qwen3_5ForConditionalGeneration"
+          ],
+          "model_type": "qwen3_5",
+          "num_hidden_layers": 32,
+          "hidden_size": 2560,
+          "torch_dtype": "bfloat16",
+          "weight_bytes": 9319737856,
+          "weight_bytes_source": "safetensors index total_size",
+          "params_b_from_weights": 4.206,
+          "moe_keys_present": {},
+          "system_turn": true,
+          "system_turn_detail": "system turn preserved",
+          "vram_bf16_gb": 8.4,
+          "text_model_type": "qwen3_5_text",
+          "layer_types": [
+            "full_attention",
+            "linear_attention"
+          ],
+          "params_source": "safetensors headers, text decoder tensors only (excluded prefixes ['model.visual.', 'visual.', 'mtp.', 'model.mtp.'])",
+          "params_b_all_tensors": 4.66,
+          "weight_bytes_text": 8411510272,
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        {
+          "repo": "Qwen/Qwen3.5-9B",
+          "architectures": [
+            "Qwen3_5ForConditionalGeneration"
+          ],
+          "model_type": "qwen3_5",
+          "num_hidden_layers": 32,
+          "hidden_size": 4096,
+          "torch_dtype": "bfloat16",
+          "weight_bytes": 19306216416,
+          "weight_bytes_source": "safetensors index total_size",
+          "params_b_from_weights": 8.954,
+          "moe_keys_present": {},
+          "system_turn": true,
+          "system_turn_detail": "system turn preserved",
+          "vram_bf16_gb": 17.9,
+          "text_model_type": "qwen3_5_text",
+          "layer_types": [
+            "full_attention",
+            "linear_attention"
+          ],
+          "params_source": "safetensors headers, text decoder tensors only (excluded prefixes ['model.visual.', 'visual.', 'mtp.', 'model.mtp.'])",
+          "params_b_all_tensors": 9.653,
+          "weight_bytes_text": 17907614208,
+          "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a"
+        },
+        {
+          "repo": "Qwen/Qwen3.5-27B",
+          "architectures": [
+            "Qwen3_5ForConditionalGeneration"
+          ],
+          "model_type": "qwen3_5",
+          "num_hidden_layers": 64,
+          "hidden_size": 5120,
+          "torch_dtype": "bfloat16",
+          "weight_bytes": 55562872800,
+          "weight_bytes_source": "safetensors index total_size",
+          "params_b_from_weights": 26.896,
+          "moe_keys_present": {},
+          "system_turn": true,
+          "system_turn_detail": "system turn preserved",
+          "vram_bf16_gb": 53.8,
+          "text_model_type": "qwen3_5_text",
+          "layer_types": [
+            "full_attention",
+            "linear_attention"
+          ],
+          "params_source": "safetensors headers, text decoder tensors only (excluded prefixes ['model.visual.', 'visual.', 'mtp.', 'model.mtp.'])",
+          "params_b_all_tensors": 27.781,
+          "weight_bytes_text": 53792013824,
+          "revision": "fc05daec18b0a78c049392ed2e771dde82bdf654"
+        }
+      ],
+      "n_models": 5,
+      "params_b": [
+        0.752,
+        1.882,
+        4.206,
+        8.954,
+        26.896
+      ],
+      "decades": 1.553,
+      "total_weight_gb": 90.5,
+      "architecture": [
+        "Qwen3_5ForConditionalGeneration"
+      ],
+      "note": "Every checkpoint is a Qwen3_5ForConditionalGeneration VLM with a vision tower and an MTP head in its safetensors. Extraction loads Qwen3_5ForCausalLM, the text decoder alone, so params_b_from_weights counts the text tensors from the safetensors headers (vision and MTP excluded, a tied embedding counted once); weight_bytes stays the full download. Layers are 3:1 Gated-DeltaNet:softmax, so a layer index is not a position in a homogeneous stack. The template's thinking default differs inside the ladder (0.8B/2B default off, 4B+ default on), so both levels are rendered with enable_thinking set explicitly and neither ends at the bare assistant tag."
+    }
+  },
+  "declined_then_run": {
+    "qwen3.5": "Viable but weaker than Qwen3 for this design: four dense scales over 1.05 decades, hybrid Gated-DeltaNet/softmax layers that complicate every layer-indexed statistic, and VLM small tiers. Kept as a later generalisation, not this run."
+  }
+}

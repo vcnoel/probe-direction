@@ -1,0 +1,168 @@
+{
+  "pinned_date": "01 Jan 2025",
+  "variants": {
+    "qwen3": [
+      "think",
+      "nothink"
+    ],
+    "qwen3.5": [
+      "think",
+      "nothink"
+    ]
+  },
+  "newlines": "LF",
+  "truncation": "none",
+  "pooling_filter": {
+    "drop_whitespace_only": true,
+    "drop_specials": [
+      "<|begin_of_text|>",
+      "<s>",
+      "<BOS>",
+      "<bos>",
+      "<|endoftext|>"
+    ],
+    "applied": "on the pod, at pooling; needs token ids"
+  },
+  "groups": [
+    {
+      "family": "olmo2",
+      "variant": "default",
+      "template_kwargs": {},
+      "template_sha12": "ac7498a36a71",
+      "repos": [
+        "allenai/OLMo-2-0325-32B-Instruct"
+      ],
+      "file": "prompts_rendered_olmo2_ac7498a36a71.json",
+      "sha256": "95116f417a469c3a964083cc594807962b45bd31912500eba6b8bab7f147521f",
+      "n_sad": 400,
+      "n_framing": 1080,
+      "bos_in_rendered": false
+    },
+    {
+      "family": "olmo2",
+      "variant": "default",
+      "template_kwargs": {},
+      "template_sha12": "fe689ffbd6a4",
+      "repos": [
+        "allenai/OLMo-2-0425-1B-Instruct",
+        "allenai/OLMo-2-1124-13B-Instruct",
+        "allenai/OLMo-2-1124-7B-Instruct"
+      ],
+      "file": "prompts_rendered_olmo2_fe689ffbd6a4.json",
+      "sha256": "531833e087d9dee7c3aa3bdaf92180253c20e3f6f31760ae781ce158b0c16981",
+      "n_sad": 400,
+      "n_framing": 1080,
+      "bos_in_rendered": true
+    },
+    {
+      "family": "qwen3",
+      "variant": "think",
+      "template_kwargs": {},
+      "template_sha12": "a55ee1b16601",
+      "repos": [
+        "Qwen/Qwen3-0.6B",
+        "Qwen/Qwen3-1.7B",
+        "Qwen/Qwen3-14B",
+        "Qwen/Qwen3-32B",
+        "Qwen/Qwen3-4B",
+        "Qwen/Qwen3-8B"
+      ],
+      "file": "prompts_rendered_qwen3_a55ee1b16601_think.json",
+      "sha256": "0f1af1abb5df44b1f2d31b72c1ec88c2ba553c5118b1b9a184d0e53a850646d7",
+      "n_sad": 400,
+      "n_framing": 1080,
+      "bos_in_rendered": false
+    },
+    {
+      "family": "qwen3",
+      "variant": "nothink",
+      "template_kwargs": {
+        "enable_thinking": false
+      },
+      "template_sha12": "a55ee1b16601",
+      "repos": [
+        "Qwen/Qwen3-0.6B",
+        "Qwen/Qwen3-1.7B",
+        "Qwen/Qwen3-14B",
+        "Qwen/Qwen3-32B",
+        "Qwen/Qwen3-4B",
+        "Qwen/Qwen3-8B"
+      ],
+      "file": "prompts_rendered_qwen3_a55ee1b16601_nothink.json",
+      "sha256": "f96932f6651f33c8614e8e32480b2b578e5caefe1cd178961a2af381e650ee37",
+      "n_sad": 400,
+      "n_framing": 1080,
+      "bos_in_rendered": false
+    },
+    {
+      "family": "qwen3.5",
+      "variant": "think",
+      "template_kwargs": {
+        "enable_thinking": true
+      },
+      "template_sha12": "273d8e0e683b",
+      "repos": [
+        "Qwen/Qwen3.5-0.8B",
+        "Qwen/Qwen3.5-2B"
+      ],
+      "file": "prompts_rendered_qwen3.5_273d8e0e683b_think.json",
+      "sha256": "3f6f70b47f7d7b59b5c30a7ae7207f5e2d64652bb1a04db875ad59440f308782",
+      "n_sad": 400,
+      "n_framing": 1080,
+      "bos_in_rendered": false
+    },
+    {
+      "family": "qwen3.5",
+      "variant": "nothink",
+      "template_kwargs": {
+        "enable_thinking": false
+      },
+      "template_sha12": "273d8e0e683b",
+      "repos": [
+        "Qwen/Qwen3.5-0.8B",
+        "Qwen/Qwen3.5-2B"
+      ],
+      "file": "prompts_rendered_qwen3.5_273d8e0e683b_nothink.json",
+      "sha256": "351c30dc6da12d76da2f767663e6c3e605927f319e42bd4434ac9a81d93e4d19",
+      "n_sad": 400,
+      "n_framing": 1080,
+      "bos_in_rendered": false
+    },
+    {
+      "family": "qwen3.5",
+      "variant": "think",
+      "template_kwargs": {
+        "enable_thinking": true
+      },
+      "template_sha12": "a4aee8afcf2e",
+      "repos": [
+        "Qwen/Qwen3.5-27B",
+        "Qwen/Qwen3.5-4B",
+        "Qwen/Qwen3.5-9B"
+      ],
+      "file": "prompts_rendered_qwen3.5_a4aee8afcf2e_think.json",
+      "sha256": "0426c245bd11a76b39ca856f214efe44502773b517fa8834c9ced102557718d6",
+      "n_sad": 400,
+      "n_framing": 1080,
+      "bos_in_rendered": false
+    },
+    {
+      "family": "qwen3.5",
+      "variant": "nothink",
+      "template_kwargs": {
+        "enable_thinking": false
+      },
+      "template_sha12": "a4aee8afcf2e",
+      "repos": [
+        "Qwen/Qwen3.5-27B",
+        "Qwen/Qwen3.5-4B",
+        "Qwen/Qwen3.5-9B"
+      ],
+      "file": "prompts_rendered_qwen3.5_a4aee8afcf2e_nothink.json",
+      "sha256": "06972c0792bb1a51416573088c7a7b852a6e257bb19db5697c9a6d6678452876",
+      "n_sad": 400,
+      "n_framing": 1080,
+      "bos_in_rendered": false
+    }
+  ]
+}
