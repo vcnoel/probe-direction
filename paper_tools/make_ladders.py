@@ -180,6 +180,24 @@ def main() -> None:
     ks = [gt[k]["k_for_080"] for k in keys if not gt[k]["k_for_080_unreachable"]]
     m["LadKMin"] = str(min(ks))
     m["LadModelMax"] = f"{100 * max(gt[k]['shares']['s_m'] for k in keys):.1f}\%"
+    # Bootstrap intervals (results/pod_gtheory_bootstrap.json, scripts/bootstrap_components.py):
+    # items and both framing sets resampled, 200 replicates, percentile 95%. Unit: each ladder and
+    # rendering. The headline interval is that of the ladder carrying LadModelMax.
+    bs = load(res / "pod_gtheory_bootstrap.json", strict)["ladders"]
+    assert set(bs) == set(keys), f"bootstrap ladders {sorted(bs)} differ from {sorted(keys)}"
+    kmax = max(keys, key=lambda k: gt[k]["shares"]["s_m"])
+    assert abs(bs[kmax]["model_share"]["point"] - gt[kmax]["shares"]["s_m"]) < 1e-9
+    pc = lambda v: f"{100 * v:.1f}\\%"  # noqa: E731
+    m["LadModelMaxLo"] = pc(bs[kmax]["model_share"]["lo"])
+    m["LadModelMaxHi"] = pc(bs[kmax]["model_share"]["hi"])
+    m["LadModelCIHiMax"] = pc(max(bs[k]["model_share"]["hi"] for k in keys))
+    m["LadMWCILoMin"] = pc(min(bs[k]["model_x_wrapper_share"]["lo"] for k in keys))
+    m["LadErhoCIHiMax"] = f"{max(bs[k]['erho_single']['hi'] for k in keys):.2f}"
+    m["LadBootReps"] = str(bs[kmax]["n_reps"])
+    q = bs["qwen2.5_paper"]
+    m["LadQtfModelLo"], m["LadQtfModelHi"] = pc(q["model_share"]["lo"]), pc(q["model_share"]["hi"])
+    m["LadQtfErhoLo"], m["LadQtfErhoHi"] = (f"{q['erho_single']['lo']:.2f}",
+                                            f"{q['erho_single']['hi']:.2f}")
     assert any(gt[k]["k_for_080_unreachable"] for k in keys), "every ladder now reaches 0.80"
     # sec:dstudy names Qwen2.5 as the one ladder that never reaches 0.80 and prints a wrapper count
     # for every other rendering; a second unreachable ladder would print "none wrappers".
