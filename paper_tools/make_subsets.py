@@ -103,8 +103,8 @@ def main() -> None:
     m["SubNDisUnresolved"] = WORDS.get(len(prim) - len(res), str(len(prim) - len(res)))
     for key, tag, _, r in present:
         m[f"Sub{tag}DisTauHalf"] = f"{r['disjoint_mean_tau'][-1]:.2f}"
-        m[f"Sub{tag}DisSignHalf"] = f"{100 * r['disjoint_sign_agreement'][-1]:.0f}\%"
-        m[f"Sub{tag}SignOnePct"] = f"{100 * r['sign_agreement'][0]:.0f}\%"
+        m[f"Sub{tag}DisSignHalf"] = f"{100 * r['disjoint_sign_agreement'][-1]:.0f}\\%"
+        m[f"Sub{tag}SignOnePct"] = f"{100 * r['sign_agreement'][0]:.0f}\\%"
     # The abstract says the ladder both published studies use is not resolved by disjoint halves.
     assert lad["qwen2.5_paper"]["disjoint_k_tau_080"] is None, "Qwen2.5 now resolves; rewrite"
     # The prose says two disjoint halves of the Qwen2.5 pool agree on the sign less often than not.

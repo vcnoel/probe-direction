@@ -179,7 +179,7 @@ def main() -> None:
     m["LadParamMax"] = fmt_b(max(max(rep[k]["params_b"]) for k in keys))
     ks = [gt[k]["k_for_080"] for k in keys if not gt[k]["k_for_080_unreachable"]]
     m["LadKMin"] = str(min(ks))
-    m["LadModelMax"] = f"{100 * max(gt[k]['shares']['s_m'] for k in keys):.1f}\%"
+    m["LadModelMax"] = f"{100 * max(gt[k]['shares']['s_m'] for k in keys):.1f}\\%"
     # Bootstrap intervals (results/pod_gtheory_bootstrap.json, scripts/bootstrap_components.py):
     # items and both framing sets resampled, 200 replicates, percentile 95%. Unit: each ladder and
     # rendering. The headline interval is that of the ladder carrying LadModelMax.

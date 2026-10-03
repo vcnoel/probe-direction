@@ -43,14 +43,16 @@ from scipy.stats import pearsonr, ttest_ind
 from sklearn.metrics import roc_auc_score
 
 ROOT = Path(__file__).resolve().parents[1]
+# Imported before first use: reanalysis() is called at module level below. As released, this
+# import sat after that call and the script raised NameError on import.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from external_paths import reanalysis  # noqa: E402
 FC = ROOT / "results" / "field_construction"
 MANEK = reanalysis("manek", "notebooks")
 CONTRASTIVE = reanalysis("manek", "datasets", "contrastive_dataset.json")
 # Parameter counts come from configs/gstudy_models.json, derived from safetensors byte
 # totals. A hardcoded dict of nominal names used to live here and was wrong by 0.037 in
 # log10 at 7B, the leverage point of the fit.
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from external_paths import reanalysis  # noqa: E402
 from result_io import params_b as _params_b  # noqa: E402
 PARAMS = _params_b()
 TAGS = {"qwen2.5-0.5b": "0.5B", "qwen2.5-1.5b": "1.5B", "qwen2.5-3b": "3B", "qwen2.5-7b": "7B"}

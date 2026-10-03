@@ -1,0 +1,438 @@
+{
+  "ladders": {
+    "qwen2.5_paper": {
+      "n_splits": 200,
+      "r_36_average": 0.19883841487462242,
+      "pool_mean_slope_z": 0.4920726129145032,
+      "arm_disjoint_3x3_sign_agreement": 0.2,
+      "arm_disjoint_3x3_both_match_36_average": 0.15,
+      "arm_disjoint_3x3_mean_tau": 0.023333333333333334,
+      "random_disjoint": {
+        "9": {
+          "sign_agreement": 0.414,
+          "mean_tau": 0.2250615510656272
+        },
+        "18": {
+          "sign_agreement": 0.3605,
+          "mean_tau": 0.4389166666666667
+        }
+      },
+      "observed_pool_resampling": {
+        "k": [
+          1,
+          2,
+          4,
+          6,
+          9,
+          12,
+          15,
+          18
+        ],
+        "fixed_pool_disjoint": [
+          0.51625,
+          0.476,
+          0.46825,
+          0.453,
+          0.412,
+          0.39275,
+          0.36375,
+          0.368
+        ],
+        "independent_with_replacement": [
+          0.529,
+          0.5185,
+          0.509,
+          0.51025,
+          0.5065,
+          0.524,
+          0.527,
+          0.5385
+        ]
+      }
+    },
+    "qwen3_nothink": {
+      "n_splits": 200,
+      "r_36_average": 0.7969814754393656,
+      "pool_mean_slope_z": 3.308462611200879,
+      "arm_disjoint_3x3_sign_agreement": 0.825,
+      "arm_disjoint_3x3_both_match_36_average": 0.825,
+      "arm_disjoint_3x3_mean_tau": 0.30045032779671177,
+      "random_disjoint": {
+        "9": {
+          "sign_agreement": 0.94975,
+          "mean_tau": 0.5093760262237369
+        },
+        "18": {
+          "sign_agreement": 0.9995,
+          "mean_tau": 0.6260213464452018
+        }
+      },
+      "observed_pool_resampling": {
+        "k": [
+          1,
+          2,
+          4,
+          6,
+          9,
+          12,
+          15,
+          18
+        ],
+        "fixed_pool_disjoint": [
+          0.5525,
+          0.6315,
+          0.77575,
+          0.8685,
+          0.95175,
+          0.98275,
+          0.99675,
+          0.99925
+        ],
+        "independent_with_replacement": [
+          0.55775,
+          0.6585,
+          0.76325,
+          0.84525,
+          0.912,
+          0.952,
+          0.97775,
+          0.98625
+        ]
+      }
+    },
+    "qwen3_think": {
+      "n_splits": 200,
+      "r_36_average": 0.7806167812313687,
+      "pool_mean_slope_z": 3.3734032164276915,
+      "arm_disjoint_3x3_sign_agreement": 0.825,
+      "arm_disjoint_3x3_both_match_36_average": 0.825,
+      "arm_disjoint_3x3_mean_tau": 0.32466666666666666,
+      "random_disjoint": {
+        "9": {
+          "sign_agreement": 0.95475,
+          "mean_tau": 0.5405771961683706
+        },
+        "18": {
+          "sign_agreement": 0.9995,
+          "mean_tau": 0.7070783661130045
+        }
+      },
+      "observed_pool_resampling": {
+        "k": [
+          1,
+          2,
+          4,
+          6,
+          9,
+          12,
+          15,
+          18
+        ],
+        "fixed_pool_disjoint": [
+          0.5525,
+          0.6325,
+          0.78125,
+          0.874,
+          0.9565,
+          0.985,
+          0.9975,
+          0.9995
+        ],
+        "independent_with_replacement": [
+          0.55775,
+          0.66475,
+          0.77175,
+          0.85275,
+          0.9175,
+          0.95675,
+          0.98075,
+          0.988
+        ]
+      }
+    },
+    "qwen3.5_nothink": {
+      "n_splits": 200,
+      "r_36_average": 0.920036627988144,
+      "pool_mean_slope_z": 5.3968523207417185,
+      "arm_disjoint_3x3_sign_agreement": 0.985,
+      "arm_disjoint_3x3_both_match_36_average": 0.985,
+      "arm_disjoint_3x3_mean_tau": 0.5669999999999998,
+      "random_disjoint": {
+        "9": {
+          "sign_agreement": 0.998,
+          "mean_tau": 0.6742999999999999
+        },
+        "18": {
+          "sign_agreement": 1.0,
+          "mean_tau": 0.87485
+        }
+      },
+      "observed_pool_resampling": {
+        "k": [
+          1,
+          2,
+          4,
+          6,
+          9,
+          12,
+          15,
+          18
+        ],
+        "fixed_pool_disjoint": [
+          0.62425,
+          0.8045,
+          0.93825,
+          0.984,
+          0.99775,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "independent_with_replacement": [
+          0.6375,
+          0.80275,
+          0.91625,
+          0.9695,
+          0.991,
+          0.99575,
+          0.9995,
+          0.99975
+        ]
+      }
+    },
+    "qwen3.5_think": {
+      "n_splits": 200,
+      "r_36_average": 0.8137150389294854,
+      "pool_mean_slope_z": 7.074418611565609,
+      "arm_disjoint_3x3_sign_agreement": 0.995,
+      "arm_disjoint_3x3_both_match_36_average": 0.995,
+      "arm_disjoint_3x3_mean_tau": 0.7389999999999999,
+      "random_disjoint": {
+        "9": {
+          "sign_agreement": 1.0,
+          "mean_tau": 0.8029000000000001
+        },
+        "18": {
+          "sign_agreement": 1.0,
+          "mean_tau": 0.9434371708245127
+        }
+      },
+      "observed_pool_resampling": {
+        "k": [
+          1,
+          2,
+          4,
+          6,
+          9,
+          12,
+          15,
+          18
+        ],
+        "fixed_pool_disjoint": [
+          0.7525,
+          0.8915,
+          0.98525,
+          0.999,
+          0.99975,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "independent_with_replacement": [
+          0.77225,
+          0.8935,
+          0.978,
+          0.99675,
+          0.99975,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "olmo2": {
+      "n_splits": 200,
+      "r_36_average": 0.9279265357233412,
+      "pool_mean_slope_z": 5.813077995564446,
+      "arm_disjoint_3x3_sign_agreement": 0.985,
+      "arm_disjoint_3x3_both_match_36_average": 0.985,
+      "arm_disjoint_3x3_mean_tau": 0.83,
+      "random_disjoint": {
+        "9": {
+          "sign_agreement": 0.99975,
+          "mean_tau": 0.9082282177322939
+        },
+        "18": {
+          "sign_agreement": 1.0,
+          "mean_tau": 0.9920833333333332
+        }
+      },
+      "observed_pool_resampling": {
+        "k": [
+          1,
+          2,
+          4,
+          6,
+          9,
+          12,
+          15,
+          18
+        ],
+        "fixed_pool_disjoint": [
+          0.72375,
+          0.843,
+          0.9635,
+          0.9925,
+          0.999,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "independent_with_replacement": [
+          0.72825,
+          0.8315,
+          0.94875,
+          0.98225,
+          0.9975,
+          0.9995,
+          0.99975,
+          1.0
+        ]
+      }
+    }
+  },
+  "finite_pool_simulation": {
+    "k": [
+      1,
+      2,
+      4,
+      6,
+      9,
+      12,
+      15,
+      18
+    ],
+    "beta=0.0": {
+      "independent_samples_sign_agreement": [
+        0.5033333333333333,
+        0.49,
+        0.49666666666666665,
+        0.4716666666666667,
+        0.4766666666666667,
+        0.495,
+        0.5016666666666667,
+        0.44666666666666666
+      ],
+      "fixed_pool_sign_agreement |z|<0.5": [
+        0.4942503639010192,
+        0.48486171761280944,
+        0.4633915574963612,
+        0.43770014556040826,
+        0.39672489082969453,
+        0.34395924308588033,
+        0.2832605531295488,
+        0.17612809315866082
+      ],
+      "n_pools |z|<0.5": 229,
+      "fixed_pool_sign_agreement 0.5<=|z|<2": [
+        0.5011560693641618,
+        0.5061175337186898,
+        0.510597302504817,
+        0.5168111753371867,
+        0.5392581888246628,
+        0.5624759152215802,
+        0.6026974951830444,
+        0.6727842003853567
+      ],
+      "n_pools 0.5<=|z|<2": 346,
+      "fixed_pool_sign_agreement |z|>=2": [
+        0.5493333333333333,
+        0.5846666666666668,
+        0.6566666666666666,
+        0.7293333333333333,
+        0.8226666666666667,
+        0.8900000000000001,
+        0.9486666666666664,
+        0.9833333333333333
+      ],
+      "n_pools |z|>=2": 25
+    },
+    "beta=0.3": {
+      "independent_samples_sign_agreement": [
+        0.5483333333333333,
+        0.5866666666666667,
+        0.5966666666666667,
+        0.6583333333333333,
+        0.7066666666666667,
+        0.7833333333333333,
+        0.7866666666666666,
+        0.8316666666666667
+      ],
+      "fixed_pool_sign_agreement |z|<0.5": [
+        0.5022875816993464,
+        0.4751633986928105,
+        0.4588235294117647,
+        0.44705882352941173,
+        0.41209150326797384,
+        0.3513071895424837,
+        0.2843137254901961,
+        0.21732026143790845
+      ],
+      "n_pools |z|<0.5": 51,
+      "fixed_pool_sign_agreement 0.5<=|z|<2": [
+        0.5104609929078017,
+        0.514775413711584,
+        0.5393617021276597,
+        0.5576832151300231,
+        0.6011820330969266,
+        0.6521276595744679,
+        0.6991134751773052,
+        0.7732860520094561
+      ],
+      "n_pools 0.5<=|z|<2": 282,
+      "fixed_pool_sign_agreement |z|>=2": [
+        0.5688514357053682,
+        0.6116104868913858,
+        0.7205992509363296,
+        0.7863920099875156,
+        0.8809612983770283,
+        0.9382022471910102,
+        0.9695380774032447,
+        0.9893882646691625
+      ],
+      "n_pools |z|>=2": 267
+    }
+  },
+  "conventions": {
+    "kind": "measured",
+    "statistic": "sign and Kendall tau agreement of wrapper averages",
+    "note": "post-submission audit; not part of the submitted manuscript or its recorded predictions",
+    "pooling": "validated for scoring and for the direction arrays (Qwen2.5: lf scoring, all-token directions, as pod_ladders)",
+    "layers": "ALL",
+    "scoring_array": "results/post_submission/cells/*.npz, from results/pod_*/*.npz and results/gstudy via scripts/ladder_audit_cells.py",
+    "data_root": "pod",
+    "model_population": [
+      "olmo-2-0325-32b-instruct",
+      "olmo-2-0425-1b-instruct",
+      "olmo-2-1124-13b-instruct",
+      "olmo-2-1124-7b-instruct",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b",
+      "qwen3-0.6b",
+      "qwen3-1.7b",
+      "qwen3-14b",
+      "qwen3-32b",
+      "qwen3-4b",
+      "qwen3-8b",
+      "qwen3.5-0.8b",
+      "qwen3.5-27b",
+      "qwen3.5-2b",
+      "qwen3.5-4b",
+      "qwen3.5-9b"
+    ],
+    "producer": "scripts/ladder_audit.py",
+    "producer_sha12": "08cc5934bd74"
+  }
+}

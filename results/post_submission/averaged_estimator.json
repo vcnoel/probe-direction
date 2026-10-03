@@ -1,0 +1,1368 @@
+{
+  "ladders": {
+    "qwen2.5_paper": {
+      "models": [
+        "qwen2.5-0.5b",
+        "qwen2.5-1.5b",
+        "qwen2.5-3b",
+        "qwen2.5-7b"
+      ],
+      "r_36_average": 0.19883841487462242,
+      "ci_items": [
+        -0.44230752234009985,
+        0.7090638746443779
+      ],
+      "ci_arms": [
+        -0.908434399313475,
+        0.8533349116384878
+      ],
+      "ci_items_and_arms": [
+        -0.9249455555420255,
+        0.9241936924130374
+      ],
+      "p_positive_items": 0.775,
+      "p_positive_arms": 0.58625,
+      "p_positive_items_and_arms": 0.621,
+      "n_boot_items": 200,
+      "n_boot_arms": 4000,
+      "n_boot_items_and_arms": 4000,
+      "permutation_p_one_sided": 0.4166666666666667,
+      "permutation_p_two_sided": 0.8333333333333334,
+      "n_permutations": 24,
+      "leave_one_arm_out": {
+        "drop eval_benchmark": 0.25768365025690365,
+        "drop eval_certification": 0.5618149536292872,
+        "drop eval_leaderboard": -0.5943600545316394,
+        "drop eval_oversight": 0.13375181040969014,
+        "drop eval_redteam": 0.17312781939820923,
+        "drop eval_rubric": 0.13065166144164708,
+        "drop deploy_a": 0.5608987715836651,
+        "drop deploy_advice": -0.06471305507081607,
+        "drop deploy_agent": -0.028064345940775972,
+        "drop deploy_api": 0.1871577561424615,
+        "drop deploy_ide": 0.29738912080417523,
+        "drop deploy_support": 0.18505026412933956
+      },
+      "leave_one_arm_out_range": [
+        -0.5943600545316394,
+        0.5618149536292872
+      ],
+      "leave_one_arm_out_all_same_sign": false,
+      "leave_one_model_out": {
+        "qwen2.5-0.5b": 0.9968768925504108,
+        "qwen2.5-1.5b": 0.11308231637129475,
+        "qwen2.5-3b": 0.237111673383206,
+        "qwen2.5-7b": -0.5274106494186335
+      },
+      "arm_structure": {
+        "slope_ss_share": {
+          "eval_main": 0.39266526615321407,
+          "deploy_main": 0.2590074991858349,
+          "interaction": 0.34832723466095095
+        },
+        "mean_square": {
+          "eval_main": 0.006888825954484902,
+          "deploy_main": 0.0045439659083607534,
+          "interaction": 0.0012221940169518458,
+          "item_noise_per_wrapper": 0.00036687135718500917
+        },
+        "interaction_over_item_noise": 3.331396668111942,
+        "eval_main_perm_p": 0.00125,
+        "deploy_main_perm_p": 0.0125,
+        "per_eval_arm": {
+          "eval_benchmark": {
+            "mean_r": -0.24285791248161015,
+            "n_positive": 3,
+            "r": [
+              0.0036330205856475017,
+              -0.5442064308910037,
+              -0.673602245419558,
+              0.6658198664456891,
+              -0.9875989018446651,
+              0.07880721623422941
+            ]
+          },
+          "eval_certification": {
+            "mean_r": -0.4814415660663552,
+            "n_positive": 1,
+            "r": [
+              -0.9362482577126038,
+              -0.26452689618382547,
+              0.25194797322405743,
+              -0.5254560801465054,
+              -0.7980692363021513,
+              -0.6162968992771027
+            ]
+          },
+          "eval_leaderboard": {
+            "mean_r": 0.3800444273756301,
+            "n_positive": 4,
+            "r": [
+              -0.17120479806060926,
+              0.889957091908476,
+              0.6772819419831944,
+              -0.034585357989591906,
+              0.41433443375360374,
+              0.504483252658708
+            ]
+          },
+          "eval_oversight": {
+            "mean_r": 0.2264651660668304,
+            "n_positive": 4,
+            "r": [
+              -0.8164476446112856,
+              0.6941301449038803,
+              0.9387745595797521,
+              -0.02376879398872649,
+              0.4785843826588047,
+              0.0875183478585573
+            ]
+          },
+          "eval_redteam": {
+            "mean_r": -0.014893161765004095,
+            "n_positive": 4,
+            "r": [
+              -0.9881957356367076,
+              0.5616614401724241,
+              0.09350922285393155,
+              0.5746282764528906,
+              -0.7361759546239887,
+              0.4052137801914254
+            ]
+          },
+          "eval_rubric": {
+            "mean_r": 0.23874866329004907,
+            "n_positive": 5,
+            "r": [
+              -0.6954611855734417,
+              0.2768800548878619,
+              0.7038668439191976,
+              0.6062918868507329,
+              0.5081483006708127,
+              0.03276607898513101
+            ]
+          }
+        },
+        "per_deploy_arm": {
+          "deploy_a": {
+            "mean_r": -0.6006541001681668,
+            "n_positive": 1
+          },
+          "deploy_advice": {
+            "mean_r": 0.26898256746630217,
+            "n_positive": 4
+          },
+          "deploy_agent": {
+            "mean_r": 0.3319630493567625,
+            "n_positive": 5
+          },
+          "deploy_api": {
+            "mean_r": 0.21048829960408147,
+            "n_positive": 3
+          },
+          "deploy_ide": {
+            "mean_r": -0.18679616261459733,
+            "n_positive": 3
+          },
+          "deploy_support": {
+            "mean_r": 0.08208196277515804,
+            "n_positive": 5
+          }
+        }
+      },
+      "bootstrap_robust_sign_span": {
+        "n_firm_positive": 10,
+        "n_firm_negative": 7,
+        "eval_fixed_spanning_firm": 3,
+        "deploy_fixed_spanning_firm": 3,
+        "p_positive_per_wrapper": {
+          "eval_benchmark/deploy_a": 0.585,
+          "eval_benchmark/deploy_advice": 0.14,
+          "eval_benchmark/deploy_agent": 0.22,
+          "eval_benchmark/deploy_api": 0.9,
+          "eval_benchmark/deploy_ide": 0.055,
+          "eval_benchmark/deploy_support": 0.61,
+          "eval_certification/deploy_a": 0.0,
+          "eval_certification/deploy_advice": 0.17,
+          "eval_certification/deploy_agent": 0.685,
+          "eval_certification/deploy_api": 0.035,
+          "eval_certification/deploy_ide": 0.025,
+          "eval_certification/deploy_support": 0.0,
+          "eval_leaderboard/deploy_a": 0.17,
+          "eval_leaderboard/deploy_advice": 1.0,
+          "eval_leaderboard/deploy_agent": 1.0,
+          "eval_leaderboard/deploy_api": 0.45,
+          "eval_leaderboard/deploy_ide": 1.0,
+          "eval_leaderboard/deploy_support": 1.0,
+          "eval_oversight/deploy_a": 0.0,
+          "eval_oversight/deploy_advice": 0.945,
+          "eval_oversight/deploy_agent": 0.995,
+          "eval_oversight/deploy_api": 0.48,
+          "eval_oversight/deploy_ide": 0.675,
+          "eval_oversight/deploy_support": 0.725,
+          "eval_redteam/deploy_a": 0.01,
+          "eval_redteam/deploy_advice": 0.95,
+          "eval_redteam/deploy_agent": 0.7,
+          "eval_redteam/deploy_api": 0.965,
+          "eval_redteam/deploy_ide": 0.235,
+          "eval_redteam/deploy_support": 0.97,
+          "eval_rubric/deploy_a": 0.005,
+          "eval_rubric/deploy_advice": 0.89,
+          "eval_rubric/deploy_agent": 1.0,
+          "eval_rubric/deploy_api": 0.95,
+          "eval_rubric/deploy_ide": 0.9,
+          "eval_rubric/deploy_support": 0.74
+        }
+      },
+      "reproduces_stored_results": {
+        "max_abs_diff_statistic": 2.5023365020748756e-05,
+        "max_rel_diff_components": 0.0015805325364559595,
+        "abs_diff_spearman_brown": 1.1816686443788527e-06
+      }
+    },
+    "qwen3_nothink": {
+      "models": [
+        "qwen3-0.6b",
+        "qwen3-1.7b",
+        "qwen3-4b",
+        "qwen3-8b",
+        "qwen3-14b",
+        "qwen3-32b"
+      ],
+      "r_36_average": 0.7969814754393656,
+      "ci_items": [
+        0.5670866508543594,
+        0.8992449263345347
+      ],
+      "ci_arms": [
+        -0.3122007779953134,
+        0.9571526852844203
+      ],
+      "ci_items_and_arms": [
+        -0.4195285417893181,
+        0.9607255794426551
+      ],
+      "p_positive_items": 1.0,
+      "p_positive_arms": 0.94025,
+      "p_positive_items_and_arms": 0.91975,
+      "n_boot_items": 200,
+      "n_boot_arms": 4000,
+      "n_boot_items_and_arms": 4000,
+      "permutation_p_one_sided": 0.03333333333333333,
+      "permutation_p_two_sided": 0.06111111111111111,
+      "n_permutations": 720,
+      "leave_one_arm_out": {
+        "drop eval_benchmark": 0.7710795328501134,
+        "drop eval_certification": 0.7912778062451985,
+        "drop eval_leaderboard": 0.8447251288259722,
+        "drop eval_oversight": 0.6960709911735234,
+        "drop eval_redteam": 0.6642385882001276,
+        "drop eval_rubric": 0.8824322040268672,
+        "drop deploy_a": 0.7370969015230386,
+        "drop deploy_advice": 0.761546151385936,
+        "drop deploy_agent": 0.8728066664599103,
+        "drop deploy_api": 0.7582456965468168,
+        "drop deploy_ide": 0.8732766789060405,
+        "drop deploy_support": 0.7254710270341902
+      },
+      "leave_one_arm_out_range": [
+        0.6642385882001276,
+        0.8824322040268672
+      ],
+      "leave_one_arm_out_all_same_sign": true,
+      "leave_one_model_out": {
+        "qwen3-0.6b": 0.8785896788641028,
+        "qwen3-1.7b": 0.8409126571770978,
+        "qwen3-4b": 0.8011183615449159,
+        "qwen3-8b": 0.8300157527028882,
+        "qwen3-14b": 0.7655293093682308,
+        "qwen3-32b": 0.7559532173478108
+      },
+      "arm_structure": {
+        "slope_ss_share": {
+          "eval_main": 0.6991264157092584,
+          "deploy_main": 0.0646206084174165,
+          "interaction": 0.2362529758733251
+        },
+        "mean_square": {
+          "eval_main": 0.006650523356456849,
+          "deploy_main": 0.0006147112395295369,
+          "interaction": 0.00044947691827207213,
+          "item_noise_per_wrapper": 0.00019558546281735212
+        },
+        "interaction_over_item_noise": 2.2981100527487417,
+        "eval_main_perm_p": 0.0,
+        "deploy_main_perm_p": 0.28475,
+        "per_eval_arm": {
+          "eval_benchmark": {
+            "mean_r": -0.049728670465175845,
+            "n_positive": 3,
+            "r": [
+              -0.6224554329495415,
+              0.4048942597226054,
+              0.10389036852260534,
+              0.9179861818158728,
+              -0.6069535879750056,
+              -0.4957338119275914
+            ]
+          },
+          "eval_certification": {
+            "mean_r": 0.07786458590444122,
+            "n_positive": 3,
+            "r": [
+              0.3190906193873659,
+              0.24786537638587003,
+              -0.16488323020125947,
+              -0.09534283577063882,
+              -0.02992074636266912,
+              0.19037833198797877
+            ]
+          },
+          "eval_leaderboard": {
+            "mean_r": 0.48127470979596215,
+            "n_positive": 6,
+            "r": [
+              0.704764460931954,
+              0.6977061309337153,
+              0.4037185439968103,
+              0.17368838515321533,
+              0.04641207056590557,
+              0.8613586671941725
+            ]
+          },
+          "eval_oversight": {
+            "mean_r": 0.7770282635158425,
+            "n_positive": 6,
+            "r": [
+              0.8865147858588877,
+              0.9987314831384764,
+              0.6666228801460425,
+              0.9022163385490157,
+              0.30093283244339636,
+              0.9071512609592365
+            ]
+          },
+          "eval_redteam": {
+            "mean_r": 0.8927280124345435,
+            "n_positive": 6,
+            "r": [
+              0.9249537934883568,
+              0.8680833109588155,
+              0.8607665475999428,
+              0.9353225576979117,
+              0.8253875312350162,
+              0.9418543336272178
+            ]
+          },
+          "eval_rubric": {
+            "mean_r": -0.4372686623175854,
+            "n_positive": 0,
+            "r": [
+              -0.2605002381341027,
+              -0.6160895540283332,
+              -0.4918587861362679,
+              -0.5640718565703686,
+              -0.5881893528347382,
+              -0.1029021862017016
+            ]
+          }
+        },
+        "per_deploy_arm": {
+          "deploy_a": {
+            "mean_r": 0.32539466476382,
+            "n_positive": 4
+          },
+          "deploy_advice": {
+            "mean_r": 0.4335318345185249,
+            "n_positive": 5
+          },
+          "deploy_agent": {
+            "mean_r": 0.2297093873213123,
+            "n_positive": 4
+          },
+          "deploy_api": {
+            "mean_r": 0.37829979514583467,
+            "n_positive": 4
+          },
+          "deploy_ide": {
+            "mean_r": -0.008721875488015804,
+            "n_positive": 3
+          },
+          "deploy_support": {
+            "mean_r": 0.3836844326065521,
+            "n_positive": 4
+          }
+        }
+      },
+      "bootstrap_robust_sign_span": {
+        "n_firm_positive": 16,
+        "n_firm_negative": 4,
+        "eval_fixed_spanning_firm": 1,
+        "deploy_fixed_spanning_firm": 3,
+        "p_positive_per_wrapper": {
+          "eval_benchmark/deploy_a": 0.185,
+          "eval_benchmark/deploy_advice": 0.775,
+          "eval_benchmark/deploy_agent": 0.64,
+          "eval_benchmark/deploy_api": 0.995,
+          "eval_benchmark/deploy_ide": 0.0,
+          "eval_benchmark/deploy_support": 0.03,
+          "eval_certification/deploy_a": 0.86,
+          "eval_certification/deploy_advice": 0.815,
+          "eval_certification/deploy_agent": 0.405,
+          "eval_certification/deploy_api": 0.47,
+          "eval_certification/deploy_ide": 0.47,
+          "eval_certification/deploy_support": 0.655,
+          "eval_leaderboard/deploy_a": 1.0,
+          "eval_leaderboard/deploy_advice": 0.97,
+          "eval_leaderboard/deploy_agent": 1.0,
+          "eval_leaderboard/deploy_api": 0.87,
+          "eval_leaderboard/deploy_ide": 0.555,
+          "eval_leaderboard/deploy_support": 1.0,
+          "eval_oversight/deploy_a": 1.0,
+          "eval_oversight/deploy_advice": 1.0,
+          "eval_oversight/deploy_agent": 1.0,
+          "eval_oversight/deploy_api": 1.0,
+          "eval_oversight/deploy_ide": 0.775,
+          "eval_oversight/deploy_support": 1.0,
+          "eval_redteam/deploy_a": 1.0,
+          "eval_redteam/deploy_advice": 1.0,
+          "eval_redteam/deploy_agent": 1.0,
+          "eval_redteam/deploy_api": 1.0,
+          "eval_redteam/deploy_ide": 1.0,
+          "eval_redteam/deploy_support": 1.0,
+          "eval_rubric/deploy_a": 0.19,
+          "eval_rubric/deploy_advice": 0.035,
+          "eval_rubric/deploy_agent": 0.2,
+          "eval_rubric/deploy_api": 0.19,
+          "eval_rubric/deploy_ide": 0.0,
+          "eval_rubric/deploy_support": 0.405
+        }
+      },
+      "reproduces_stored_results": {
+        "max_abs_diff_statistic": 2.502412796023812e-05,
+        "max_rel_diff_components": 0.00037419588295586924,
+        "abs_diff_spearman_brown": 3.608386063280733e-06
+      }
+    },
+    "qwen3_think": {
+      "models": [
+        "qwen3-0.6b",
+        "qwen3-1.7b",
+        "qwen3-4b",
+        "qwen3-8b",
+        "qwen3-14b",
+        "qwen3-32b"
+      ],
+      "r_36_average": 0.7806167812313687,
+      "ci_items": [
+        0.5558899103498809,
+        0.8795429620530435
+      ],
+      "ci_arms": [
+        -0.2687571664297942,
+        0.9489724700757505
+      ],
+      "ci_items_and_arms": [
+        -0.48592780402443597,
+        0.9525271650282313
+      ],
+      "p_positive_items": 1.0,
+      "p_positive_arms": 0.944,
+      "p_positive_items_and_arms": 0.91375,
+      "n_boot_items": 200,
+      "n_boot_arms": 4000,
+      "n_boot_items_and_arms": 4000,
+      "permutation_p_one_sided": 0.03611111111111111,
+      "permutation_p_two_sided": 0.06805555555555555,
+      "n_permutations": 720,
+      "leave_one_arm_out": {
+        "drop eval_benchmark": 0.759393854870375,
+        "drop eval_certification": 0.7819360939420731,
+        "drop eval_leaderboard": 0.8238336565191967,
+        "drop eval_oversight": 0.6795030501654364,
+        "drop eval_redteam": 0.6482160322201891,
+        "drop eval_rubric": 0.8651357002399052,
+        "drop deploy_a": 0.7195039944928558,
+        "drop deploy_advice": 0.7599864861318223,
+        "drop deploy_agent": 0.8528103635182277,
+        "drop deploy_api": 0.7345744873117537,
+        "drop deploy_ide": 0.8617918408795762,
+        "drop deploy_support": 0.7028527112096528
+      },
+      "leave_one_arm_out_range": [
+        0.6482160322201891,
+        0.8651357002399052
+      ],
+      "leave_one_arm_out_all_same_sign": true,
+      "leave_one_model_out": {
+        "qwen3-0.6b": 0.8412241294573608,
+        "qwen3-1.7b": 0.8306608099823838,
+        "qwen3-4b": 0.7794893332895387,
+        "qwen3-8b": 0.8198770946361088,
+        "qwen3-14b": 0.7448369787843597,
+        "qwen3-32b": 0.7714142718032787
+      },
+      "arm_structure": {
+        "slope_ss_share": {
+          "eval_main": 0.7002287587569953,
+          "deploy_main": 0.06567503834980498,
+          "interaction": 0.23409620289319968
+        },
+        "mean_square": {
+          "eval_main": 0.006122827705155931,
+          "deploy_main": 0.0005742651088184073,
+          "interaction": 0.00040938927423965016,
+          "item_noise_per_wrapper": 0.00017367563159550062
+        },
+        "interaction_over_item_noise": 2.357206192248885,
+        "eval_main_perm_p": 0.0,
+        "deploy_main_perm_p": 0.2685,
+        "per_eval_arm": {
+          "eval_benchmark": {
+            "mean_r": -0.05397903704880056,
+            "n_positive": 3,
+            "r": [
+              -0.6102997060515044,
+              0.4056375306432297,
+              0.0387634469049968,
+              0.9269765421639155,
+              -0.6194561139015047,
+              -0.46549592205193624
+            ]
+          },
+          "eval_certification": {
+            "mean_r": 0.10340217268812522,
+            "n_positive": 3,
+            "r": [
+              0.337505967522751,
+              0.22688355247570713,
+              -0.09417129217445867,
+              -0.07728556675719504,
+              -0.01516586511138275,
+              0.24264624017332972
+            ]
+          },
+          "eval_leaderboard": {
+            "mean_r": 0.43806137989516514,
+            "n_positive": 6,
+            "r": [
+              0.6558656620556699,
+              0.49867693586384887,
+              0.3966633425297802,
+              0.18861929914578385,
+              0.03812328313923312,
+              0.850419756636675
+            ]
+          },
+          "eval_oversight": {
+            "mean_r": 0.782165444621233,
+            "n_positive": 6,
+            "r": [
+              0.9524282596636764,
+              0.9770217076713521,
+              0.6774503437194599,
+              0.8678963928335868,
+              0.32105928996139177,
+              0.8971366738779308
+            ]
+          },
+          "eval_redteam": {
+            "mean_r": 0.8821141499653556,
+            "n_positive": 6,
+            "r": [
+              0.9081271860064061,
+              0.8613845225683218,
+              0.8562405939789559,
+              0.9153842712661722,
+              0.8234112540045673,
+              0.9281370719677103
+            ]
+          },
+          "eval_rubric": {
+            "mean_r": -0.3925626174741253,
+            "n_positive": 0,
+            "r": [
+              -0.2651497415440757,
+              -0.5703564327054715,
+              -0.3770010631567219,
+              -0.4387462666183828,
+              -0.6536022695140784,
+              -0.05051993130602135
+            ]
+          }
+        },
+        "per_deploy_arm": {
+          "deploy_a": {
+            "mean_r": 0.32974627127548717,
+            "n_positive": 4
+          },
+          "deploy_advice": {
+            "mean_r": 0.3998746360861647,
+            "n_positive": 5
+          },
+          "deploy_agent": {
+            "mean_r": 0.24965756196700206,
+            "n_positive": 4
+          },
+          "deploy_api": {
+            "mean_r": 0.3971407786723134,
+            "n_positive": 4
+          },
+          "deploy_ide": {
+            "mean_r": -0.017605070236962284,
+            "n_positive": 3
+          },
+          "deploy_support": {
+            "mean_r": 0.40038731488294804,
+            "n_positive": 4
+          }
+        }
+      },
+      "bootstrap_robust_sign_span": {
+        "n_firm_positive": 15,
+        "n_firm_negative": 4,
+        "eval_fixed_spanning_firm": 1,
+        "deploy_fixed_spanning_firm": 3,
+        "p_positive_per_wrapper": {
+          "eval_benchmark/deploy_a": 0.21,
+          "eval_benchmark/deploy_advice": 0.805,
+          "eval_benchmark/deploy_agent": 0.515,
+          "eval_benchmark/deploy_api": 0.995,
+          "eval_benchmark/deploy_ide": 0.0,
+          "eval_benchmark/deploy_support": 0.035,
+          "eval_certification/deploy_a": 0.82,
+          "eval_certification/deploy_advice": 0.8,
+          "eval_certification/deploy_agent": 0.455,
+          "eval_certification/deploy_api": 0.48,
+          "eval_certification/deploy_ide": 0.385,
+          "eval_certification/deploy_support": 0.63,
+          "eval_leaderboard/deploy_a": 0.995,
+          "eval_leaderboard/deploy_advice": 0.9,
+          "eval_leaderboard/deploy_agent": 1.0,
+          "eval_leaderboard/deploy_api": 0.875,
+          "eval_leaderboard/deploy_ide": 0.535,
+          "eval_leaderboard/deploy_support": 0.99,
+          "eval_oversight/deploy_a": 1.0,
+          "eval_oversight/deploy_advice": 1.0,
+          "eval_oversight/deploy_agent": 1.0,
+          "eval_oversight/deploy_api": 1.0,
+          "eval_oversight/deploy_ide": 0.795,
+          "eval_oversight/deploy_support": 1.0,
+          "eval_redteam/deploy_a": 1.0,
+          "eval_redteam/deploy_advice": 1.0,
+          "eval_redteam/deploy_agent": 1.0,
+          "eval_redteam/deploy_api": 1.0,
+          "eval_redteam/deploy_ide": 1.0,
+          "eval_redteam/deploy_support": 1.0,
+          "eval_rubric/deploy_a": 0.16,
+          "eval_rubric/deploy_advice": 0.02,
+          "eval_rubric/deploy_agent": 0.24,
+          "eval_rubric/deploy_api": 0.265,
+          "eval_rubric/deploy_ide": 0.0,
+          "eval_rubric/deploy_support": 0.36
+        }
+      },
+      "reproduces_stored_results": {
+        "max_abs_diff_statistic": 7.499475479122442e-05,
+        "max_rel_diff_components": 0.0005872045694586971,
+        "abs_diff_spearman_brown": 8.054527144363277e-06
+      }
+    },
+    "qwen3.5_nothink": {
+      "models": [
+        "qwen3.5-0.8b",
+        "qwen3.5-2b",
+        "qwen3.5-4b",
+        "qwen3.5-9b",
+        "qwen3.5-27b"
+      ],
+      "r_36_average": 0.920036627988144,
+      "ci_items": [
+        0.7732160206756088,
+        0.9833959203349809
+      ],
+      "ci_arms": [
+        0.27538506437778393,
+        0.9780602123600245
+      ],
+      "ci_items_and_arms": [
+        0.1469372774588428,
+        0.9875869110237709
+      ],
+      "p_positive_items": 1.0,
+      "p_positive_arms": 0.9905,
+      "p_positive_items_and_arms": 0.98375,
+      "n_boot_items": 200,
+      "n_boot_arms": 4000,
+      "n_boot_items_and_arms": 4000,
+      "permutation_p_one_sided": 0.016666666666666666,
+      "permutation_p_two_sided": 0.025,
+      "n_permutations": 120,
+      "leave_one_arm_out": {
+        "drop eval_benchmark": 0.9405762147241364,
+        "drop eval_certification": 0.9158128992686745,
+        "drop eval_leaderboard": 0.8948068046086942,
+        "drop eval_oversight": 0.9349144698554854,
+        "drop eval_redteam": 0.8380294193891351,
+        "drop eval_rubric": 0.9366579522437579,
+        "drop deploy_a": 0.9144920083436443,
+        "drop deploy_advice": 0.9256317804831273,
+        "drop deploy_agent": 0.9316012961085847,
+        "drop deploy_api": 0.9089980426820582,
+        "drop deploy_ide": 0.9053506823045906,
+        "drop deploy_support": 0.8966922611024216
+      },
+      "leave_one_arm_out_range": [
+        0.8380294193891351,
+        0.9405762147241364
+      ],
+      "leave_one_arm_out_all_same_sign": true,
+      "leave_one_model_out": {
+        "qwen3.5-0.8b": 0.9502827868403576,
+        "qwen3.5-2b": 0.9900826956285653,
+        "qwen3.5-4b": 0.9208260693385939,
+        "qwen3.5-9b": 0.9186168955164068,
+        "qwen3.5-27b": 0.8596701855257455
+      },
+      "arm_structure": {
+        "slope_ss_share": {
+          "eval_main": 0.304651142422597,
+          "deploy_main": 0.4174672240653953,
+          "interaction": 0.2778816335120077
+        },
+        "mean_square": {
+          "eval_main": 0.0017490442066653313,
+          "deploy_main": 0.002396736883761242,
+          "interaction": 0.00031907135313392833,
+          "item_noise_per_wrapper": 0.00020242574790007762
+        },
+        "interaction_over_item_noise": 1.576238973766469,
+        "eval_main_perm_p": 0.00075,
+        "deploy_main_perm_p": 0.0,
+        "per_eval_arm": {
+          "eval_benchmark": {
+            "mean_r": 0.4262158506095302,
+            "n_positive": 4,
+            "r": [
+              0.7095926704736976,
+              0.805548996811168,
+              -0.1888081319373509,
+              -0.06710736278570377,
+              0.4551672968858764,
+              0.8429016342094943
+            ]
+          },
+          "eval_certification": {
+            "mean_r": 0.1166168557488891,
+            "n_positive": 4,
+            "r": [
+              0.3212115366114879,
+              0.6412941365665014,
+              -0.4378679812715673,
+              0.6427020130915928,
+              0.038590546228056175,
+              -0.5062291167327364
+            ]
+          },
+          "eval_leaderboard": {
+            "mean_r": 0.38632244074797634,
+            "n_positive": 4,
+            "r": [
+              0.9175111234175528,
+              0.8336389481416547,
+              -0.5659707168336141,
+              0.5462948631973251,
+              -0.024068379662698702,
+              0.6105288062276385
+            ]
+          },
+          "eval_oversight": {
+            "mean_r": 0.5077042045393204,
+            "n_positive": 5,
+            "r": [
+              0.5563983539122681,
+              0.7686092812340178,
+              -0.06984987243457336,
+              0.6230384748960719,
+              0.6669268019935796,
+              0.5011021876345585
+            ]
+          },
+          "eval_redteam": {
+            "mean_r": 0.9516152766591048,
+            "n_positive": 6,
+            "r": [
+              0.8833294706582714,
+              0.9927530019804013,
+              0.9750068426196312,
+              0.9212119242515565,
+              0.9482128697690884,
+              0.9891775506756804
+            ]
+          },
+          "eval_rubric": {
+            "mean_r": 0.3715952789490571,
+            "n_positive": 4,
+            "r": [
+              0.864759936363809,
+              0.7280147069355819,
+              -0.5486908170948842,
+              0.6937349925009485,
+              -0.44697494519296527,
+              0.9387278001818524
+            ]
+          }
+        },
+        "per_deploy_arm": {
+          "deploy_a": {
+            "mean_r": 0.7088005152395144,
+            "n_positive": 6
+          },
+          "deploy_advice": {
+            "mean_r": 0.7949765119448875,
+            "n_positive": 6
+          },
+          "deploy_agent": {
+            "mean_r": -0.13936344615872645,
+            "n_positive": 1
+          },
+          "deploy_api": {
+            "mean_r": 0.5599791508586319,
+            "n_positive": 5
+          },
+          "deploy_ide": {
+            "mean_r": 0.2729756983368228,
+            "n_positive": 4
+          },
+          "deploy_support": {
+            "mean_r": 0.562701477032748,
+            "n_positive": 5
+          }
+        }
+      },
+      "bootstrap_robust_sign_span": {
+        "n_firm_positive": 23,
+        "n_firm_negative": 1,
+        "eval_fixed_spanning_firm": 1,
+        "deploy_fixed_spanning_firm": 1,
+        "p_positive_per_wrapper": {
+          "eval_benchmark/deploy_a": 0.995,
+          "eval_benchmark/deploy_advice": 1.0,
+          "eval_benchmark/deploy_agent": 0.275,
+          "eval_benchmark/deploy_api": 0.425,
+          "eval_benchmark/deploy_ide": 1.0,
+          "eval_benchmark/deploy_support": 1.0,
+          "eval_certification/deploy_a": 0.79,
+          "eval_certification/deploy_advice": 1.0,
+          "eval_certification/deploy_agent": 0.255,
+          "eval_certification/deploy_api": 1.0,
+          "eval_certification/deploy_ide": 0.545,
+          "eval_certification/deploy_support": 0.185,
+          "eval_leaderboard/deploy_a": 1.0,
+          "eval_leaderboard/deploy_advice": 1.0,
+          "eval_leaderboard/deploy_agent": 0.03,
+          "eval_leaderboard/deploy_api": 0.895,
+          "eval_leaderboard/deploy_ide": 0.48,
+          "eval_leaderboard/deploy_support": 0.95,
+          "eval_oversight/deploy_a": 0.995,
+          "eval_oversight/deploy_advice": 1.0,
+          "eval_oversight/deploy_agent": 0.45,
+          "eval_oversight/deploy_api": 0.995,
+          "eval_oversight/deploy_ide": 1.0,
+          "eval_oversight/deploy_support": 0.87,
+          "eval_redteam/deploy_a": 1.0,
+          "eval_redteam/deploy_advice": 1.0,
+          "eval_redteam/deploy_agent": 1.0,
+          "eval_redteam/deploy_api": 1.0,
+          "eval_redteam/deploy_ide": 1.0,
+          "eval_redteam/deploy_support": 1.0,
+          "eval_rubric/deploy_a": 1.0,
+          "eval_rubric/deploy_advice": 1.0,
+          "eval_rubric/deploy_agent": 0.19,
+          "eval_rubric/deploy_api": 1.0,
+          "eval_rubric/deploy_ide": 0.29,
+          "eval_rubric/deploy_support": 0.965
+        }
+      },
+      "reproduces_stored_results": {
+        "max_abs_diff_statistic": 0.0003749698638916277,
+        "max_rel_diff_components": 0.0009319719901532376,
+        "abs_diff_spearman_brown": 0.00011094732579441935
+      }
+    },
+    "qwen3.5_think": {
+      "models": [
+        "qwen3.5-0.8b",
+        "qwen3.5-2b",
+        "qwen3.5-4b",
+        "qwen3.5-9b",
+        "qwen3.5-27b"
+      ],
+      "r_36_average": 0.8137150389294854,
+      "ci_items": [
+        0.6675066769351432,
+        0.9347006212060887
+      ],
+      "ci_arms": [
+        0.44819426596960166,
+        0.9536301391422725
+      ],
+      "ci_items_and_arms": [
+        0.32677299600808185,
+        0.9680454981762842
+      ],
+      "p_positive_items": 1.0,
+      "p_positive_arms": 0.999,
+      "p_positive_items_and_arms": 0.99425,
+      "n_boot_items": 200,
+      "n_boot_arms": 4000,
+      "n_boot_items_and_arms": 4000,
+      "permutation_p_one_sided": 0.058333333333333334,
+      "permutation_p_two_sided": 0.10833333333333334,
+      "n_permutations": 120,
+      "leave_one_arm_out": {
+        "drop eval_benchmark": 0.8395948727447472,
+        "drop eval_certification": 0.842269362852327,
+        "drop eval_leaderboard": 0.773955253733284,
+        "drop eval_oversight": 0.8462144556097158,
+        "drop eval_redteam": 0.7059902038449803,
+        "drop eval_rubric": 0.8456542165164641,
+        "drop deploy_a": 0.7913662676459121,
+        "drop deploy_advice": 0.7890773065896236,
+        "drop deploy_agent": 0.8530169782691839,
+        "drop deploy_api": 0.8024809044978265,
+        "drop deploy_ide": 0.8245354799570944,
+        "drop deploy_support": 0.7963359460240994
+      },
+      "leave_one_arm_out_range": [
+        0.7059902038449803,
+        0.8530169782691839
+      ],
+      "leave_one_arm_out_all_same_sign": true,
+      "leave_one_model_out": {
+        "qwen3.5-0.8b": 0.7946885126619289,
+        "qwen3.5-2b": 0.8138593807150182,
+        "qwen3.5-4b": 0.816743648093235,
+        "qwen3.5-9b": 0.9175983420902388,
+        "qwen3.5-27b": 0.8491244912341317
+      },
+      "arm_structure": {
+        "slope_ss_share": {
+          "eval_main": 0.32495363202132077,
+          "deploy_main": 0.3761826303274395,
+          "interaction": 0.2988637376512397
+        },
+        "mean_square": {
+          "eval_main": 0.0015459862643861385,
+          "deploy_main": 0.0017897112759420145,
+          "interaction": 0.0002843724075080372,
+          "item_noise_per_wrapper": 0.0001948773660783315
+        },
+        "interaction_over_item_noise": 1.4592377413071815,
+        "eval_main_perm_p": 0.00225,
+        "deploy_main_perm_p": 0.0005,
+        "per_eval_arm": {
+          "eval_benchmark": {
+            "mean_r": 0.5103527203189397,
+            "n_positive": 6,
+            "r": [
+              0.7053810166836256,
+              0.8124887231345316,
+              0.026507393348173064,
+              0.1948721845892922,
+              0.4510368030958669,
+              0.871830201062149
+            ]
+          },
+          "eval_certification": {
+            "mean_r": 0.2735040385308926,
+            "n_positive": 5,
+            "r": [
+              0.24240818336368214,
+              0.5578021549136808,
+              -0.10029615570581982,
+              0.8588873646404482,
+              0.062235820939622634,
+              0.01998686303374208
+            ]
+          },
+          "eval_leaderboard": {
+            "mean_r": 0.37808149987131734,
+            "n_positive": 4,
+            "r": [
+              0.8640945801324227,
+              0.8591875214705286,
+              -0.559291297203431,
+              0.5657925951762595,
+              -0.039052047561159785,
+              0.577757647213284
+            ]
+          },
+          "eval_oversight": {
+            "mean_r": 0.5242382462964482,
+            "n_positive": 6,
+            "r": [
+              0.5607614425280871,
+              0.7952943082357585,
+              0.11103909471759399,
+              0.5674009027063059,
+              0.5464644508000377,
+              0.5644692787909065
+            ]
+          },
+          "eval_redteam": {
+            "mean_r": 0.9487350020680027,
+            "n_positive": 6,
+            "r": [
+              0.8948287263798304,
+              0.9899006376131897,
+              0.9779547815243343,
+              0.9578738893827883,
+              0.9361124638461016,
+              0.9357395136617718
+            ]
+          },
+          "eval_rubric": {
+            "mean_r": 0.3713309958431054,
+            "n_positive": 4,
+            "r": [
+              0.8637650505515551,
+              0.6984403545703324,
+              -0.23850797866167056,
+              0.5676703294593447,
+              -0.24966670560527623,
+              0.5862849247443472
+            ]
+          }
+        },
+        "per_deploy_arm": {
+          "deploy_a": {
+            "mean_r": 0.6885398332732006,
+            "n_positive": 6
+          },
+          "deploy_advice": {
+            "mean_r": 0.7855189499896703,
+            "n_positive": 6
+          },
+          "deploy_agent": {
+            "mean_r": 0.03623430633653001,
+            "n_positive": 3
+          },
+          "deploy_api": {
+            "mean_r": 0.6187495443257398,
+            "n_positive": 6
+          },
+          "deploy_ide": {
+            "mean_r": 0.2845217975858655,
+            "n_positive": 4
+          },
+          "deploy_support": {
+            "mean_r": 0.5926780714177001,
+            "n_positive": 6
+          }
+        }
+      },
+      "bootstrap_robust_sign_span": {
+        "n_firm_positive": 24,
+        "n_firm_negative": 0,
+        "eval_fixed_spanning_firm": 0,
+        "deploy_fixed_spanning_firm": 0,
+        "p_positive_per_wrapper": {
+          "eval_benchmark/deploy_a": 0.995,
+          "eval_benchmark/deploy_advice": 1.0,
+          "eval_benchmark/deploy_agent": 0.425,
+          "eval_benchmark/deploy_api": 0.745,
+          "eval_benchmark/deploy_ide": 1.0,
+          "eval_benchmark/deploy_support": 1.0,
+          "eval_certification/deploy_a": 0.705,
+          "eval_certification/deploy_advice": 1.0,
+          "eval_certification/deploy_agent": 0.49,
+          "eval_certification/deploy_api": 1.0,
+          "eval_certification/deploy_ide": 0.57,
+          "eval_certification/deploy_support": 0.765,
+          "eval_leaderboard/deploy_a": 1.0,
+          "eval_leaderboard/deploy_advice": 1.0,
+          "eval_leaderboard/deploy_agent": 0.065,
+          "eval_leaderboard/deploy_api": 0.925,
+          "eval_leaderboard/deploy_ide": 0.44,
+          "eval_leaderboard/deploy_support": 0.96,
+          "eval_oversight/deploy_a": 1.0,
+          "eval_oversight/deploy_advice": 1.0,
+          "eval_oversight/deploy_agent": 0.705,
+          "eval_oversight/deploy_api": 0.995,
+          "eval_oversight/deploy_ide": 0.99,
+          "eval_oversight/deploy_support": 0.96,
+          "eval_redteam/deploy_a": 1.0,
+          "eval_redteam/deploy_advice": 1.0,
+          "eval_redteam/deploy_agent": 1.0,
+          "eval_redteam/deploy_api": 1.0,
+          "eval_redteam/deploy_ide": 1.0,
+          "eval_redteam/deploy_support": 1.0,
+          "eval_rubric/deploy_a": 1.0,
+          "eval_rubric/deploy_advice": 1.0,
+          "eval_rubric/deploy_agent": 0.425,
+          "eval_rubric/deploy_api": 1.0,
+          "eval_rubric/deploy_ide": 0.405,
+          "eval_rubric/deploy_support": 1.0
+        }
+      },
+      "reproduces_stored_results": {
+        "max_abs_diff_statistic": 0.0001750175476074034,
+        "max_rel_diff_components": 0.0009598523677813081,
+        "abs_diff_spearman_brown": 9.697912505091111e-05
+      }
+    },
+    "olmo2": {
+      "models": [
+        "olmo-2-0425-1b-instruct",
+        "olmo-2-1124-7b-instruct",
+        "olmo-2-1124-13b-instruct",
+        "olmo-2-0325-32b-instruct"
+      ],
+      "r_36_average": 0.9279265357233412,
+      "ci_items": [
+        0.7502025100948336,
+        0.9724282928408404
+      ],
+      "ci_arms": [
+        0.4593329356750792,
+        0.9850406305765661
+      ],
+      "ci_items_and_arms": [
+        0.19730584666646195,
+        0.9905356074233976
+      ],
+      "p_positive_items": 1.0,
+      "p_positive_arms": 0.997,
+      "p_positive_items_and_arms": 0.986,
+      "n_boot_items": 200,
+      "n_boot_arms": 4000,
+      "n_boot_items_and_arms": 4000,
+      "permutation_p_one_sided": 0.08333333333333333,
+      "permutation_p_two_sided": 0.125,
+      "n_permutations": 24,
+      "leave_one_arm_out": {
+        "drop eval_benchmark": 0.8975290601401448,
+        "drop eval_certification": 0.9264733144435966,
+        "drop eval_leaderboard": 0.9584846766992984,
+        "drop eval_oversight": 0.9123967848759336,
+        "drop eval_redteam": 0.9076112665684879,
+        "drop eval_rubric": 0.9337319142958874,
+        "drop deploy_a": 0.9209932262547016,
+        "drop deploy_advice": 0.9014641837496741,
+        "drop deploy_agent": 0.9552191314246945,
+        "drop deploy_api": 0.9336587266921583,
+        "drop deploy_ide": 0.9392893100659749,
+        "drop deploy_support": 0.8939319346197442
+      },
+      "leave_one_arm_out_range": [
+        0.8939319346197442,
+        0.9584846766992984
+      ],
+      "leave_one_arm_out_all_same_sign": true,
+      "leave_one_model_out": {
+        "olmo-2-0425-1b-instruct": 0.7574805410760744,
+        "olmo-2-1124-7b-instruct": 0.9490584655076036,
+        "olmo-2-1124-13b-instruct": 0.9958392256655003,
+        "olmo-2-0325-32b-instruct": 0.8600696803949098
+      },
+      "arm_structure": {
+        "slope_ss_share": {
+          "eval_main": 0.49884999361692384,
+          "deploy_main": 0.1799938195037645,
+          "interaction": 0.3211561868793118
+        },
+        "mean_square": {
+          "eval_main": 0.005183456232469503,
+          "deploy_main": 0.0018702818431410855,
+          "interaction": 0.0006674146776692403,
+          "item_noise_per_wrapper": 0.0002787442268518519
+        },
+        "interaction_over_item_noise": 2.394362334269834,
+        "eval_main_perm_p": 0.00075,
+        "deploy_main_perm_p": 0.01975,
+        "per_eval_arm": {
+          "eval_benchmark": {
+            "mean_r": 0.9185025106492609,
+            "n_positive": 6,
+            "r": [
+              0.8786539998023735,
+              0.9913658414670113,
+              0.9420452478409087,
+              0.9059360823680507,
+              0.8072935903885156,
+              0.985720302028706
+            ]
+          },
+          "eval_certification": {
+            "mean_r": 0.29515410336839926,
+            "n_positive": 4,
+            "r": [
+              0.8520183895918768,
+              0.9950418002060019,
+              0.014711439982602915,
+              -0.7162674006766669,
+              -0.3682805224693423,
+              0.9937009135759233
+            ]
+          },
+          "eval_leaderboard": {
+            "mean_r": 0.1884075169655602,
+            "n_positive": 3,
+            "r": [
+              0.8119292212924625,
+              0.9680586457374191,
+              -0.21321082903466027,
+              -0.842947044761195,
+              -0.3143766654209755,
+              0.7209917739803103
+            ]
+          },
+          "eval_oversight": {
+            "mean_r": 0.8298845497827938,
+            "n_positive": 6,
+            "r": [
+              0.6953884727373018,
+              0.8682268538183069,
+              0.7588152372089928,
+              0.9153372471453062,
+              0.8503018794974562,
+              0.8912376082893987
+            ]
+          },
+          "eval_redteam": {
+            "mean_r": 0.9572843783932098,
+            "n_positive": 6,
+            "r": [
+              0.9121311756408558,
+              0.9510221062856464,
+              0.9604217348716266,
+              0.9652312718996245,
+              0.9802083819269015,
+              0.9746915997346034
+            ]
+          },
+          "eval_rubric": {
+            "mean_r": 0.5447915490027083,
+            "n_positive": 5,
+            "r": [
+              -0.018443734696171145,
+              0.7396385054227189,
+              0.8330434597332816,
+              0.029221067689096346,
+              0.7703445103786302,
+              0.914945485488694
+            ]
+          }
+        },
+        "per_deploy_arm": {
+          "deploy_a": {
+            "mean_r": 0.6886129207281165,
+            "n_positive": 5
+          },
+          "deploy_advice": {
+            "mean_r": 0.9188922921561841,
+            "n_positive": 6
+          },
+          "deploy_agent": {
+            "mean_r": 0.5493043817671254,
+            "n_positive": 5
+          },
+          "deploy_api": {
+            "mean_r": 0.20941853727736928,
+            "n_positive": 4
+          },
+          "deploy_ide": {
+            "mean_r": 0.45424852905019764,
+            "n_positive": 4
+          },
+          "deploy_support": {
+            "mean_r": 0.9135479471829392,
+            "n_positive": 6
+          }
+        }
+      },
+      "bootstrap_robust_sign_span": {
+        "n_firm_positive": 23,
+        "n_firm_negative": 1,
+        "eval_fixed_spanning_firm": 1,
+        "deploy_fixed_spanning_firm": 1,
+        "p_positive_per_wrapper": {
+          "eval_benchmark/deploy_a": 1.0,
+          "eval_benchmark/deploy_advice": 1.0,
+          "eval_benchmark/deploy_agent": 1.0,
+          "eval_benchmark/deploy_api": 1.0,
+          "eval_benchmark/deploy_ide": 1.0,
+          "eval_benchmark/deploy_support": 1.0,
+          "eval_certification/deploy_a": 1.0,
+          "eval_certification/deploy_advice": 1.0,
+          "eval_certification/deploy_agent": 0.495,
+          "eval_certification/deploy_api": 0.115,
+          "eval_certification/deploy_ide": 0.455,
+          "eval_certification/deploy_support": 0.895,
+          "eval_leaderboard/deploy_a": 0.99,
+          "eval_leaderboard/deploy_advice": 1.0,
+          "eval_leaderboard/deploy_agent": 0.18,
+          "eval_leaderboard/deploy_api": 0.01,
+          "eval_leaderboard/deploy_ide": 0.055,
+          "eval_leaderboard/deploy_support": 0.9,
+          "eval_oversight/deploy_a": 1.0,
+          "eval_oversight/deploy_advice": 0.995,
+          "eval_oversight/deploy_agent": 1.0,
+          "eval_oversight/deploy_api": 0.97,
+          "eval_oversight/deploy_ide": 1.0,
+          "eval_oversight/deploy_support": 1.0,
+          "eval_redteam/deploy_a": 1.0,
+          "eval_redteam/deploy_advice": 1.0,
+          "eval_redteam/deploy_agent": 1.0,
+          "eval_redteam/deploy_api": 0.97,
+          "eval_redteam/deploy_ide": 0.99,
+          "eval_redteam/deploy_support": 1.0,
+          "eval_rubric/deploy_a": 0.545,
+          "eval_rubric/deploy_advice": 0.855,
+          "eval_rubric/deploy_agent": 0.825,
+          "eval_rubric/deploy_api": 0.545,
+          "eval_rubric/deploy_ide": 0.79,
+          "eval_rubric/deploy_support": 0.96
+        }
+      },
+      "reproduces_stored_results": {
+        "max_abs_diff_statistic": 4.999799728389043e-05,
+        "max_rel_diff_components": 0.00025608322093866026,
+        "abs_diff_spearman_brown": 1.0982172210405317e-05
+      }
+    }
+  },
+  "conventions": {
+    "kind": "measured",
+    "statistic": "r of the 36-wrapper-averaged folded max with log10 parameters",
+    "note": "post-submission audit; not part of the submitted manuscript or its recorded predictions",
+    "pooling": "validated for scoring and for the direction arrays (Qwen2.5: lf scoring, all-token directions, as pod_ladders)",
+    "layers": "ALL",
+    "scoring_array": "results/post_submission/cells/*.npz, from results/pod_*/*.npz and results/gstudy via scripts/ladder_audit_cells.py",
+    "data_root": "pod",
+    "model_population": [
+      "olmo-2-0325-32b-instruct",
+      "olmo-2-0425-1b-instruct",
+      "olmo-2-1124-13b-instruct",
+      "olmo-2-1124-7b-instruct",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b",
+      "qwen3-0.6b",
+      "qwen3-1.7b",
+      "qwen3-14b",
+      "qwen3-32b",
+      "qwen3-4b",
+      "qwen3-8b",
+      "qwen3.5-0.8b",
+      "qwen3.5-27b",
+      "qwen3.5-2b",
+      "qwen3.5-4b",
+      "qwen3.5-9b"
+    ],
+    "producer": "scripts/ladder_audit.py",
+    "producer_sha12": "08cc5934bd74"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "ladders": {
+    "qwen3_nothink": {
+      "replication_both_signs": true,
+      "components_model_below_mw": true,
+      "components_mw_above_mi": true,
+      "reliability_erho_k1_below_080": true,
+      "model_share": 0.03190091840320082,
+      "mw_share": 0.21169549649238573,
+      "mi_share": 0.027657792232227116,
+      "erho_k1": 0.10603231221539029,
+      "bootstrap_p_model_below_mw": 0.84,
+      "bootstrap_ci_erho_k1_flat": [
+        0.0,
+        0.5699488274390968
+      ],
+      "n_held_of_4_directional_parts": 4,
+      "n_held_of_3_predictions": 3
+    },
+    "qwen3_think": {
+      "replication_both_signs": true,
+      "components_model_below_mw": true,
+      "components_mw_above_mi": true,
+      "reliability_erho_k1_below_080": true,
+      "model_share": 0.023173995238599532,
+      "mw_share": 0.1955647770432352,
+      "mi_share": 0.02148956566095127,
+      "erho_k1": 0.08468601918575586,
+      "bootstrap_p_model_below_mw": 0.845,
+      "bootstrap_ci_erho_k1_flat": [
+        0.0,
+        0.5592133113333057
+      ],
+      "n_held_of_4_directional_parts": 4,
+      "n_held_of_3_predictions": 3
+    },
+    "qwen3.5_nothink": {
+      "replication_both_signs": true,
+      "components_model_below_mw": true,
+      "components_mw_above_mi": true,
+      "reliability_erho_k1_below_080": true,
+      "model_share": 0.06290198335730147,
+      "mw_share": 0.09819703263217586,
+      "mi_share": 0.018354689880601866,
+      "erho_k1": 0.3205137325200155,
+      "bootstrap_p_model_below_mw": 0.625,
+      "bootstrap_ci_erho_k1_flat": [
+        0.022346022677674347,
+        0.631616885330118
+      ],
+      "n_held_of_4_directional_parts": 4,
+      "n_held_of_3_predictions": 3
+    },
+    "qwen3.5_think": {
+      "replication_both_signs": true,
+      "components_model_below_mw": false,
+      "components_mw_above_mi": true,
+      "reliability_erho_k1_below_080": true,
+      "model_share": 0.1017218600989021,
+      "mw_share": 0.09721299701208216,
+      "mi_share": 0.011834900077333942,
+      "erho_k1": 0.43610193551193094,
+      "bootstrap_p_model_below_mw": 0.345,
+      "bootstrap_ci_erho_k1_flat": [
+        0.07640993654921072,
+        0.696882384905412
+      ],
+      "n_held_of_4_directional_parts": 3,
+      "n_held_of_3_predictions": 2
+    }
+  },
+  "source": "pod/PREDICTIONS.md section 4; the manuscript scored qwen3.5_nothink only",
+  "conventions": {
+    "kind": "measured",
+    "statistic": "flat 3-way G-study and sign counts as pod_ladders",
+    "note": "post-submission audit; not part of the submitted manuscript or its recorded predictions",
+    "pooling": "validated for scoring and for the direction arrays (Qwen2.5: lf scoring, all-token directions, as pod_ladders)",
+    "layers": "ALL",
+    "scoring_array": "results/post_submission/cells/*.npz, from results/pod_*/*.npz and results/gstudy via scripts/ladder_audit_cells.py",
+    "data_root": "pod",
+    "model_population": [
+      "olmo-2-0325-32b-instruct",
+      "olmo-2-0425-1b-instruct",
+      "olmo-2-1124-13b-instruct",
+      "olmo-2-1124-7b-instruct",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b",
+      "qwen3-0.6b",
+      "qwen3-1.7b",
+      "qwen3-14b",
+      "qwen3-32b",
+      "qwen3-4b",
+      "qwen3-8b",
+      "qwen3.5-0.8b",
+      "qwen3.5-27b",
+      "qwen3.5-2b",
+      "qwen3.5-4b",
+      "qwen3.5-9b"
+    ],
+    "producer": "scripts/ladder_audit.py",
+    "producer_sha12": "08cc5934bd74"
+  }
+}

@@ -1,0 +1,576 @@
+{
+  "ladders": {
+    "qwen3_nothink": {
+      "length_unit": "tokens (Qwen/Qwen3-0.6B)",
+      "eval_lengths": {
+        "eval_benchmark": 94.0,
+        "eval_certification": 83.0,
+        "eval_leaderboard": 84.0,
+        "eval_oversight": 81.0,
+        "eval_redteam": 95.0,
+        "eval_rubric": 81.0
+      },
+      "deploy_lengths": {
+        "deploy_a": 96.0,
+        "deploy_advice": 82.0,
+        "deploy_agent": 90.0,
+        "deploy_api": 80.0,
+        "deploy_ide": 87.0,
+        "deploy_support": 84.0
+      },
+      "covariates": {
+        "eval_length": {
+          "slope": {
+            "pearson": 0.13019005549876733,
+            "spearman": 0.20810173363435888,
+            "arm_permutation_p_two_sided": 0.76675
+          },
+          "r": {
+            "pearson": 0.2110076758260639,
+            "spearman": 0.29070700194723414,
+            "arm_permutation_p_two_sided": 0.5652
+          }
+        },
+        "deploy_length": {
+          "slope": {
+            "pearson": 0.029922027850049996,
+            "spearman": -0.026616978897057848,
+            "arm_permutation_p_two_sided": 0.81985
+          },
+          "r": {
+            "pearson": -0.08247341888953907,
+            "spearman": -0.15813616874134367,
+            "arm_permutation_p_two_sided": 0.537
+          }
+        },
+        "eval_minus_deploy": {
+          "slope": {
+            "pearson": 0.07618118865394241,
+            "spearman": 0.13354835255596012,
+            "arm_permutation_p_two_sided": 0.80835
+          },
+          "r": {
+            "pearson": 0.211593018514526,
+            "spearman": 0.2575575370722088,
+            "arm_permutation_p_two_sided": 0.4766
+          }
+        },
+        "eval_plus_deploy": {
+          "slope": {
+            "pearson": 0.11644630775193908,
+            "spearman": 0.12089979125071199,
+            "arm_permutation_p_two_sided": 0.7185
+          },
+          "r": {
+            "pearson": 0.10061116759693471,
+            "spearman": 0.10169502696888247,
+            "arm_permutation_p_two_sided": 0.7355
+          }
+        }
+      },
+      "arm_level": {
+        "eval_arm_mean_slope_vs_length_r": 0.15570055503775293,
+        "deploy_arm_mean_slope_vs_length_r": 0.11773108248594549,
+        "eval_arm_mean_slope": {
+          "eval_benchmark": -0.00497876361300814,
+          "eval_certification": 0.002167890707151232,
+          "eval_leaderboard": 0.020919474987636525,
+          "eval_oversight": 0.062342753320918126,
+          "eval_redteam": 0.05821877205210857,
+          "eval_rubric": -0.016696170295063175
+        },
+        "deploy_arm_mean_slope": {
+          "deploy_a": 0.028396889562692516,
+          "deploy_advice": 0.017781637247002113,
+          "deploy_agent": 0.022408699920637033,
+          "deploy_api": 0.025803535249354383,
+          "deploy_ide": 0.0011286067099538926,
+          "deploy_support": 0.026454588470103207
+        },
+        "longest_deploy": "deploy_a",
+        "longest_deploy_rank_of_mean_slope_from_bottom": 6
+      },
+      "eval_fixed_spanning_without_longest_deploy": 2,
+      "deploy_fixed_spanning_without_longest_deploy": 5
+    },
+    "qwen3_think": {
+      "length_unit": "tokens (Qwen/Qwen3-0.6B)",
+      "eval_lengths": {
+        "eval_benchmark": 94.0,
+        "eval_certification": 83.0,
+        "eval_leaderboard": 84.0,
+        "eval_oversight": 81.0,
+        "eval_redteam": 95.0,
+        "eval_rubric": 81.0
+      },
+      "deploy_lengths": {
+        "deploy_a": 96.0,
+        "deploy_advice": 82.0,
+        "deploy_agent": 90.0,
+        "deploy_api": 80.0,
+        "deploy_ide": 87.0,
+        "deploy_support": 84.0
+      },
+      "covariates": {
+        "eval_length": {
+          "slope": {
+            "pearson": 0.14782457403362226,
+            "spearman": 0.23113589499083373,
+            "arm_permutation_p_two_sided": 0.74465
+          },
+          "r": {
+            "pearson": 0.19822475753133012,
+            "spearman": 0.2533757749212232,
+            "arm_permutation_p_two_sided": 0.6069
+          }
+        },
+        "deploy_length": {
+          "slope": {
+            "pearson": 0.035930677126690076,
+            "spearman": -0.025051274256054447,
+            "arm_permutation_p_two_sided": 0.76715
+          },
+          "r": {
+            "pearson": -0.07968432888501069,
+            "spearman": -0.12525637128027223,
+            "arm_permutation_p_two_sided": 0.5763
+          }
+        },
+        "eval_minus_deploy": {
+          "slope": {
+            "pearson": 0.08518426577268721,
+            "spearman": 0.14515004341506862,
+            "arm_permutation_p_two_sided": 0.79575
+          },
+          "r": {
+            "pearson": 0.20025970473767088,
+            "spearman": 0.2174672497701783,
+            "arm_permutation_p_two_sided": 0.50835
+          }
+        },
+        "eval_plus_deploy": {
+          "slope": {
+            "pearson": 0.13353503267351496,
+            "spearman": 0.13778451689446813,
+            "arm_permutation_p_two_sided": 0.6888
+          },
+          "r": {
+            "pearson": 0.0930310433355147,
+            "spearman": 0.10710845045772033,
+            "arm_permutation_p_two_sided": 0.75225
+          }
+        }
+      },
+      "arm_level": {
+        "eval_arm_mean_slope_vs_length_r": 0.1766533818148239,
+        "deploy_arm_mean_slope_vs_length_r": 0.14021130733998727,
+        "eval_arm_mean_slope": {
+          "eval_benchmark": -0.004889332994332122,
+          "eval_certification": 0.0033676962073803233,
+          "eval_leaderboard": 0.018633819093937073,
+          "eval_oversight": 0.058692901813618914,
+          "eval_redteam": 0.05846554255164276,
+          "eval_rubric": -0.01503981804342125
+        },
+        "deploy_arm_mean_slope": {
+          "deploy_a": 0.026947964557958472,
+          "deploy_advice": 0.015159125800303147,
+          "deploy_agent": 0.023052510256286036,
+          "deploy_api": 0.024815782158825617,
+          "deploy_ide": 0.0020446433872907746,
+          "deploy_support": 0.02721078246816164
+        },
+        "longest_deploy": "deploy_a",
+        "longest_deploy_rank_of_mean_slope_from_bottom": 5
+      },
+      "eval_fixed_spanning_without_longest_deploy": 2,
+      "deploy_fixed_spanning_without_longest_deploy": 5
+    },
+    "qwen3.5_nothink": {
+      "length_unit": "tokens (Qwen/Qwen3.5-0.8B)",
+      "eval_lengths": {
+        "eval_benchmark": 96.0,
+        "eval_certification": 85.0,
+        "eval_leaderboard": 86.0,
+        "eval_oversight": 83.0,
+        "eval_redteam": 97.0,
+        "eval_rubric": 83.0
+      },
+      "deploy_lengths": {
+        "deploy_a": 98.0,
+        "deploy_advice": 84.0,
+        "deploy_agent": 92.0,
+        "deploy_api": 82.0,
+        "deploy_ide": 89.0,
+        "deploy_support": 86.0
+      },
+      "covariates": {
+        "eval_length": {
+          "slope": {
+            "pearson": 0.3894118659669265,
+            "spearman": 0.4011121201730963,
+            "arm_permutation_p_two_sided": 0.09925
+          },
+          "r": {
+            "pearson": 0.3144211973361074,
+            "spearman": 0.39396358733832826,
+            "arm_permutation_p_two_sided": 0.1925
+          }
+        },
+        "deploy_length": {
+          "slope": {
+            "pearson": -0.186408857561764,
+            "spearman": -0.24581562863753423,
+            "arm_permutation_p_two_sided": 0.5752
+          },
+          "r": {
+            "pearson": -0.13985040723683237,
+            "spearman": -0.15970187338234706,
+            "arm_permutation_p_two_sided": 0.6537
+          }
+        },
+        "eval_minus_deploy": {
+          "slope": {
+            "pearson": 0.413506570354821,
+            "spearman": 0.47708730966178414,
+            "arm_permutation_p_two_sided": 0.12125
+          },
+          "r": {
+            "pearson": 0.326702854842086,
+            "spearman": 0.41340691761289966,
+            "arm_permutation_p_two_sided": 0.19975
+          }
+        },
+        "eval_plus_deploy": {
+          "slope": {
+            "pearson": 0.16266211261084507,
+            "spearman": 0.17348733371370825,
+            "arm_permutation_p_two_sided": 0.54715
+          },
+          "r": {
+            "pearson": 0.1385106196261498,
+            "spearman": 0.2331638831263731,
+            "arm_permutation_p_two_sided": 0.5876
+          }
+        }
+      },
+      "arm_level": {
+        "eval_arm_mean_slope_vs_length_r": 0.7054058367640981,
+        "deploy_arm_mean_slope_vs_length_r": -0.28855914124658477,
+        "eval_arm_mean_slope": {
+          "eval_benchmark": 0.025849831316467477,
+          "eval_certification": 0.008334522871938229,
+          "eval_leaderboard": 0.018325256183099787,
+          "eval_oversight": 0.028238842149941445,
+          "eval_redteam": 0.0574428642878668,
+          "eval_rubric": 0.01631772048989766
+        },
+        "deploy_arm_mean_slope": {
+          "deploy_a": 0.037400223393722294,
+          "deploy_advice": 0.04635462064335549,
+          "deploy_agent": -0.010635365841895984,
+          "deploy_api": 0.03290444399191542,
+          "deploy_ide": 0.018918223283705304,
+          "deploy_support": 0.029566891828408867
+        },
+        "longest_deploy": "deploy_a",
+        "longest_deploy_rank_of_mean_slope_from_bottom": 5
+      },
+      "eval_fixed_spanning_without_longest_deploy": 5,
+      "deploy_fixed_spanning_without_longest_deploy": 4
+    },
+    "qwen3.5_think": {
+      "length_unit": "tokens (Qwen/Qwen3.5-0.8B)",
+      "eval_lengths": {
+        "eval_benchmark": 96.0,
+        "eval_certification": 85.0,
+        "eval_leaderboard": 86.0,
+        "eval_oversight": 83.0,
+        "eval_redteam": 97.0,
+        "eval_rubric": 83.0
+      },
+      "deploy_lengths": {
+        "deploy_a": 98.0,
+        "deploy_advice": 84.0,
+        "deploy_agent": 92.0,
+        "deploy_api": 82.0,
+        "deploy_ide": 89.0,
+        "deploy_support": 86.0
+      },
+      "covariates": {
+        "eval_length": {
+          "slope": {
+            "pearson": 0.3920960911453468,
+            "spearman": 0.3288325103993305,
+            "arm_permutation_p_two_sided": 0.1155
+          },
+          "r": {
+            "pearson": 0.38580665566707373,
+            "spearman": 0.4733917299468622,
+            "arm_permutation_p_two_sided": 0.0865
+          }
+        },
+        "deploy_length": {
+          "slope": {
+            "pearson": -0.1840340451603238,
+            "spearman": -0.241118514714524,
+            "arm_permutation_p_two_sided": 0.55085
+          },
+          "r": {
+            "pearson": -0.16970110874384514,
+            "spearman": -0.19884448940743213,
+            "arm_permutation_p_two_sided": 0.6087
+          }
+        },
+        "eval_minus_deploy": {
+          "slope": {
+            "pearson": 0.41389448784150007,
+            "spearman": 0.4349344995403566,
+            "arm_permutation_p_two_sided": 0.11485
+          },
+          "r": {
+            "pearson": 0.3995979169393999,
+            "spearman": 0.4932007691883238,
+            "arm_permutation_p_two_sided": 0.12635
+          }
+        },
+        "eval_plus_deploy": {
+          "slope": {
+            "pearson": 0.16624573944779236,
+            "spearman": 0.14796690869490123,
+            "arm_permutation_p_two_sided": 0.5414
+          },
+          "r": {
+            "pearson": 0.17123654421172885,
+            "spearman": 0.25971543642876826,
+            "arm_permutation_p_two_sided": 0.52255
+          }
+        }
+      },
+      "arm_level": {
+        "eval_arm_mean_slope_vs_length_r": 0.6877300867251931,
+        "deploy_arm_mean_slope_vs_length_r": -0.30008757891587007,
+        "eval_arm_mean_slope": {
+          "eval_benchmark": 0.030950851864472922,
+          "eval_certification": 0.017068893558212138,
+          "eval_leaderboard": 0.020433122381658175,
+          "eval_oversight": 0.035633891837901145,
+          "eval_redteam": 0.060090913940777035,
+          "eval_rubric": 0.02023929411385599
+        },
+        "deploy_arm_mean_slope": {
+          "deploy_a": 0.041009659142078804,
+          "deploy_advice": 0.0474440800722944,
+          "deploy_agent": 0.0003662755610643253,
+          "deploy_api": 0.038248845928510695,
+          "deploy_ide": 0.020950522938235978,
+          "deploy_support": 0.0363975840546932
+        },
+        "longest_deploy": "deploy_a",
+        "longest_deploy_rank_of_mean_slope_from_bottom": 5
+      },
+      "eval_fixed_spanning_without_longest_deploy": 3,
+      "deploy_fixed_spanning_without_longest_deploy": 2
+    },
+    "qwen2.5_paper": {
+      "length_unit": "tokens (Qwen/Qwen2.5-0.5B-Instruct)",
+      "eval_lengths": {
+        "eval_benchmark": 94.0,
+        "eval_certification": 83.0,
+        "eval_leaderboard": 84.0,
+        "eval_oversight": 81.0,
+        "eval_redteam": 95.0,
+        "eval_rubric": 81.0
+      },
+      "deploy_lengths": {
+        "deploy_a": 96.0,
+        "deploy_advice": 82.0,
+        "deploy_agent": 90.0,
+        "deploy_api": 80.0,
+        "deploy_ide": 87.0,
+        "deploy_support": 84.0
+      },
+      "covariates": {
+        "eval_length": {
+          "slope": {
+            "pearson": -0.10178923619183723,
+            "spearman": -0.0667196397911685,
+            "arm_permutation_p_two_sided": 0.68995
+          },
+          "r": {
+            "pearson": -0.1808942052140518,
+            "spearman": -0.16123912949532385,
+            "arm_permutation_p_two_sided": 0.4815
+          }
+        },
+        "deploy_length": {
+          "slope": {
+            "pearson": -0.33266735607852604,
+            "spearman": -0.25990697040656485,
+            "arm_permutation_p_two_sided": 0.1529
+          },
+          "r": {
+            "pearson": -0.3932551748476865,
+            "spearman": -0.3287979746107146,
+            "arm_permutation_p_two_sided": 0.0997
+          }
+        },
+        "eval_minus_deploy": {
+          "slope": {
+            "pearson": 0.14852692000170206,
+            "spearman": 0.06832106839252787,
+            "arm_permutation_p_two_sided": 0.5925
+          },
+          "r": {
+            "pearson": 0.13077113156388823,
+            "spearman": 0.05981316176251495,
+            "arm_permutation_p_two_sided": 0.59165
+          }
+        },
+        "eval_plus_deploy": {
+          "slope": {
+            "pearson": -0.29913293713245126,
+            "spearman": -0.2882003552628913,
+            "arm_permutation_p_two_sided": 0.2708
+          },
+          "r": {
+            "pearson": -0.3984198220204683,
+            "spearman": -0.37146396416263533,
+            "arm_permutation_p_two_sided": 0.0885
+          }
+        }
+      },
+      "arm_level": {
+        "eval_arm_mean_slope_vs_length_r": -0.1624393370596923,
+        "deploy_arm_mean_slope_vs_length_r": -0.6536382878812422,
+        "eval_arm_mean_slope": {
+          "eval_benchmark": -0.013198417021937114,
+          "eval_certification": -0.04534206481548725,
+          "eval_leaderboard": 0.057929684739454555,
+          "eval_oversight": 0.011288198084161441,
+          "eval_redteam": 0.0030476040893158197,
+          "eval_rubric": 0.010914093507609158
+        },
+        "deploy_arm_mean_slope": {
+          "deploy_a": -0.04307151163742251,
+          "deploy_advice": 0.03262783982428875,
+          "deploy_agent": 0.027792825595524675,
+          "deploy_api": 0.006215328518372697,
+          "deploy_ide": -0.008313621539118838,
+          "deploy_support": 0.009388237821471851
+        },
+        "longest_deploy": "deploy_a",
+        "longest_deploy_rank_of_mean_slope_from_bottom": 1
+      },
+      "eval_fixed_spanning_without_longest_deploy": 5,
+      "deploy_fixed_spanning_without_longest_deploy": 5
+    },
+    "olmo2": {
+      "length_unit": "tokens (allenai/OLMo-2-0425-1B-Instruct)",
+      "eval_lengths": {
+        "eval_benchmark": 94.0,
+        "eval_certification": 83.0,
+        "eval_leaderboard": 84.0,
+        "eval_oversight": 81.0,
+        "eval_redteam": 95.0,
+        "eval_rubric": 81.0
+      },
+      "deploy_lengths": {
+        "deploy_a": 96.0,
+        "deploy_advice": 82.0,
+        "deploy_agent": 90.0,
+        "deploy_api": 80.0,
+        "deploy_ide": 87.0,
+        "deploy_support": 84.0
+      },
+      "covariates": {
+        "eval_length": {
+          "slope": {
+            "pearson": 0.5187145199446964,
+            "spearman": 0.40746637158177906,
+            "arm_permutation_p_two_sided": 0.09845
+          },
+          "r": {
+            "pearson": 0.35755515541066835,
+            "spearman": 0.42652912580782715,
+            "arm_permutation_p_two_sided": 0.20995
+          }
+        },
+        "deploy_length": {
+          "slope": {
+            "pearson": 0.08337342488659166,
+            "spearman": 0.10646791558823139,
+            "arm_permutation_p_two_sided": 0.70065
+          },
+          "r": {
+            "pearson": 0.05442183193391489,
+            "spearman": -0.1878845569204083,
+            "arm_permutation_p_two_sided": 0.83995
+          }
+        },
+        "eval_minus_deploy": {
+          "slope": {
+            "pearson": 0.3276451157175645,
+            "spearman": 0.35617190937463106,
+            "arm_permutation_p_two_sided": 0.2459
+          },
+          "r": {
+            "pearson": 0.2279000939361309,
+            "spearman": 0.5326465181092926,
+            "arm_permutation_p_two_sided": 0.3561
+          }
+        },
+        "eval_plus_deploy": {
+          "slope": {
+            "pearson": 0.43983807601724195,
+            "spearman": 0.46955004213895923,
+            "arm_permutation_p_two_sided": 0.1004
+          },
+          "r": {
+            "pearson": 0.3011338184461019,
+            "spearman": 0.2563642695071068,
+            "arm_permutation_p_two_sided": 0.22135
+          }
+        }
+      },
+      "arm_level": {
+        "eval_arm_mean_slope_vs_length_r": 0.7344341168359376,
+        "deploy_arm_mean_slope_vs_length_r": 0.1965126256334007,
+        "eval_arm_mean_slope": {
+          "eval_benchmark": 0.08872326783722767,
+          "eval_certification": 0.017215197437313205,
+          "eval_leaderboard": 0.01571242448236873,
+          "eval_oversight": 0.04413798954094192,
+          "eval_redteam": 0.04675269648834047,
+          "eval_rubric": 0.011422226265160132
+        },
+        "deploy_arm_mean_slope": {
+          "deploy_a": 0.040580617600200146,
+          "deploy_advice": 0.05613242639373541,
+          "deploy_agent": 0.041323542673255734,
+          "deploy_api": 0.008945871731580913,
+          "deploy_ide": 0.024883781142518602,
+          "deploy_support": 0.052097562510061306
+        },
+        "longest_deploy": "deploy_a",
+        "longest_deploy_rank_of_mean_slope_from_bottom": 3
+      },
+      "eval_fixed_spanning_without_longest_deploy": 2,
+      "deploy_fixed_spanning_without_longest_deploy": 3
+    }
+  },
+  "n_permutations": 20000,
+  "conventions": {
+    "kind": "derived",
+    "sources": [
+      "ladder_curves.json"
+    ],
+    "statistic": "correlation of per-wrapper slope and r with framing length, arm-level permutation null",
+    "note": "post-submission audit; lengths from data/framings_multi.json",
+    "source_hashes": {
+      "ladder_curves.json": "c4c15c3b4a77"
+    },
+    "producer": "scripts/wrapper_length.py",
+    "producer_sha12": "00e262f1136d"
+  }
+}

@@ -2,7 +2,7 @@
 PY ?= python
 R  := results
 .PHONY: all clean-json
-all: $(R)/surface_baseline.json $(R)/null_control.json $(R)/field_construction.json $(R)/direction_geometry_v11_validated.json $(R)/direction_geometry_v11_lasttoken.json $(R)/direction_geometry_v11_validated_smollm2.json $(R)/corrected_decomposition_validated.json $(R)/label_permuted_control_validated.json $(R)/released_label_permuted.json $(R)/wrapper_curves.json $(R)/slope_distribution_deploy_peak_lf.json $(R)/concordance_equivalence_peak_lf.json $(R)/counterbalance_saturation.json $(R)/imbalance_hazard.json $(R)/arm_decomposition_trunk_peak_validated.json $(R)/implementation_facet.json $(R)/gstudy_gtheory_deploy_peak_lf.json $(R)/reml_components_validated_interior.json $(R)/reml_components_validated_interior_fourfam.json $(R)/two_concept_floor.json $(R)/qwen_anomaly_test.json $(R)/slope_reliability.json $(R)/param_count_check.json $(R)/k_requirement.json $(R)/reanalysis_table.json
+all: $(R)/surface_baseline.json $(R)/null_control.json $(R)/field_construction.json $(R)/direction_geometry_v11_validated.json $(R)/direction_geometry_v11_lasttoken.json $(R)/direction_geometry_v11_validated_smollm2.json $(R)/corrected_decomposition_validated.json $(R)/label_permuted_control_validated.json $(R)/released_label_permuted.json $(R)/wrapper_curves.json $(R)/slope_distribution_deploy_peak_lf.json $(R)/concordance_equivalence_peak_lf.json $(R)/counterbalance_saturation.json $(R)/imbalance_hazard.json $(R)/arm_decomposition_trunk_peak_validated.json $(R)/implementation_facet.json $(R)/gstudy_gtheory_deploy_peak_lf.json $(R)/reml_components_validated_interior.json $(R)/reml_components_validated_interior_fourfam.json $(R)/two_concept_floor.json $(R)/qwen_anomaly_test.json $(R)/slope_reliability.json $(R)/param_count_check.json $(R)/k_requirement.json $(R)/reanalysis_table.json $(R)/pod_gtheory.json $(R)/ladder_curves.json $(R)/pod_gtheory_bootstrap.json $(R)/wrapper_subsets.json $(R)/post_submission/cells/olmo2.npz $(R)/post_submission/averaged_estimator.json $(R)/post_submission/wrapper_length.json
 
 $(R)/surface_baseline.json:
 	$(PY) scripts/surface_baseline.py
@@ -78,6 +78,27 @@ $(R)/k_requirement.json:
 
 $(R)/reanalysis_table.json: $(R)/slope_distribution_deploy_peak_lf.json $(R)/released_label_permuted.json
 	$(PY) scripts/reanalysis_table.py
+
+$(R)/pod_gtheory.json:
+	$(PY) scripts/pod_ladders.py
+
+$(R)/ladder_curves.json:
+	$(PY) scripts/ladder_curves.py
+
+$(R)/pod_gtheory_bootstrap.json:
+	$(PY) scripts/bootstrap_components.py
+
+$(R)/wrapper_subsets.json: $(R)/ladder_curves.json $(R)/pod_gtheory.json
+	$(PY) scripts/wrapper_subsets.py
+
+$(R)/post_submission/cells/olmo2.npz:
+	$(PY) scripts/ladder_audit_cells.py
+
+$(R)/post_submission/averaged_estimator.json: $(R)/post_submission/cells/olmo2.npz
+	$(PY) scripts/ladder_audit.py
+
+$(R)/post_submission/wrapper_length.json: $(R)/ladder_curves.json
+	$(PY) scripts/wrapper_length.py
 
 clean-json:
 	rm -f $(R)/*.json

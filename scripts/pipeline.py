@@ -85,6 +85,27 @@ GRAPH: dict[str, tuple[list[str], list[str], bool]] = {
                               ["reanalysis_scaling_law.json", "reanalysis_probe_depth.json",
                                "slope_distribution_deploy_peak_lf.json",
                                "released_label_permuted.json"], False),
+
+    # --- the ladders (Table 1, Figs 1/3-6). These were run by hand from the README and were
+    # missing here, so the declared graph did not cover the files the ladder macros read. ----------
+    "pod_gtheory.json": (["scripts/pod_ladders.py"], [], True),   # also pod_replication.json,
+                                                                  # pod_slope_reliability.json
+    "ladder_curves.json": (["scripts/ladder_curves.py"], [], True),
+    "pod_gtheory_bootstrap.json": (["scripts/bootstrap_components.py"], [], True),
+    "wrapper_subsets.json": (["scripts/wrapper_subsets.py"],
+                             ["ladder_curves.json", "pod_gtheory.json"], False),
+
+    # --- post-submission audit (results/post_submission/; not read by the manuscript) ---------
+    # ladder_audit_cells.py caches activation-derived cells (gitignored .npz) under
+    # results/post_submission/cells/; set EAS_ACTIVATION_ROOT if the arrays live elsewhere.
+    # ladder_audit.py also writes crossed_gstudy.json, null_directions.json, arm_disjoint.json
+    # and prediction_scoring.json from the same cells.
+    # The cache is named by its last ladder; the script writes one .npz per ladder.
+    "post_submission/cells/olmo2.npz": (["scripts/ladder_audit_cells.py"], [], True),
+    "post_submission/averaged_estimator.json": (
+        ["scripts/ladder_audit.py"], ["post_submission/cells/olmo2.npz"], False),
+    "post_submission/wrapper_length.json": (["scripts/wrapper_length.py"],
+                                            ["ladder_curves.json"], False),
 }
 
 
