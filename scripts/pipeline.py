@@ -106,6 +106,13 @@ GRAPH: dict[str, tuple[list[str], list[str], bool]] = {
         ["scripts/ladder_audit.py"], ["post_submission/cells/olmo2.npz"], False),
     "post_submission/wrapper_length.json": (["scripts/wrapper_length.py"],
                                             ["ladder_curves.json"], False),
+    # Geometry-matched nulls (framing-band rotation, within-task label permutation, cross-layer
+    # matched isotropic, exhaustive framing relabelling). Same caching convention as above; the
+    # analysis also checks its real cells against ladder_audit_cells.py's.
+    "post_submission/cells/matched_olmo2.npz": (["scripts/matched_null_cells.py"], [], True),
+    "post_submission/matched_null.json": (
+        ["scripts/matched_null.py"],
+        ["post_submission/cells/matched_olmo2.npz", "post_submission/cells/olmo2.npz"], False),
 }
 
 
