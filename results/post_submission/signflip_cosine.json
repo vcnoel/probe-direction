@@ -162,9 +162,9 @@
   "conventions": {
     "kind": "measured",
     "statistic": "|cosine| between paired sign-flip directions and the real direction (and between independent sign-flip draws), per hidden state",
-    "note": "released cells: the released 204-item paired construction, hidden states 1..L-2 as the released statistic; ladder cells: median over draws and wrappers as stored by scripts/ladder_audit_cells.py",
+    "note": "released cells: the released 204-item paired construction, hidden states 1..L-1 of an L-layer model as the released statistic; ladder cells: median over draws and wrappers as stored by scripts/ladder_audit_cells.py",
     "pooling": "released: answer-token activations (paired differences); ladder cells: validated framing means",
-    "layers": "1..L-2 (released cells); as stored (ladder cells)",
+    "layers": "hidden states 1..L-1 of an L-layer model, the embedding output and the final state dropped (released cells); as stored (ladder cells)",
     "scoring_array": "results/released_label_permuted/*__diffs.npz; results/post_submission/cells/*.npz cos_signflip",
     "data_root": "gstudy + pod",
     "model_population": [
@@ -189,6 +189,6 @@
       "qwen3.5-9b"
     ],
     "producer": "scripts/signflip_cosine.py",
-    "producer_sha12": "912a180214c3"
+    "producer_sha12": "9c06ea237f39"
   }
 }

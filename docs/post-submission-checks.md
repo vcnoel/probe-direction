@@ -5,7 +5,8 @@ checks was registered before it was computed.** The adversarial audit computed e
 in scratch scripts; the versions here are ports, rerun and checked independently. They have no decision rules; they read stored
 activations or stored results and report numbers. None changes a reported number of the
 submitted paper. Registered analyses are in `docs/controlled-transfer-registration.md`,
-`docs/interior-band-registration.md` and `docs/paraphrase-registration.md`.
+`docs/interior-band-registration.md`, `docs/sign-mechanism-registration.md` and
+`docs/paraphrase-registration.md`.
 
 | Check | Motivation | Script | Output |
 |---|---|---|---|
@@ -30,6 +31,24 @@ above.
 | C2 unfolding alone | `signed_statistic.py` changed two things at once (the fold and the layer set). Here the paper's read-out state is kept and only the sign of the AUROC there is restored. Reports the share of model-by-wrapper cells below 0.5, and the 36-average r folded against unfolded, for all states and for states 1..n-2. | `scripts/unfold_isolate.py` | `results/post_submission/unfold_isolate.json` |
 | C3 scalar averaging, empirical | Q4 compared empirical vector averaging with a D-study extrapolation for scalar averaging. Adds the empirical scalar curve on the same partitions. | `scripts/q4_scalar_empirical.py` | `results/post_submission/q4_scalar_empirical.json` |
 | C4 subset agreement | Kendall tau between framing-disjoint 3 x 3 subset averages against random disjoint 9-wrapper subsets (which share framings), recomputed from the ladder cells. Also the flat and crossed k for E rho^2 = 0.80 from `matched_null.json`. | `scripts/subset_agreement.py` | `results/post_submission/subset_agreement.json` |
+
+## Three values of the Qwen3 (thinking on) flat k for E rho^2 = 0.80
+
+Table 1 prints 588, `matched_null.json` holds 582 and `crossed_gstudy.json` holds 583. All three use
+one definition: the smallest number of wrappers k with flat-design E rho^2 >= 0.80 at n = 4 item
+blocks. They differ only in the per-cell values the components are estimated from:
+
+| value | file | producer | cells |
+|---|---|---|---|
+| 588 | `results/pod_gtheory.json` (`k_for_080`), printed in Table 1 | `scripts/pod_ladders.py` | float32 projections from the stored arrays |
+| 583 | `results/post_submission/crossed_gstudy.json` (`k080.flat_wrappers`) | `scripts/ladder_audit.py` | `results/post_submission/cells/qwen3_think.npz` (`scripts/ladder_audit_cells.py`) |
+| 582 | `results/post_submission/matched_null.json` (`real.k080`) | `scripts/matched_null.py` | `results/post_submission/cells/matched_qwen3_think.npz` (`scripts/matched_null_cells.py`) |
+
+The cells agree to 4e-4. At n = 4 blocks, the coefficient's limit as k grows is 0.8117 to 0.8118,
+just above 0.80, so k is very sensitive to the fourth decimal of the components. The same
+computation on the stored float64 projections (`results/post_submission/controlled`) gives 585.
+582 to 588 is one value ("about 585, near the ceiling"); Table 1's 588 comes from
+`pod_gtheory.json`.
 
 Inputs are the stored arrays under `$EAS_ACTIVATION_ROOT` and the stored post-submission results;
 none of these checks runs a model.

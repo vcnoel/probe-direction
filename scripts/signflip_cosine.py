@@ -7,7 +7,8 @@ vector leaves part of it in d(s), and the "null" direction is still partly the r
 measures that, with exactly the released script's draws (seed 0 per model-rendering cell, 200
 sequential draws of s):
 
-  |cos(d(s), d_real)| per draw and scored hidden state (1 .. L-2, the layers the released
+  |cos(d(s), d_real)| per draw and scored hidden state (states 1..L-1 of an L-layer model, the
+  embedding output and the final state dropped, the layers the released
   statistic maximises over): median over draws and states, the largest per-state median, and
   the largest value; |cos| between independent draws (draw b against draw b + 100); 1/sqrt(n).
   Beside it, from results/released_label_permuted.json, the permutation mean, the AR(1) mean and
@@ -92,11 +93,13 @@ def main() -> None:
                  statistic="|cosine| between paired sign-flip directions and the real direction "
                            "(and between independent sign-flip draws), per hidden state",
                  note="released cells: the released 204-item paired construction, hidden states "
-                      "1..L-2 as the released statistic; ladder cells: median over draws and "
+                      "1..L-1 of an L-layer model as the released statistic; ladder cells: "
+                      "median over draws and "
                       "wrappers as stored by scripts/ladder_audit_cells.py",
                  pooling="released: answer-token activations (paired differences); ladder cells: "
                          "validated framing means",
-                 layers="1..L-2 (released cells); as stored (ladder cells)",
+                 layers="hidden states 1..L-1 of an L-layer model, the embedding output and the "
+                        "final state dropped (released cells); as stored (ladder cells)",
                  scoring_array="results/released_label_permuted/*__diffs.npz; "
                                "results/post_submission/cells/*.npz cos_signflip",
                  data_root="gstudy + pod",
