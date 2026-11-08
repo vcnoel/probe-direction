@@ -22,7 +22,10 @@ Directions are full-task (P7a-c) or train-task (P7d) unit mean differences of th
 fold is the paper's statistic (max over all hidden states of the folded |AUROC - 0.5|) and carries
 the verdicts; sign (mean of AUROC - 0.5 over relative depth 0.25 to 0.75) is reported beside it.
 
-    EAS_ACTIVATION_ROOT=<root> python scripts/paraphrase_analysis.py
+    EAS_ACTIVATION_ROOT=<root> python scripts/paraphrase_analysis.py [--ungated]
+
+--ungated computes every ladder whatever its gate and writes paraphrase_analysis_ungated.json,
+labelled descriptive; the gated file is the registered result.
 """
 
 from __future__ import annotations
@@ -48,6 +51,7 @@ from result_io import write_result  # noqa: E402
 ACT = Path(os.environ.get("EAS_ACTIVATION_ROOT", str(ROOT)))
 ACTS = ACT / "results" / "post_submission" / "paraphrase" / "acts"
 OUT = ROOT / "results" / "post_submission" / "paraphrase" / "paraphrase_analysis.json"
+OUT_UNGATED = OUT.with_name("paraphrase_analysis_ungated.json")
 CT_JSON = ROOT / "results" / "post_submission" / "controlled_transfer.json"
 CELLS = ROOT / "results" / "post_submission" / "cells"
 LADDER_KEYS = ("qwen3_nothink", "qwen3.5_nothink")
@@ -267,6 +271,8 @@ def main() -> None:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
+    ungated = "--ungated" in sys.argv
+    out_path = OUT_UNGATED if ungated else OUT
     result, pop = {}, []
     for ladder in LADDER_KEYS:
         params = LADDERS[ladder][1]
@@ -283,9 +289,14 @@ def main() -> None:
                   f"{g['max_abs_diff_fold']:.2g}, max|d sign| {g['max_abs_diff_sign']:.2g}", flush=True)
             C.append(c)
         bad = [c["model"] for c in C if not c["gate"]["passes"]]
-        if bad:
-            raise SystemExit(f"{ladder}: reproduction gate (amendment 2) failed for {bad}; stop")
         pop += models
+        gates = {c["model"]: c["gate"] for c in C}
+        if bad and not ungated:
+            print(f"{ladder}: reproduction gate (amendment 2) failed for {bad}; P7 stops on this "
+                  f"ladder", flush=True)
+            result[ladder] = {"models": models, "status": "stopped by the reproduction gate",
+                              "gate_failed": bad, "gates": gates}
+            continue
         # the version-0 statistic from the stored arrays against the paper's October cells
         cells_check = None
         cf = CELLS / f"matched_{ladder}.npz"
@@ -320,6 +331,8 @@ def main() -> None:
         Xs = np.stack([c["sign"].T for c in C])
         need = math.ceil(0.75 * len(models))
         lad = {"models": models, "params_b": [params[m] for m in models],
+               "status": ("computed although the reproduction gate failed for " + ", ".join(bad)
+                          + "; descriptive, not a registered result") if bad else "gate passed",
                "version0_stored_vs_october_cells_max_abs_diff": cells_check,
                "per_model": per_model,
                "p7a": {"holds_on_ladder": all(r["p7a"]["fold"]["holds"] for r in per_model),
@@ -340,7 +353,10 @@ def main() -> None:
         result[ladder] = lad
     if not result:
         raise SystemExit("no ladder had a paraphrase extraction")
-    write_result(OUT, {"ladders": result, "registration": "docs/paraphrase-registration.md",
+    write_result(out_path, {"ladders": result, "registration": "docs/paraphrase-registration.md",
+                       "run": ("ungated: every ladder computed whatever its gate; descriptive, "
+                               "see the registration's note on the ungated run") if ungated
+                              else "gated as registered (amendment 2)",
                        "gate_tolerance_fold_registered": GATE,
                        "gate_amended": {"min_direction_cosine": COS_MIN, "mean_abs_diff_fold": MEAN_TOL,
                                         "max_abs_diff_fold": "max(0.01, 2 x floor_batch)"},
@@ -360,7 +376,7 @@ def main() -> None:
                                "results/pod_qwen35/*__nothink.npz (P7a-c); held-out framing rows of "
                                "results/post_submission/paraphrase/acts/*__nothink.npz (P7d)",
                  data_root="pod + post_submission/paraphrase", model_population=sorted(pop))
-    print(f"wrote {OUT.as_posix()}")
+    print(f"wrote {out_path.as_posix()}")
 
 
 if __name__ == "__main__":

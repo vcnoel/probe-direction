@@ -174,3 +174,21 @@ the statistic over the 36 wrappers is at most 0.005, and the largest change is a
 max(0.01, 2 x floor_batch). A model that fails stops P7 on its ladder. Both the registered and the
 amended verdict are recorded per model, and results computed under this amendment are reported as
 such. Nothing else in the design changes.
+
+## Note on the floor and an ungated run (2026-11-08, after the floor measurement of the Qwen3 laptop rungs, before any paraphrase number was computed)
+
+The floor measurement of amendment 2 gives, for the 36 original wrappers (largest / mean change of
+the statistic): Qwen3-0.6B floor_batch 0 / 0, floor_machine 0.0071 / 0.0010; Qwen3-1.7B
+floor_batch 0 / 0, floor_machine 0.0301 / 0.0013; Qwen3-4B floor_batch 0.0183 / 0.0007,
+floor_machine 0.0073 / 0.0008. On 0.6B and 1.7B the laptop extraction does not depend on batch
+composition at all: the paraphrase extraction's version-0 rows equal, bit for bit in the statistic,
+a laptop re-extraction in the paper's own prompt order and batch. The whole Qwen3-1.7B discrepancy
+is therefore the change of machine and software stack, which amendment 2 does not admit (its
+tolerance uses floor_batch only). Under amendment 2, Qwen3-1.7B fails and P7 stops on the Qwen3
+ladder; that is the registered result for this ladder and it is not amended again.
+
+The same code is also run with the gate disabled (`scripts/paraphrase_analysis.py --ungated`,
+output `paraphrase_analysis_ungated.json`), with the registered decision rules evaluated unchanged.
+Its numbers are descriptive and are not registered results; any use of them must state that the
+registered reproduction gate failed on the change of machine (largest change 0.030 of the paper's
+statistic, mean 0.0013, directions within cosine 0.9988).
