@@ -22,17 +22,25 @@
 # but misses scripts/extract_paraphrase.py, scripts/extract_qwen25_validated.py and
 # scripts/paraphrase_noise_floor.py, which would then fail to import.
 #
+# Pod: a container disk of at least 80 GB (the model cache, one model at a time, up to 65.5 GB) and
+# a volume quota POD_DISK_GB of at least 70 GB. Run DRY_INSTALL=1 once on the pod first: it installs
+# the pins and runs every check (GPU, CUDA matmul, imports, disk, prompts, pod id) without
+# extracting.
+#
 # Billing. Launch inside tmux so a dropped SSH session does not kill the run; the script keeps its
 # own log, so no outer tee is needed:
 #     tmux new -s post
-#     POD_AUTOSTOP=1 POD_DISK_GB=<volume quota> POD_UPLOAD=<rclone target> bash pod/run_post_submission.sh
+#     POD_DISK_GB=<quota> DRY_INSTALL=1 bash pod/run_post_submission.sh          # once, checks only
+#     POD_AUTOSTOP=1 POD_DISK_GB=<quota> POD_UPLOAD=<rclone target> bash pod/run_post_submission.sh
 #     (detach with Ctrl-b d; reattach with tmux attach -t post; log in $POD_LOG_DIR/post_run.log)
 # The EXIT trap is set before anything else can fail. With POD_AUTOSTOP=1 it uploads the logs, then
 # calls pod_stop (pod/pod_stop.sh, bash and runpodctl only): `runpodctl stop pod`, a verified status
 # check, and, if the pod is still RUNNING (RunPod has documented stop as unavailable for pods with a
 # network volume), `runpodctl remove pod` provided no output awaits upload. A detached watchdog calls
-# the same function after POD_WATCHDOG_HOURS (default 4) whatever happens to this shell, and removes
-# the pod even with an upload pending. Every step of both is logged to $POD_LOG_DIR/post_stop.log.
+# the same function after POD_WATCHDOG_HOURS (default 5, above the expected 2 h; the step timeouts
+# alone could sum past 4 h) whatever happens to this shell, and removes the pod even with an upload
+# pending. Every step of both is logged to $POD_LOG_DIR/post_stop.log on the container disk; the
+# trap uploads the logs before it stops the pod, and nothing in the stop depends on the log.
 # A STOPPED POD STILL BILLS ITS VOLUME STORAGE: after retrieving the outputs, terminate it
 # (runpodctl remove pod <id>) and delete any network volume no longer needed.
 # A real run refuses to start without POD_AUTOSTOP=1 unless POD_KEEP_RUNNING=1.
@@ -45,11 +53,11 @@
 #   POD_UPLOAD          rclone target for the npz files and logs        REQUIRED unless DRY=1
 #   POD_AUTOSTOP=1      stop (or remove) the pod when the run ends or aborts
 #   POD_KEEP_RUNNING=1  run without autostop, deliberately
-#   POD_DISK_GB         the volume quota in GB; REQUIRED whenever RUNPOD_POD_ID is set or the
-#                       outputs are on a network volume (statvfs reports the cluster there)
-#   POD_WATCHDOG_HOURS  whole hours >= 1 before the watchdog stops the pod (default 4)
-#   POD_LOCAL_DIR       local container-disk directory for HF_HOME (default /root; HF_HOME=$it/hf)
-#   POD_LOG_DIR         logs, pid and state files (default: post_logs next to the checkout)
+#   POD_DISK_GB         the volume quota in GB (at least 70); REQUIRED whenever RUNPOD_POD_ID is
+#                       set or the outputs are on a network volume (statvfs reports the cluster there)
+#   POD_WATCHDOG_HOURS  whole hours >= 1 before the watchdog stops the pod (default 5)
+#   POD_LOCAL_DIR       local container-disk directory (default /root): HF_HOME=$it/hf and the logs
+#   POD_LOG_DIR         logs, pid and pending-upload flag (default $POD_LOCAL_DIR/post_logs)
 #   DRY=1               preflight and plan only: no install, no download, no extraction, no stop
 #   DRY_INSTALL=1       as DRY=1, but install the pinned dependencies first
 #   POD_ALLOW_GPU=1     accept a GPU other than an A100 80GB (estimates below assume an A100)
@@ -78,7 +86,7 @@ DRY=${DRY:-0}
 DRY_INSTALL=${DRY_INSTALL:-0}
 [ "$DRY_INSTALL" = "1" ] && DRY=1
 SCRIPT_DIR=$(cd "$(dirname "$0")" 2>/dev/null && pwd) || SCRIPT_DIR=$(dirname "$0")
-LOGDIR=${POD_LOG_DIR:-$SCRIPT_DIR/../../post_logs}
+LOGDIR=${POD_LOG_DIR:-${POD_LOCAL_DIR:-/root}/post_logs}
 mkdir -p "$LOGDIR" 2>/dev/null || LOGDIR=/tmp
 LOGDIR=$(cd "$LOGDIR" 2>/dev/null && pwd) || LOGDIR=/tmp
 export POD_STOP_LOG=$LOGDIR/post_stop.log
@@ -91,18 +99,19 @@ autostop() {
   trap '' PIPE
   set +e
   [ "$DRY" = "1" ] && exit "$rc"
-  printf '%s [autostop] run ended with status %s\n' "$(date -u +%FT%TZ)" "$rc" >> "$POD_STOP_LOG"
+  # Nothing below depends on the log: every write ignores its own failure, and an unwritable log
+  # falls back to /tmp only for the record.
+  { : >> "$POD_STOP_LOG"; } 2>/dev/null || POD_STOP_LOG=/tmp/post_stop.$$.log
+  { printf '%s [autostop] run ended with status %s\n' "$(date -u +%FT%TZ)" "$rc" >> "$POD_STOP_LOG"; } 2>/dev/null || true
   if [ -n "${POD_UPLOAD:-}" ] && command -v rclone >/dev/null 2>&1; then
-    for f in post_run.log post_pip_freeze.txt post_nvidia_smi.txt post_stop.log; do
-      [ -f "$LOGDIR/$f" ] && timeout 120 rclone copy "$LOGDIR/$f" "$POD_UPLOAD/logs" >> "$POD_STOP_LOG" 2>&1
-    done
-    printf '%s [autostop] logs uploaded to %s/logs\n' "$(date -u +%FT%TZ)" "$POD_UPLOAD" >> "$POD_STOP_LOG"
+    { timeout -k 10 120 rclone copy "$LOGDIR" "$POD_UPLOAD/logs" --include 'post_*' >> "$POD_STOP_LOG" 2>&1; } 2>/dev/null || true
+    { printf '%s [autostop] log upload to %s/logs attempted\n' "$(date -u +%FT%TZ)" "$POD_UPLOAD" >> "$POD_STOP_LOG"; } 2>/dev/null || true
   fi
   if [ "${POD_AUTOSTOP:-0}" = "1" ]; then
     if declare -F pod_stop >/dev/null; then
       pod_stop autostop
     else
-      printf '%s [autostop] pod_stop not loaded; STOP THE POD BY HAND\n' "$(date -u +%FT%TZ)" >> "$POD_STOP_LOG"
+      { printf '%s [autostop] pod_stop not loaded; STOP THE POD BY HAND\n' "$(date -u +%FT%TZ)" >> "$POD_STOP_LOG"; } 2>/dev/null || true
     fi
   fi
   exit "$rc"
@@ -114,11 +123,15 @@ trap 'exit 130' INT TERM HUP
 exec > >(tee -a "$LOGDIR/post_run.log") 2>&1
 echo "== run started $(date -u +%FT%TZ); logs in $LOGDIR"
 
-case "${POD_WATCHDOG_HOURS:-4}" in
+POD_WATCHDOG_HOURS=${POD_WATCHDOG_HOURS:-5}
+case "$POD_WATCHDOG_HOURS" in
   ''|*[!0-9]*|0*) echo "POD_WATCHDOG_HOURS must be a whole number of hours >= 1" >&2; exit 1 ;;
 esac
 if [ -n "${RUNPOD_POD_ID:-}" ] && [ -z "${POD_DISK_GB:-}" ]; then
   echo "POD_DISK_GB (the volume quota in GB) is required on a pod" >&2; exit 1
+fi
+if [ -n "${POD_DISK_GB:-}" ] && [ "${POD_DISK_GB%.*}" -lt 70 ] 2>/dev/null; then
+  echo "WARNING POD_DISK_GB=$POD_DISK_GB is below the 70 GB this run is planned for" >&2
 fi
 if [ "$DRY" != "1" ]; then
   if [ "${POD_AUTOSTOP:-0}" = "1" ]; then
@@ -129,12 +142,14 @@ if [ "$DRY" != "1" ]; then
     exit 1
   fi
 fi
-# The stop is only as good as the pod id: probe it while stopping is still cheap.
+# The stop is only as good as the pod id: require a RUNNING row for it now, while stopping is cheap.
+# The legacy `get pod` filters the id on the client and exits 0 with only a header for an absent pod
+# or a key scoped away from it, so the exit status alone proves nothing.
 if [ -n "${RUNPOD_POD_ID:-}" ] && command -v runpodctl >/dev/null; then
-  if timeout 60 runpodctl get pod "$RUNPOD_POD_ID" >/dev/null 2>&1; then
-    echo "runpodctl sees pod $RUNPOD_POD_ID"
+  if timeout -k 10 60 runpodctl get pod "$RUNPOD_POD_ID" 2>&1 | grep -F -- "$RUNPOD_POD_ID" | grep -q RUNNING; then
+    echo "runpodctl shows pod $RUNPOD_POD_ID RUNNING"
   else
-    echo "runpodctl get pod $RUNPOD_POD_ID failed: the stop could not reach this pod" >&2
+    echo "runpodctl get pod shows no RUNNING row for $RUNPOD_POD_ID: the stop could not reach this pod" >&2
     [ "$DRY" = "1" ] || exit 1
   fi
 fi
@@ -148,14 +163,15 @@ if [ "$DRY" != "1" ]; then
       kill "$old" 2>/dev/null || true
       echo "stopped an older watchdog (pid $old)"
     fi
-    nohup bash -c "sleep $(( ${POD_WATCHDOG_HOURS:-4} * 3600 )) && . '$SCRIPT_DIR/pod_stop.sh' && pod_stop_log watchdog '${POD_WATCHDOG_HOURS:-4} h elapsed' && pod_stop watchdog force" \
+    # `;`, not `&&`: a failed log write or source must not cancel the stop
+    nohup bash -c "sleep $(( POD_WATCHDOG_HOURS * 3600 )); . '$SCRIPT_DIR/pod_stop.sh'; pod_stop_log watchdog '$POD_WATCHDOG_HOURS h elapsed'; pod_stop watchdog force" \
       >> "$LOGDIR/post_watchdog.log" 2>&1 < /dev/null &
     wd=$!
     disown "$wd" 2>/dev/null || true
     echo "$wd" > "$pidf"
     sleep 1
     kill -0 "$wd" 2>/dev/null || { echo "the watchdog did not start" >&2; exit 1; }
-    echo "watchdog pid $wd stops pod $RUNPOD_POD_ID in ${POD_WATCHDOG_HOURS:-4} h"
+    echo "watchdog pid $wd stops pod $RUNPOD_POD_ID in $POD_WATCHDOG_HOURS h"
   else
     echo "WARNING no watchdog: RUNPOD_POD_ID or runpodctl missing; stop the pod by hand" >&2
   fi
@@ -274,11 +290,11 @@ elif [ "$DRY" = "1" ] && [ "$DRY_INSTALL" != "1" ]; then
   echo "  DRY=1: not installing anything (DRY_INSTALL=1 installs, then runs the same checks)"
 else
   # one resolver call, so pip picks scipy and scikit-learn builds that declare numpy 2.4.4 supported
-  "$PY" -m pip install --quiet "torch==2.11.0" "transformers==5.8.0" "numpy==2.4.4" \
+  timeout -k 2m 30m "$PY" -m pip install --quiet "torch==2.11.0" "transformers==5.8.0" "numpy==2.4.4" \
       huggingface_hub accelerate scipy scikit-learn
 fi
 if { [ "$DRY" != "1" ] || [ "$DRY_INSTALL" = "1" ]; } && ! "$PY" -c "import hf_transfer" 2>/dev/null; then
-  "$PY" -m pip install --quiet hf_transfer || true
+  timeout -k 1m 10m "$PY" -m pip install --quiet hf_transfer || true
 fi
 "$PY" -c "import hf_transfer" 2>/dev/null && export HF_HUB_ENABLE_HF_TRANSFER=1 || true
 "$PY" -m pip freeze > "$LOGDIR/post_pip_freeze.txt" 2>&1 || true
@@ -317,7 +333,7 @@ done
 # --------------------------------------------- 4. the prompts are the laptop's prompts
 say "rendering check (tokenizers only)"
 for m in $P7_MODELS; do
-  if ! out=$("$PY" scripts/extract_paraphrase.py --render-only --model "$m" 2>&1); then
+  if ! out=$(timeout -k 30s 10m "$PY" scripts/extract_paraphrase.py --render-only --model "$m" 2>&1); then
     echo "$out" >&2
     echo "  render check failed for $m (output above); stopping" >&2
     exit 1
@@ -336,13 +352,13 @@ done
 if [ "$DRY" != "1" ]; then
   say "verifying the upload target"
   : "${POD_UPLOAD:?set POD_UPLOAD to an rclone target, or DRY=1}"
-  command -v rclone >/dev/null || { curl -fsSL https://rclone.org/install.sh | bash; }
+  command -v rclone >/dev/null || { timeout -k 30s 5m bash -c "curl -fsSL https://rclone.org/install.sh | bash"; }
   probe=$(mktemp -d)/upload-probe.txt
   date -u +%FT%TZ > "$probe"
-  rclone copy --checksum "$probe" "$POD_UPLOAD" || { echo "cannot write to $POD_UPLOAD" >&2; exit 1; }
-  rclone lsf "$POD_UPLOAD" --include upload-probe.txt | grep -q . \
+  timeout -k 30s 5m rclone copy --checksum "$probe" "$POD_UPLOAD" || { echo "cannot write to $POD_UPLOAD" >&2; exit 1; }
+  timeout -k 30s 2m rclone lsf "$POD_UPLOAD" --include upload-probe.txt | grep -q . \
     || { echo "cannot read back $POD_UPLOAD" >&2; exit 1; }
-  rclone deletefile "$POD_UPLOAD/upload-probe.txt" || true
+  timeout -k 30s 2m rclone deletefile "$POD_UPLOAD/upload-probe.txt" || true
 fi
 
 ACTS_P7=$EAS_ACTIVATION_ROOT/results/post_submission/paraphrase/acts
@@ -361,7 +377,7 @@ done
 if [ "$DRY" = "1" ]; then say "DRY=1: stopping before the GPU"; exit 0; fi
 
 upload() {   # $1 file, $2 subdirectory of the target
-  rclone copy --checksum "$1" "$POD_UPLOAD/$2" || { echo "upload failed for $1" >&2; exit 1; }
+  timeout -k 2m 30m rclone copy --checksum "$1" "$POD_UPLOAD/$2" || { echo "upload failed for $1" >&2; exit 1; }
   echo "  uploaded $(basename "$1") -> $POD_UPLOAD/$2"
 }
 
@@ -370,7 +386,7 @@ T0=$(date +%s)
 for m in $P3_MODELS; do
   say "P3 $m"
   echo "P3 $m" > "$POD_PENDING_FLAG"
-  timeout 60m "$PY" scripts/extract_qwen25_validated.py --model "$m" --delete-weights
+  timeout -k 2m 60m "$PY" scripts/extract_qwen25_validated.py --model "$m" --delete-weights
   upload "$ACTS_P3/$m.npz" qwen25_validated
   rm -f "$POD_PENDING_FLAG"
 done
@@ -378,13 +394,13 @@ for m in $P7_MODELS; do
   say "P7 $m"
   read -r tf tp <<< "$(timeouts_of "$m")"
   echo "P7 $m" > "$POD_PENDING_FLAG"      # from here an output may exist that is not uploaded
-  timeout "${tf}m" "$PY" scripts/paraphrase_noise_floor.py extract --model "$m"
+  timeout -k 2m "${tf}m" "$PY" scripts/paraphrase_noise_floor.py extract --model "$m"
   upload "$FLOOR/${m}__nothink.npz" paraphrase/floor
-  timeout "${tp}m" "$PY" scripts/extract_paraphrase.py --model "$m" --batch "$(batch_of "$m")" --delete-weights
+  timeout -k 2m "${tp}m" "$PY" scripts/extract_paraphrase.py --model "$m" --batch "$(batch_of "$m")" --delete-weights
   f=$ACTS_P7/${m}__nothink.npz
   # A validated-only copy: what scripts/paraphrase_analysis.py reads, at half the download.
   mkdir -p "$ACTS_P7_SMALL"
-  [ -f "$ACTS_P7_SMALL/$(basename "$f")" ] || timeout 20m "$PY" - "$f" "$ACTS_P7_SMALL/$(basename "$f")" <<'PY'
+  [ -f "$ACTS_P7_SMALL/$(basename "$f")" ] || timeout -k 2m 20m "$PY" - "$f" "$ACTS_P7_SMALL/$(basename "$f")" <<'PY'
 import sys, numpy as np
 with np.load(sys.argv[1], allow_pickle=False) as z:
     keep = {k: z[k] for k in z.files if k != "framing_alltokens"}
