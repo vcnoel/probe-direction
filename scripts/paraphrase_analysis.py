@@ -52,6 +52,9 @@ ACT = Path(os.environ.get("EAS_ACTIVATION_ROOT", str(ROOT)))
 ACTS = ACT / "results" / "post_submission" / "paraphrase" / "acts"
 OUT = ROOT / "results" / "post_submission" / "paraphrase" / "paraphrase_analysis.json"
 OUT_UNGATED = OUT.with_name("paraphrase_analysis_ungated.json")
+# The laptop rungs. Any analysis that includes another rung (the pod rungs) goes to a *_with_pod file,
+# so the laptop-only numbers, which the author response cites, are never overwritten.
+LAPTOP_MODELS = {"qwen3-0.6b", "qwen3-1.7b", "qwen3-4b", "qwen3.5-0.8b", "qwen3.5-2b", "qwen3.5-4b"}
 CT_JSON = ROOT / "results" / "post_submission" / "controlled_transfer.json"
 CELLS = ROOT / "results" / "post_submission" / "cells"
 LADDER_KEYS = ("qwen3_nothink", "qwen3.5_nothink")
@@ -360,6 +363,8 @@ def main() -> None:
         result[ladder] = lad
     if not result:
         raise SystemExit("no ladder had a paraphrase extraction")
+    if set(pop) - LAPTOP_MODELS:
+        out_path = out_path.with_name(out_path.stem + "_with_pod.json")
     write_result(out_path, {"ladders": result, "registration": "docs/paraphrase-registration.md",
                        "run": ("ungated: every ladder computed whatever its gate; descriptive, "
                                "see the registration's note on the ungated run") if ungated
