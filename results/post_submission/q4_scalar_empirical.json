@@ -1,0 +1,367 @@
+{
+  "ladders": {
+    "qwen3_nothink": {
+      "models": [
+        "qwen3-0.6b",
+        "qwen3-1.7b",
+        "qwen3-4b",
+        "qwen3-8b",
+        "qwen3-14b",
+        "qwen3-32b"
+      ],
+      "curve": [
+        {
+          "k": 1,
+          "erho_vector_median": 0.06748825213237405,
+          "erho_scalar_empirical_median": 0.06748825213237451,
+          "erho_scalar_dstudy": 0.06748825213237405
+        },
+        {
+          "k": 2,
+          "erho_vector_median": 0.22452814989458741,
+          "erho_scalar_empirical_median": 0.11795508252052052,
+          "erho_scalar_dstudy": 0.11987203034108182
+        },
+        {
+          "k": 3,
+          "erho_vector_median": 0.29654023650097694,
+          "erho_scalar_empirical_median": 0.16308290140443715,
+          "erho_scalar_dstudy": 0.16171177530150915
+        },
+        {
+          "k": 4,
+          "erho_vector_median": 0.3760274311823055,
+          "erho_scalar_empirical_median": 0.20103701970845284,
+          "erho_scalar_dstudy": 0.1958999101637443
+        },
+        {
+          "k": 6,
+          "erho_vector_median": 0.4523862295532295,
+          "erho_scalar_empirical_median": 0.24022890862591342,
+          "erho_scalar_dstudy": 0.2484192118799395
+        },
+        {
+          "k": 9,
+          "erho_vector_median": 0.48643154481228773,
+          "erho_scalar_empirical_median": 0.3030628668184126,
+          "erho_scalar_dstudy": 0.3024811729925917
+        },
+        {
+          "k": 12,
+          "erho_vector_median": 0.5178497807438921,
+          "erho_scalar_empirical_median": 0.36492305368745903,
+          "erho_scalar_dstudy": 0.33941341034293965
+        }
+      ],
+      "vector_reproduces_q4_max_abs_diff": 0.0,
+      "max_abs_empirical_minus_dstudy": 0.025509643344519384
+    },
+    "qwen3_think": {
+      "models": [
+        "qwen3-0.6b",
+        "qwen3-1.7b",
+        "qwen3-4b",
+        "qwen3-8b",
+        "qwen3-14b",
+        "qwen3-32b"
+      ],
+      "curve": [
+        {
+          "k": 1,
+          "erho_vector_median": 0.052877740977889456,
+          "erho_scalar_empirical_median": 0.05287774097789023,
+          "erho_scalar_dstudy": 0.052877740977889456
+        },
+        {
+          "k": 2,
+          "erho_vector_median": 0.19958960079379465,
+          "erho_scalar_empirical_median": 0.0955052958652961,
+          "erho_scalar_dstudy": 0.09597275957937784
+        },
+        {
+          "k": 3,
+          "erho_vector_median": 0.27198603801116766,
+          "erho_scalar_empirical_median": 0.13399684093378011,
+          "erho_scalar_dstudy": 0.13176999118095564
+        },
+        {
+          "k": 4,
+          "erho_vector_median": 0.3475942563379234,
+          "erho_scalar_empirical_median": 0.1661374618667577,
+          "erho_scalar_dstudy": 0.16197846138729888
+        },
+        {
+          "k": 6,
+          "erho_vector_median": 0.4359532353582505,
+          "erho_scalar_empirical_median": 0.201297763614254,
+          "erho_scalar_dstudy": 0.21015735313617975
+        },
+        {
+          "k": 9,
+          "erho_vector_median": 0.4716060943469672,
+          "erho_scalar_empirical_median": 0.2577155404749715,
+          "erho_scalar_dstudy": 0.2621374893129949
+        },
+        {
+          "k": 12,
+          "erho_vector_median": 0.4970391586868099,
+          "erho_scalar_empirical_median": 0.3243364500853826,
+          "erho_scalar_dstudy": 0.29913087385467235
+        }
+      ],
+      "vector_reproduces_q4_max_abs_diff": 0.0,
+      "max_abs_empirical_minus_dstudy": 0.025205576230710236
+    },
+    "qwen3.5_nothink": {
+      "models": [
+        "qwen3.5-0.8b",
+        "qwen3.5-2b",
+        "qwen3.5-4b",
+        "qwen3.5-9b",
+        "qwen3.5-27b"
+      ],
+      "curve": [
+        {
+          "k": 1,
+          "erho_vector_median": 0.20839162547211312,
+          "erho_scalar_empirical_median": 0.20839162547211426,
+          "erho_scalar_dstudy": 0.20839162547211312
+        },
+        {
+          "k": 2,
+          "erho_vector_median": 0.22325798910542782,
+          "erho_scalar_empirical_median": 0.3292866656310858,
+          "erho_scalar_dstudy": 0.328362203084444
+        },
+        {
+          "k": 3,
+          "erho_vector_median": 0.25792186890769797,
+          "erho_scalar_empirical_median": 0.4062525825096759,
+          "erho_scalar_dstudy": 0.4063381887665866
+        },
+        {
+          "k": 4,
+          "erho_vector_median": 0.26786789182709125,
+          "erho_scalar_empirical_median": 0.45618858028474546,
+          "erho_scalar_dstudy": 0.461084983172908
+        },
+        {
+          "k": 6,
+          "erho_vector_median": 0.29959484808584935,
+          "erho_scalar_empirical_median": 0.5493721850961859,
+          "erho_scalar_dstudy": 0.5328811795034236
+        },
+        {
+          "k": 9,
+          "erho_vector_median": 0.3059953195027113,
+          "erho_scalar_empirical_median": 0.5890034591993559,
+          "erho_scalar_dstudy": 0.5946057860470679
+        },
+        {
+          "k": 12,
+          "erho_vector_median": 0.29690441019789393,
+          "erho_scalar_empirical_median": 0.6233786789174927,
+          "erho_scalar_dstudy": 0.6311599973825374
+        }
+      ],
+      "vector_reproduces_q4_max_abs_diff": 0.0,
+      "max_abs_empirical_minus_dstudy": 0.016491005592762287
+    },
+    "qwen3.5_think": {
+      "models": [
+        "qwen3.5-0.8b",
+        "qwen3.5-2b",
+        "qwen3.5-4b",
+        "qwen3.5-9b",
+        "qwen3.5-27b"
+      ],
+      "curve": [
+        {
+          "k": 1,
+          "erho_vector_median": 0.30241931098777375,
+          "erho_scalar_empirical_median": 0.3024193109877746,
+          "erho_scalar_dstudy": 0.30241931098777375
+        },
+        {
+          "k": 2,
+          "erho_vector_median": 0.3493386765376531,
+          "erho_scalar_empirical_median": 0.45498526579589477,
+          "erho_scalar_dstudy": 0.45218419744003446
+        },
+        {
+          "k": 3,
+          "erho_vector_median": 0.42243152117174954,
+          "erho_scalar_empirical_median": 0.5428548973991085,
+          "erho_scalar_dstudy": 0.54158609399477
+        },
+        {
+          "k": 4,
+          "erho_vector_median": 0.4927438057877167,
+          "erho_scalar_empirical_median": 0.6044355995781449,
+          "erho_scalar_dstudy": 0.600998136146563
+        },
+        {
+          "k": 6,
+          "erho_vector_median": 0.5575675250913985,
+          "erho_scalar_empirical_median": 0.6863001000848638,
+          "erho_scalar_dstudy": 0.6750513259883021
+        },
+        {
+          "k": 9,
+          "erho_vector_median": 0.60122852076825,
+          "erho_scalar_empirical_median": 0.7331818625079914,
+          "erho_scalar_dstudy": 0.735465931844024
+        },
+        {
+          "k": 12,
+          "erho_vector_median": 0.6207391751384077,
+          "erho_scalar_empirical_median": 0.7731756656345143,
+          "erho_scalar_dstudy": 0.7699183597209147
+        }
+      ],
+      "vector_reproduces_q4_max_abs_diff": 0.0,
+      "max_abs_empirical_minus_dstudy": 0.011248774096561664
+    },
+    "qwen2.5_paper": {
+      "models": [
+        "qwen2.5-0.5b",
+        "qwen2.5-1.5b",
+        "qwen2.5-3b",
+        "qwen2.5-7b"
+      ],
+      "curve": [
+        {
+          "k": 1,
+          "erho_vector_median": 0.012440785354524643,
+          "erho_scalar_empirical_median": 0.01244078535452516,
+          "erho_scalar_dstudy": 0.012440785354524643
+        },
+        {
+          "k": 2,
+          "erho_vector_median": 0.0,
+          "erho_scalar_empirical_median": 0.02389288998043841,
+          "erho_scalar_dstudy": 0.02359032940438646
+        },
+        {
+          "k": 3,
+          "erho_vector_median": 0.0,
+          "erho_scalar_empirical_median": 0.03543508838007073,
+          "erho_scalar_dstudy": 0.03363974315126082
+        },
+        {
+          "k": 4,
+          "erho_vector_median": 0.03492400276396636,
+          "erho_scalar_empirical_median": 0.044706692276305846,
+          "erho_scalar_dstudy": 0.04274419673750742
+        },
+        {
+          "k": 6,
+          "erho_vector_median": 0.057534913260252035,
+          "erho_scalar_empirical_median": 0.06779218636160099,
+          "erho_scalar_dstudy": 0.05860553614606899
+        },
+        {
+          "k": 9,
+          "erho_vector_median": 0.021993035711809293,
+          "erho_scalar_empirical_median": 0.10479763993665608,
+          "erho_scalar_dstudy": 0.0778690975066245
+        },
+        {
+          "k": 12,
+          "erho_vector_median": 0.0,
+          "erho_scalar_empirical_median": 0.10747095106979562,
+          "erho_scalar_dstudy": 0.09318379130173006
+        }
+      ],
+      "vector_reproduces_q4_max_abs_diff": 0.0,
+      "max_abs_empirical_minus_dstudy": 0.02692854243003158
+    },
+    "olmo2": {
+      "models": [
+        "olmo-2-0425-1b-instruct",
+        "olmo-2-1124-7b-instruct",
+        "olmo-2-1124-13b-instruct",
+        "olmo-2-0325-32b-instruct"
+      ],
+      "curve": [
+        {
+          "k": 1,
+          "erho_vector_median": 0.2634104101178777,
+          "erho_scalar_empirical_median": 0.26341041011787825,
+          "erho_scalar_dstudy": 0.2634104101178777
+        },
+        {
+          "k": 2,
+          "erho_vector_median": 0.2962082683351248,
+          "erho_scalar_empirical_median": 0.3855325627738839,
+          "erho_scalar_dstudy": 0.38052671817267125
+        },
+        {
+          "k": 3,
+          "erho_vector_median": 0.3054799320065463,
+          "erho_scalar_empirical_median": 0.45235633644736717,
+          "erho_scalar_dstudy": 0.4467351513424302
+        },
+        {
+          "k": 4,
+          "erho_vector_median": 0.30511335295897923,
+          "erho_scalar_empirical_median": 0.4940067641671902,
+          "erho_scalar_dstudy": 0.48930239191703545
+        },
+        {
+          "k": 6,
+          "erho_vector_median": 0.31000645199625354,
+          "erho_scalar_empirical_median": 0.5421550143775085,
+          "erho_scalar_dstudy": 0.540836054228062
+        },
+        {
+          "k": 9,
+          "erho_vector_median": 0.3313698300065615,
+          "erho_scalar_empirical_median": 0.581852001415629,
+          "erho_scalar_dstudy": 0.5816778607757838
+        },
+        {
+          "k": 12,
+          "erho_vector_median": 0.33148137483406426,
+          "erho_scalar_empirical_median": 0.6124970531898013,
+          "erho_scalar_dstudy": 0.6045026907402249
+        }
+      ],
+      "vector_reproduces_q4_max_abs_diff": 0.0,
+      "max_abs_empirical_minus_dstudy": 0.007994362449576409
+    }
+  },
+  "check": "post-submission descriptive check, not registered; first computed by the adversarial audit (docs/post-submission-checks.md)",
+  "conventions": {
+    "kind": "measured",
+    "statistic": "E rho^2 for one group (k = 1, n = 1) in model x group x item block, median over Q4's random partitions: vector averaging, empirical scalar averaging, and the D-study value coefficients(c, k, 1)",
+    "note": "the paper's statistic on its scoring set; partitions and blocks as Q4",
+    "pooling": "validated (Qwen2.5: lf scoring, all-token directions, as pod_ladders)",
+    "layers": "ALL",
+    "scoring_array": "results/post_submission/controlled/*.npz sadproj",
+    "data_root": "pod + gstudy",
+    "model_population": [
+      "olmo-2-0325-32b-instruct",
+      "olmo-2-0425-1b-instruct",
+      "olmo-2-1124-13b-instruct",
+      "olmo-2-1124-7b-instruct",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b",
+      "qwen3-0.6b",
+      "qwen3-1.7b",
+      "qwen3-14b",
+      "qwen3-32b",
+      "qwen3-4b",
+      "qwen3-8b",
+      "qwen3.5-0.8b",
+      "qwen3.5-27b",
+      "qwen3.5-2b",
+      "qwen3.5-4b",
+      "qwen3.5-9b"
+    ],
+    "producer": "scripts/q4_scalar_empirical.py",
+    "producer_sha12": "8f26f3991e72"
+  }
+}
