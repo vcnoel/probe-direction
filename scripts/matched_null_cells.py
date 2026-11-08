@@ -70,10 +70,10 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from ladder_audit_cells import item_partitions, load_model, wrapper_rows  # noqa: E402
+from ladder_audit_cells import band_layers, item_partitions, load_model, wrapper_rows  # noqa: E402
 from pod_ladders import LADDERS, N_SPLITS  # noqa: E402
 
-OUT = ROOT / "results" / "post_submission" / "cells"
+OUT = Path(os.environ.get("EAS_CELLS_DIR") or ROOT / "results" / "post_submission" / "cells")
 N_DRAWS = int(os.environ.get("EAS_MATCHED_DRAWS", "100"))
 N_DIAG = 2                     # draws per null whose directions are characterised
 NULLS = ("iso", "iso_rep", "iso_xl", "cov", "matched", "matched_wide", "taskperm")
@@ -108,6 +108,7 @@ def subset_list(y, blocks, halves):
 def peaks_multi(y, proj, subs):
     """proj [n_items, L, C] -> [n_subsets, C]: folded max over layers of |AUROC - 0.5| on every
     item subset. Ties have probability zero for continuous projections and are not averaged."""
+    proj = np.ascontiguousarray(proj[:, band_layers(proj.shape[1]), :])
     n, L, C = proj.shape
     pos = np.stack([(y == 1) & s for s in subs]).astype(np.int16)      # [S, n]
     neg = np.stack([(y == 0) & s for s in subs]).astype(np.int16)

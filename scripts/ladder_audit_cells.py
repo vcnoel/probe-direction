@@ -60,7 +60,18 @@ from gstudy_gtheory import auc_cols  # noqa: E402
 from pod_ladders import LADDERS, N_BLOCKS, N_SPLITS  # noqa: E402
 
 ACT = Path(os.environ.get("EAS_ACTIVATION_ROOT", str(ROOT)))
-OUT = ROOT / "results" / "post_submission" / "cells"
+OUT = Path(os.environ.get("EAS_CELLS_DIR") or ROOT / "results" / "post_submission" / "cells")
+# Layer band for the statistic (docs/interior-band-registration.md). Unset: all layers, as submitted.
+_BAND = os.environ.get("EAS_LAYER_BAND")
+
+
+def band_layers(n_layers):
+    """Layer indices the statistic is maximised over: all, or relative depth in the registered band."""
+    if not _BAND:
+        return slice(None)
+    lo, hi = map(float, _BAND.split(","))
+    depth = np.arange(n_layers) / (n_layers - 1)
+    return np.flatnonzero((depth >= lo) & (depth <= hi))
 
 N_BOOT = 200
 N_NULL = 20
@@ -101,6 +112,7 @@ def bootstrap_indices(y):
 
 def peaks(y, proj):
     """proj [n_items, n_layers, n_cols] -> folded max over layers per column."""
+    proj = proj[:, band_layers(proj.shape[1]), :]
     n, L, c = proj.shape
     out = np.empty(c)
     step = max(1, CHUNK_COLS // L)          # bounds the rank arrays on a shared machine

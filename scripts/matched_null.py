@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import itertools
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -41,8 +42,8 @@ from ladder_audit import (LADDER_ORDER, N_BLOCKS, corr, crossed, erho_crossed, f
                           grid, k_arm_080, rel_share_crossed, sb, sign_summary)
 from result_io import write_result  # noqa: E402
 
-CELLS = ROOT / "results" / "post_submission" / "cells"
-OUT = ROOT / "results" / "post_submission" / "matched_null.json"
+CELLS = Path(os.environ.get("EAS_CELLS_DIR") or ROOT / "results" / "post_submission" / "cells")
+OUT = Path(os.environ.get("EAS_MATCHED_OUT") or ROOT / "results" / "post_submission" / "matched_null.json")
 DRAWN = ("iso", "iso_rep", "iso_xl", "cov", "matched", "matched_wide", "taskperm")
 MATCHED = ("iso_xl", "matched", "matched_wide", "taskperm", "relabel")
 N_FLOOR_BOOT = 2000
