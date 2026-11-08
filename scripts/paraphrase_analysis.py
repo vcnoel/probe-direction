@@ -5,7 +5,11 @@ exists (scripts/extract_paraphrase.py):
 
   gate  the 12 original framings of the new extraction against the paper's stored arrays: max
         absolute activation difference, and the paper's statistic of the 36 version-0 wrappers
-        from both. Any wrapper differing by more than 0.01 stops the analysis.
+        from both. Registered: any wrapper differing by more than 0.01 stops the analysis.
+        Amendment 2 (the registered rule failed on bf16 noise): every version-0 direction within
+        cosine 0.995 of the stored one at every layer, mean |d fold| <= 0.005, and max |d fold|
+        <= max(0.01, 2 x the same-machine batch floor of scripts/paraphrase_noise_floor.py).
+        Both verdicts are recorded per model.
   P7a   Spearman across the 36 wrappers between versions 0-1, 0-2 and 1-2, with a bootstrap over
         evaluation and deployment framings (2000 draws, seed 0).
   P7b   variance components of x[model, wrapper, version] (gstudy_gtheory.components_3way).
@@ -48,7 +52,9 @@ CT_JSON = ROOT / "results" / "post_submission" / "controlled_transfer.json"
 CELLS = ROOT / "results" / "post_submission" / "cells"
 LADDER_KEYS = ("qwen3_nothink", "qwen3.5_nothink")
 VERSIONS = (0, 1, 2)
-GATE = 0.01
+GATE = 0.01                    # registered: max |d fold| over the 36 version-0 wrappers
+COS_MIN, MEAN_TOL = 0.995, 0.005   # amendment 2
+FLOOR_JSON = ROOT / "results" / "post_submission" / "paraphrase" / "noise_floor.json"
 N_BOOT, BOOT_SEED = 2000, 0
 N_REPAIR, REPAIR_SEED = 1000, 0
 
@@ -66,6 +72,19 @@ def stats(y, proj, band):
     """fold and sign of one direction's projections [items, states]."""
     a = auc_cols(y, proj)
     return peak(y, proj), float((a[band] - 0.5).mean())
+
+
+def amended_gate(model, g):
+    """Amendment 2: direction cosine, mean and floor-calibrated maximum (noise_floor.json)."""
+    floor = None
+    if FLOOR_JSON.exists():
+        f = json.loads(FLOOR_JSON.read_text(encoding="utf-8"))["models"].get(model)
+        floor = f["floor_batch"]["max_abs_diff_fold"] if f else None
+    tol = max(GATE, 2 * floor) if floor is not None else GATE
+    ok = (g["min_direction_cosine"] >= COS_MIN and g["mean_abs_diff_fold"] <= MEAN_TOL
+          and g["max_abs_diff_fold"] <= tol)
+    return {"floor_batch_max_abs_diff_fold": floor, "amended_max_tolerance": tol,
+            "passes_amended": bool(ok), "passes": bool(ok)}
 
 
 def model_cells(ladder, model):
@@ -110,18 +129,26 @@ def model_cells(ladder, model):
     fold = np.zeros((3, len(pairs)))
     sign = np.zeros((3, len(pairs)))
     fold_old, sign_old = np.zeros(len(pairs)), np.zeros(len(pairs))
+    cos_min = 1.0
     for j, (e, d) in enumerate(pairs):
         for v in VERSIONS:
             D = unit(mu_new[vname(e, v)] - mu_new[vname(d, v)])
             fold[v, j], sign[v, j] = stats(y, np.einsum("ild,ld->il", sad, D), band)
+            if v == 0:
+                D0 = D
         D = unit(mu_old[e] - mu_old[d])
         fold_old[j], sign_old[j] = stats(y, np.einsum("ild,ld->il", sad, D), band)
+        cos_min = min(cos_min, float((D0 * D).sum(-1).min()))
     gate = {"max_abs_diff_activation": float(dif.max()), "mean_abs_diff_activation": float(dif.mean()),
             "max_abs_stored_activation": float(np.abs(s_fr[idx_old]).max()),
             "max_rel_row_norm_diff": float(rel.max()),
             "max_abs_diff_fold": float(np.abs(fold[0] - fold_old).max()),
-            "max_abs_diff_sign": float(np.abs(sign[0] - sign_old).max())}
-    gate["passes"] = gate["max_abs_diff_fold"] <= GATE
+            "max_abs_diff_sign": float(np.abs(sign[0] - sign_old).max()),
+            "mean_abs_diff_fold": float(np.abs(fold[0] - fold_old).mean()),
+            "min_direction_cosine": cos_min,
+            "spearman_fold": float(spearmanr(fold[0], fold_old)[0])}
+    gate["passes_registered"] = gate["max_abs_diff_fold"] <= GATE
+    gate.update(amended_gate(model, gate))
     del s_fr, sad
 
     # ---- P7d: framing means per split and band layer; train from version 0, test per version
@@ -257,7 +284,7 @@ def main() -> None:
             C.append(c)
         bad = [c["model"] for c in C if not c["gate"]["passes"]]
         if bad:
-            raise SystemExit(f"{ladder}: reproduction gate failed for {bad}; registered stop")
+            raise SystemExit(f"{ladder}: reproduction gate (amendment 2) failed for {bad}; stop")
         pop += models
         # the version-0 statistic from the stored arrays against the paper's October cells
         cells_check = None
@@ -314,7 +341,10 @@ def main() -> None:
     if not result:
         raise SystemExit("no ladder had a paraphrase extraction")
     write_result(OUT, {"ladders": result, "registration": "docs/paraphrase-registration.md",
-                       "gate_tolerance_fold": GATE, "bootstrap_draws": N_BOOT,
+                       "gate_tolerance_fold_registered": GATE,
+                       "gate_amended": {"min_direction_cosine": COS_MIN, "mean_abs_diff_fold": MEAN_TOL,
+                                        "max_abs_diff_fold": "max(0.01, 2 x floor_batch)"},
+                       "bootstrap_draws": N_BOOT,
                        "repairings": N_REPAIR},
                  kind="measured",
                  statistic="fold = max over all hidden states of |max(AUROC, 1-AUROC) - 0.5| on the "

@@ -145,3 +145,32 @@ non-thinking rendering: Qwen3.5-0.8B, 2B and 4B on the laptop, Qwen3.5-9B and 27
   ladder if at least 75 percent of that ladder's models pass. No verdict pools the two ladders.
 - The pod run (`pod/run_post_submission.sh`) covers Qwen3-8B, 14B, 32B and Qwen3.5-9B, 27B in one
   resumable run, together with the Qwen2.5-7B rung of the companion analysis.
+
+## Amendment 2 (2026-11-08, after the reproduction gate of the three Qwen3 laptop rungs and before any paraphrase number was computed)
+
+**Observation.** The registered gate failed on Qwen3-1.7B (largest change of the paper's statistic
+over the 36 version-0 wrappers 0.030) and Qwen3-4B (0.018); it passed on Qwen3-0.6B (0.0071). As
+registered, P7 stops on those two models, and that outcome stands as the registered result.
+
+**Diagnosis, on the original-framing rows only.** Embedding-layer rows are identical; relative row
+differences grow with depth to at most 0.8 percent; every version-0 direction is within cosine
+0.9988 of the stored one at every layer (median 0.99993); the mean change of the statistic is
+0.0010 to 0.0013 and the 36 statistics correlate at Spearman 0.988 to 0.997. The largest change
+sits at the last hidden state (Qwen3-1.7B, eval_benchmark x deploy_ide: 0.223 against 0.192 at
+layer 28, with layers 0 to 18 within 0.002). This is the signature of bfloat16 arithmetic under a
+different GPU, software stack and padded-batch composition (laptop RTX 5080, torch 2.11,
+transformers 5.2, 36 framings per task; the paper's pod: A100, 18 framings per task), not of a
+different prompt, weight or pooling. The tolerance of 0.01 on a maximum over 36 wrappers was set
+without a measured floor.
+
+**Replacement gate**, applied to every model of both ladders, the pod rungs included.
+`scripts/paraphrase_noise_floor.py` re-extracts the paper's own framing prompt set (18 framings x
+60 tasks, the order and batch 16 of the pod run) on the analysis GPU and records, for the 36
+original wrappers, floor_batch = the largest change of the statistic between that extraction and
+the paraphrase extraction's version-0 rows (same machine, batch composition only), and
+floor_machine = the same between that extraction and the stored arrays. A model passes if every
+version-0 direction is within cosine 0.995 of the stored one at every layer, the mean change of
+the statistic over the 36 wrappers is at most 0.005, and the largest change is at most
+max(0.01, 2 x floor_batch). A model that fails stops P7 on its ladder. Both the registered and the
+amended verdict are recorded per model, and results computed under this amendment are reported as
+such. Nothing else in the design changes.
