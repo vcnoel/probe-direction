@@ -478,7 +478,9 @@
             "seconds_forward": 34.226309061050415,
             "gpu": "NVIDIA GeForce RTX 5080 Laptop GPU",
             "torch": "2.11.0+cu128",
-            "transformers": "5.2.0"
+            "transformers": "5.2.0",
+            "git_commit": null,
+            "git_status_porcelain": null
           }
         },
         {
@@ -945,7 +947,9 @@
             "seconds_forward": 56.267077922821045,
             "gpu": "NVIDIA GeForce RTX 5080 Laptop GPU",
             "torch": "2.11.0+cu128",
-            "transformers": "5.2.0"
+            "transformers": "5.2.0",
+            "git_commit": null,
+            "git_status_porcelain": null
           }
         },
         {
@@ -1412,7 +1416,9 @@
             "seconds_forward": 107.45027375221252,
             "gpu": "NVIDIA GeForce RTX 5080 Laptop GPU",
             "torch": "2.11.0+cu128",
-            "transformers": "5.2.0"
+            "transformers": "5.2.0",
+            "git_commit": null,
+            "git_status_porcelain": null
           }
         }
       ],
@@ -1938,7 +1944,9 @@
             "seconds_forward": 69.85251951217651,
             "gpu": "NVIDIA GeForce RTX 5080 Laptop GPU",
             "torch": "2.11.0+cu128",
-            "transformers": "5.2.0"
+            "transformers": "5.2.0",
+            "git_commit": null,
+            "git_status_porcelain": null
           }
         },
         {
@@ -2405,7 +2413,9 @@
             "seconds_forward": 101.9194643497467,
             "gpu": "NVIDIA GeForce RTX 5080 Laptop GPU",
             "torch": "2.11.0+cu128",
-            "transformers": "5.2.0"
+            "transformers": "5.2.0",
+            "git_commit": null,
+            "git_status_porcelain": null
           }
         },
         {
@@ -2872,7 +2882,9 @@
             "seconds_forward": 187.8118612766266,
             "gpu": "NVIDIA GeForce RTX 5080 Laptop GPU",
             "torch": "2.11.0+cu128",
-            "transformers": "5.2.0"
+            "transformers": "5.2.0",
+            "git_commit": null,
+            "git_status_porcelain": null
           }
         }
       ],
@@ -2947,6 +2959,6 @@
       "qwen3.5-4b"
     ],
     "producer": "scripts/paraphrase_analysis.py",
-    "producer_sha12": "1f78bbfecd97"
+    "producer_sha12": "19179fbb8232"
   }
 }

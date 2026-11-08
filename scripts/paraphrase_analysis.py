@@ -322,7 +322,7 @@ def main() -> None:
                               "extraction": {k: c["extraction_meta"].get(k) for k in
                                              ("revision", "template_sha12", "prompt_sha256", "batch",
                                               "seconds_load", "seconds_forward", "gpu", "torch",
-                                              "transformers")}})
+                                              "transformers", "git_commit", "git_status_porcelain")}})
             fa = a["fold"]
             print(f"  {ladder}/{c['model']}: P7a fold rho 0v1 {fa['0v1']['rho']:+.2f} "
                   f"[{fa['0v1']['ci95'][0]:+.2f},{fa['0v1']['ci95'][1]:+.2f}] 0v2 {fa['0v2']['rho']:+.2f} "

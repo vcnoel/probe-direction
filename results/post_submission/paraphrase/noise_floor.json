@@ -2,6 +2,14 @@
   "models": {
     "qwen3-0.6b": {
       "ladder": "qwen3_nothink",
+      "floor_meta": {
+        "repo": "Qwen/Qwen3-0.6B",
+        "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+        "batch": 16,
+        "n_prompts_run": 1080,
+        "seconds_forward": 17.525084018707275,
+        "gpu": "NVIDIA GeForce RTX 5080 Laptop GPU"
+      },
       "floor_batch": {
         "max_abs_diff_fold": 0.0,
         "mean_abs_diff_fold": 0.0,
@@ -23,6 +31,14 @@
     },
     "qwen3-1.7b": {
       "ladder": "qwen3_nothink",
+      "floor_meta": {
+        "repo": "Qwen/Qwen3-1.7B",
+        "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+        "batch": 16,
+        "n_prompts_run": 1080,
+        "seconds_forward": 22.839876174926758,
+        "gpu": "NVIDIA GeForce RTX 5080 Laptop GPU"
+      },
       "floor_batch": {
         "max_abs_diff_fold": 0.0,
         "mean_abs_diff_fold": 0.0,
@@ -44,6 +60,14 @@
     },
     "qwen3-4b": {
       "ladder": "qwen3_nothink",
+      "floor_meta": {
+        "repo": "Qwen/Qwen3-4B",
+        "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+        "batch": 16,
+        "n_prompts_run": 1080,
+        "seconds_forward": 49.5158314704895,
+        "gpu": "NVIDIA GeForce RTX 5080 Laptop GPU"
+      },
       "floor_batch": {
         "max_abs_diff_fold": 0.01832503080368042,
         "mean_abs_diff_fold": 0.0006638914346694946,
@@ -65,6 +89,14 @@
     },
     "qwen3.5-0.8b": {
       "ladder": "qwen3.5_nothink",
+      "floor_meta": {
+        "repo": "Qwen/Qwen3.5-0.8B",
+        "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+        "batch": 16,
+        "n_prompts_run": 1080,
+        "seconds_forward": 29.62169075012207,
+        "gpu": "NVIDIA GeForce RTX 5080 Laptop GPU"
+      },
       "floor_batch": {
         "max_abs_diff_fold": 0.0,
         "mean_abs_diff_fold": 0.0,
@@ -86,6 +118,14 @@
     },
     "qwen3.5-2b": {
       "ladder": "qwen3.5_nothink",
+      "floor_meta": {
+        "repo": "Qwen/Qwen3.5-2B",
+        "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+        "batch": 16,
+        "n_prompts_run": 1080,
+        "seconds_forward": 39.55496072769165,
+        "gpu": "NVIDIA GeForce RTX 5080 Laptop GPU"
+      },
       "floor_batch": {
         "max_abs_diff_fold": 0.0,
         "mean_abs_diff_fold": 0.0,
@@ -107,6 +147,14 @@
     },
     "qwen3.5-4b": {
       "ladder": "qwen3.5_nothink",
+      "floor_meta": {
+        "repo": "Qwen/Qwen3.5-4B",
+        "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+        "batch": 16,
+        "n_prompts_run": 1080,
+        "seconds_forward": 88.89973950386047,
+        "gpu": "NVIDIA GeForce RTX 5080 Laptop GPU"
+      },
       "floor_batch": {
         "max_abs_diff_fold": 0.0005500316619873047,
         "mean_abs_diff_fold": 7.986194557613797e-05,
@@ -145,6 +193,6 @@
       "qwen3.5-4b"
     ],
     "producer": "scripts/paraphrase_noise_floor.py",
-    "producer_sha12": "d8d14d872744"
+    "producer_sha12": "ace8328ab3b9"
   }
 }

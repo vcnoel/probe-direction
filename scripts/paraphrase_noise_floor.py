@@ -82,6 +82,10 @@ def extract(key):
     batch = pod_batch(key)
     out = xp.pod_extract.pool_reductions(model, tok, texts, batch)
     keep = np.array([p.condition.startswith(("eval_", "deploy_")) for p in prompts])
+    rows = [{"name": p.condition, "task": p.task_id, "text": t}
+            for p, t, k in zip(prompts, texts, keep) if k]          # the 720 stored rows
+    rows_sha = hashlib.sha256(json.dumps(rows, sort_keys=True, ensure_ascii=False)
+                              .encode("utf-8")).hexdigest()
     tmp = dest.with_suffix(".tmp.npz")
     np.savez_compressed(tmp, framing_validated=out["validated"][keep],
                         framing_name=np.array([p.condition for p in prompts])[keep],
@@ -90,6 +94,11 @@ def extract(key):
                                                   "n_prompts_run": len(texts),
                                                   "seconds_forward": time.time() - t0,
                                                   "gpu": torch.cuda.get_device_name(0),
+                                                  "torch": torch.__version__,
+                                                  "torch_cuda": torch.version.cuda,
+                                                  "transformers": __import__("transformers").__version__,
+                                                  "framing_rows_sha256": rows_sha,
+                                                  "n_framing_rows": len(rows),
                                                   **xp.git_state()})))
     tmp.replace(dest)
     print(f"{dest.name}: {len(texts)} prompts in {time.time() - t0:.0f}s")
@@ -135,7 +144,10 @@ def compare(model):
         return {"max_abs_diff_fold": float(dd.max()), "mean_abs_diff_fold": float(dd.mean()),
                 "min_direction_cosine": float(cos.min()),
                 "spearman_fold": float(spearmanr(stat[a], stat[b])[0])}
-    return {"ladder": lad, "floor_batch": pair("N", "F"), "floor_machine": pair("F", "S"),
+    with np.load(FLOOR / f"{model}__nothink.npz", allow_pickle=False) as z:
+        floor_meta = json.loads(str(z["meta"]))   # rungs extracted before a field existed lack it
+    return {"ladder": lad, "floor_meta": floor_meta,
+            "floor_batch": pair("N", "F"), "floor_machine": pair("F", "S"),
             "gate": pair("N", "S")}
 
 
