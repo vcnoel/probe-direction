@@ -139,7 +139,7 @@ pod_write_manifest() {   # $1 tag: every completed output with bytes and sha256,
 }
 
 pod_upload_outputs() {   # $1 tag -> 0 when every output directory is uploaded
-  local tag=$1 pair d rc bad=0
+  local tag=$1 pair d rc bad=0 n=0
   if [ -z "${POD_UPLOAD:-}" ] || ! command -v rclone >/dev/null 2>&1; then
     pod_stop_log "$tag" "no upload target or no rclone"
     return 1
@@ -152,7 +152,9 @@ pod_upload_outputs() {   # $1 tag -> 0 when every output directory is uploaded
     rc=$?
     pod_stop_log "$tag" "upload ${pair%%=*} -> $POD_UPLOAD/${pair#*=}: rc=$rc"
     [ "$rc" -eq 0 ] || bad=1
+    n=$((n + 1))
   done
+  [ "$n" -gt 0 ] || pod_stop_log "$tag" "no output directory exists yet: nothing to upload"
   return "$bad"
 }
 
