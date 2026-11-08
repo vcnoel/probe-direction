@@ -150,6 +150,6 @@
       "qwen3.5-4b"
     ],
     "producer": "scripts/paraphrase_analysis.py",
-    "producer_sha12": "152397d7920f"
+    "producer_sha12": "1f78bbfecd97"
   }
 }
