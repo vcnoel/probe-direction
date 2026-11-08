@@ -1,0 +1,547 @@
+{
+  "ladders": {
+    "qwen3_nothink": {
+      "models": [
+        "qwen3-0.6b",
+        "qwen3-1.7b",
+        "qwen3-4b",
+        "qwen3-8b",
+        "qwen3-14b",
+        "qwen3-32b"
+      ],
+      "m1a": {
+        "per_model": {
+          "real": [
+            -0.05894845240342303,
+            -0.39407979407979404,
+            -0.047361647361647365,
+            0.35830115830115833,
+            0.3011583011583012,
+            0.5261261261261262
+          ],
+          "content_free": [
+            -0.19911012235817574,
+            -0.06918798665183537,
+            -0.016687062067882244,
+            -0.2164627363737486,
+            0.22269187986651834,
+            -0.22625139043381537
+          ]
+        },
+        "median_real": 0.12689832689832692,
+        "holds": false
+      },
+      "m1b": {
+        "real": {
+          "spearman_r_score_vs_r_align": 0.43577863577863574,
+          "same_sign_share": 0.5555555555555556,
+          "n": 36
+        },
+        "content_free": {
+          "spearman_r_score_vs_r_align": 0.057174638487208,
+          "same_sign_share": 0.5666666666666667,
+          "n": 30
+        },
+        "holds": false
+      },
+      "m1c": [
+        {
+          "model": "qwen3-0.6b",
+          "cos_at_median_read_layer": 0.2701346589043787,
+          "max_abs_cos_over_layers": 0.32068095733208485,
+          "median_read_layer": 22,
+          "n_layers": 29,
+          "unrelated_expectation": 0.03125
+        },
+        {
+          "model": "qwen3-1.7b",
+          "cos_at_median_read_layer": 0.03429059280238699,
+          "max_abs_cos_over_layers": 0.26420549007712113,
+          "median_read_layer": 8,
+          "n_layers": 29,
+          "unrelated_expectation": 0.022097086912079608
+        },
+        {
+          "model": "qwen3-4b",
+          "cos_at_median_read_layer": -0.17328394952062673,
+          "max_abs_cos_over_layers": 0.24200986210947098,
+          "median_read_layer": 1,
+          "n_layers": 37,
+          "unrelated_expectation": 0.01976423537605237
+        },
+        {
+          "model": "qwen3-8b",
+          "cos_at_median_read_layer": -0.24774385379281064,
+          "max_abs_cos_over_layers": 0.24774385379281064,
+          "median_read_layer": 0,
+          "n_layers": 37,
+          "unrelated_expectation": 0.015625
+        },
+        {
+          "model": "qwen3-14b",
+          "cos_at_median_read_layer": -0.209550089214487,
+          "max_abs_cos_over_layers": 0.25975221345720123,
+          "median_read_layer": 1,
+          "n_layers": 41,
+          "unrelated_expectation": 0.013975424859373685
+        },
+        {
+          "model": "qwen3-32b",
+          "cos_at_median_read_layer": 0.09011431114502226,
+          "max_abs_cos_over_layers": 0.24815424283828763,
+          "median_read_layer": 11,
+          "n_layers": 65,
+          "unrelated_expectation": 0.013975424859373685
+        }
+      ],
+      "repro_maxdiff": 2.5000000000052758e-05
+    },
+    "qwen3_think": {
+      "models": [
+        "qwen3-0.6b",
+        "qwen3-1.7b",
+        "qwen3-4b",
+        "qwen3-8b",
+        "qwen3-14b",
+        "qwen3-32b"
+      ],
+      "m1a": {
+        "per_model": {
+          "real": [
+            -0.11068211068211067,
+            -0.29575289575289576,
+            -0.09472329472329473,
+            0.38378378378378386,
+            0.45637065637065644,
+            0.5266409266409267
+          ],
+          "content_free": [
+            -0.20133481646273638,
+            -0.06295884315906564,
+            -0.15016685205784203,
+            -0.14883203559510566,
+            0.13192436040044492,
+            -0.2645161290322581
+          ]
+        },
+        "median_real": 0.14453024453024457,
+        "holds": false
+      },
+      "m1b": {
+        "real": {
+          "spearman_r_score_vs_r_align": 0.43320463320463326,
+          "same_sign_share": 0.6388888888888888,
+          "n": 36
+        },
+        "content_free": {
+          "spearman_r_score_vs_r_align": 0.07007786429365963,
+          "same_sign_share": 0.5,
+          "n": 30
+        },
+        "holds": false
+      },
+      "m1c": [
+        {
+          "model": "qwen3-0.6b",
+          "cos_at_median_read_layer": 0.271658552942454,
+          "max_abs_cos_over_layers": 0.32221593216617517,
+          "median_read_layer": 22,
+          "n_layers": 29,
+          "unrelated_expectation": 0.03125
+        },
+        {
+          "model": "qwen3-1.7b",
+          "cos_at_median_read_layer": 0.06732179625251734,
+          "max_abs_cos_over_layers": 0.27841382017792726,
+          "median_read_layer": 3,
+          "n_layers": 29,
+          "unrelated_expectation": 0.022097086912079608
+        },
+        {
+          "model": "qwen3-4b",
+          "cos_at_median_read_layer": -0.19631196039608262,
+          "max_abs_cos_over_layers": 0.25614468370211285,
+          "median_read_layer": 1,
+          "n_layers": 37,
+          "unrelated_expectation": 0.01976423537605237
+        },
+        {
+          "model": "qwen3-8b",
+          "cos_at_median_read_layer": -0.25349146574726983,
+          "max_abs_cos_over_layers": 0.25349146574726983,
+          "median_read_layer": 0,
+          "n_layers": 37,
+          "unrelated_expectation": 0.015625
+        },
+        {
+          "model": "qwen3-14b",
+          "cos_at_median_read_layer": -0.21190212300221375,
+          "max_abs_cos_over_layers": 0.2661897806508101,
+          "median_read_layer": 1,
+          "n_layers": 41,
+          "unrelated_expectation": 0.013975424859373685
+        },
+        {
+          "model": "qwen3-32b",
+          "cos_at_median_read_layer": 0.09130323376322338,
+          "max_abs_cos_over_layers": 0.25330696072203435,
+          "median_read_layer": 11,
+          "n_layers": 65,
+          "unrelated_expectation": 0.013975424859373685
+        }
+      ],
+      "repro_maxdiff": 7.499999999993623e-05
+    },
+    "qwen3.5_nothink": {
+      "models": [
+        "qwen3.5-0.8b",
+        "qwen3.5-2b",
+        "qwen3.5-4b",
+        "qwen3.5-9b",
+        "qwen3.5-27b"
+      ],
+      "m1a": {
+        "per_model": {
+          "real": [
+            0.5572715572715573,
+            0.03371943371943372,
+            0.20694980694980697,
+            0.42393822393822395,
+            0.39305019305019306
+          ],
+          "content_free": [
+            0.5025583982202447,
+            0.3161290322580645,
+            0.4064516129032258,
+            0.07808676307007786,
+            0.15728587319243603
+          ]
+        },
+        "median_real": 0.39305019305019306,
+        "holds": false
+      },
+      "m1b": {
+        "real": {
+          "spearman_r_score_vs_r_align": 0.24324324324324326,
+          "same_sign_share": 0.4722222222222222,
+          "n": 36
+        },
+        "content_free": {
+          "spearman_r_score_vs_r_align": 0.3864293659621802,
+          "same_sign_share": 0.4,
+          "n": 30
+        },
+        "holds": false
+      },
+      "m1c": [
+        {
+          "model": "qwen3.5-0.8b",
+          "cos_at_median_read_layer": -0.19036387989570508,
+          "max_abs_cos_over_layers": 0.37966192604978166,
+          "median_read_layer": 1,
+          "n_layers": 25,
+          "unrelated_expectation": 0.03125
+        },
+        {
+          "model": "qwen3.5-2b",
+          "cos_at_median_read_layer": -0.14953151786219726,
+          "max_abs_cos_over_layers": 0.4096692710748986,
+          "median_read_layer": 1,
+          "n_layers": 25,
+          "unrelated_expectation": 0.022097086912079608
+        },
+        {
+          "model": "qwen3.5-4b",
+          "cos_at_median_read_layer": -0.23218310667766456,
+          "max_abs_cos_over_layers": 0.4318771554742993,
+          "median_read_layer": 1,
+          "n_layers": 33,
+          "unrelated_expectation": 0.01976423537605237
+        },
+        {
+          "model": "qwen3.5-9b",
+          "cos_at_median_read_layer": -0.24370555581801517,
+          "max_abs_cos_over_layers": 0.3985344128721946,
+          "median_read_layer": 0,
+          "n_layers": 33,
+          "unrelated_expectation": 0.015625
+        },
+        {
+          "model": "qwen3.5-27b",
+          "cos_at_median_read_layer": -0.24228160340145988,
+          "max_abs_cos_over_layers": 0.6482648601130085,
+          "median_read_layer": 0,
+          "n_layers": 65,
+          "unrelated_expectation": 0.013975424859373685
+        }
+      ],
+      "repro_maxdiff": 0.0003750000000000142
+    },
+    "qwen3.5_think": {
+      "models": [
+        "qwen3.5-0.8b",
+        "qwen3.5-2b",
+        "qwen3.5-4b",
+        "qwen3.5-9b",
+        "qwen3.5-27b"
+      ],
+      "m1a": {
+        "per_model": {
+          "real": [
+            0.5820194361752815,
+            0.06435006435006435,
+            0.23474903474903477,
+            0.179548233848854,
+            0.26872586872586873
+          ],
+          "content_free": [
+            0.5021134593993326,
+            0.2413793103448276,
+            0.4042269187986652,
+            -0.4220244716351501,
+            0.041156840934371525
+          ]
+        },
+        "median_real": 0.23474903474903477,
+        "holds": false
+      },
+      "m1b": {
+        "real": {
+          "spearman_r_score_vs_r_align": 0.4015444015444016,
+          "same_sign_share": 0.6388888888888888,
+          "n": 36
+        },
+        "content_free": {
+          "spearman_r_score_vs_r_align": 0.3481646273637375,
+          "same_sign_share": 0.5666666666666667,
+          "n": 30
+        },
+        "holds": false
+      },
+      "m1c": [
+        {
+          "model": "qwen3.5-0.8b",
+          "cos_at_median_read_layer": -0.19312373439847108,
+          "max_abs_cos_over_layers": 0.38394238335641706,
+          "median_read_layer": 1,
+          "n_layers": 25,
+          "unrelated_expectation": 0.03125
+        },
+        {
+          "model": "qwen3.5-2b",
+          "cos_at_median_read_layer": -0.1539335734134297,
+          "max_abs_cos_over_layers": 0.41530824810478745,
+          "median_read_layer": 1,
+          "n_layers": 25,
+          "unrelated_expectation": 0.022097086912079608
+        },
+        {
+          "model": "qwen3.5-4b",
+          "cos_at_median_read_layer": -0.23727466080375054,
+          "max_abs_cos_over_layers": 0.4366605731454898,
+          "median_read_layer": 1,
+          "n_layers": 33,
+          "unrelated_expectation": 0.01976423537605237
+        },
+        {
+          "model": "qwen3.5-9b",
+          "cos_at_median_read_layer": -0.40085181777467405,
+          "max_abs_cos_over_layers": 0.40085181777467405,
+          "median_read_layer": 1,
+          "n_layers": 33,
+          "unrelated_expectation": 0.015625
+        },
+        {
+          "model": "qwen3.5-27b",
+          "cos_at_median_read_layer": -0.24818058707624527,
+          "max_abs_cos_over_layers": 0.6515972177997461,
+          "median_read_layer": 0,
+          "n_layers": 65,
+          "unrelated_expectation": 0.013975424859373685
+        }
+      ],
+      "repro_maxdiff": 0.00017500000000003624
+    },
+    "qwen2.5_paper": {
+      "models": [
+        "qwen2.5-0.5b",
+        "qwen2.5-1.5b",
+        "qwen2.5-3b",
+        "qwen2.5-7b"
+      ],
+      "m1a": {
+        "per_model": {
+          "real": [
+            -0.003861003861003861,
+            -0.0010296010296010297,
+            -0.13333333333333333,
+            0.6643500643500644
+          ],
+          "content_free": [
+            -0.04961067853170189,
+            0.10433815350389322,
+            -0.41045606229143494,
+            0.34282536151279197
+          ]
+        },
+        "median_real": -0.0024453024453024454,
+        "holds": false
+      },
+      "m1b": {
+        "real": {
+          "spearman_r_score_vs_r_align": 0.1045045045045045,
+          "same_sign_share": 0.5277777777777778,
+          "n": 36
+        },
+        "content_free": {
+          "spearman_r_score_vs_r_align": 0.38598442714126807,
+          "same_sign_share": 0.5333333333333333,
+          "n": 30
+        },
+        "holds": false
+      },
+      "m1c": [
+        {
+          "model": "qwen2.5-0.5b",
+          "cos_at_median_read_layer": 0.24691846029684827,
+          "max_abs_cos_over_layers": 0.3695097628770882,
+          "median_read_layer": 23,
+          "n_layers": 25,
+          "unrelated_expectation": 0.03340765523905305
+        },
+        {
+          "model": "qwen2.5-1.5b",
+          "cos_at_median_read_layer": 0.081114239325458,
+          "max_abs_cos_over_layers": 0.36972723084939607,
+          "median_read_layer": 28,
+          "n_layers": 29,
+          "unrelated_expectation": 0.025515518153991442
+        },
+        {
+          "model": "qwen2.5-3b",
+          "cos_at_median_read_layer": 0.4983269013888146,
+          "max_abs_cos_over_layers": 0.4983269013888146,
+          "median_read_layer": 36,
+          "n_layers": 37,
+          "unrelated_expectation": 0.022097086912079608
+        },
+        {
+          "model": "qwen2.5-7b",
+          "cos_at_median_read_layer": 0.149580297343956,
+          "max_abs_cos_over_layers": 0.22296862188793123,
+          "median_read_layer": 14,
+          "n_layers": 29,
+          "unrelated_expectation": 0.016703827619526525
+        }
+      ],
+      "repro_maxdiff": 2.5000000000052758e-05
+    },
+    "olmo2": {
+      "models": [
+        "olmo-2-0425-1b-instruct",
+        "olmo-2-1124-7b-instruct",
+        "olmo-2-1124-13b-instruct",
+        "olmo-2-0325-32b-instruct"
+      ],
+      "m1a": {
+        "per_model": {
+          "real": [
+            0.7554697554697556,
+            0.5317889317889318,
+            0.533110239858031,
+            -0.05791505791505792
+          ],
+          "content_free": [
+            0.6364849833147942,
+            0.32547274749721916,
+            0.6872080088987764,
+            0.4264738598442714
+          ]
+        },
+        "median_real": 0.5324495858234815,
+        "holds": true
+      },
+      "m1b": {
+        "real": {
+          "spearman_r_score_vs_r_align": 0.010553410553410554,
+          "same_sign_share": 0.7777777777777778,
+          "n": 36
+        },
+        "content_free": {
+          "spearman_r_score_vs_r_align": 0.41846496106785314,
+          "same_sign_share": 0.6,
+          "n": 30
+        },
+        "holds": false
+      },
+      "m1c": [
+        {
+          "model": "olmo-2-0425-1b-instruct",
+          "cos_at_median_read_layer": -0.1128334123344294,
+          "max_abs_cos_over_layers": 0.1128334123344294,
+          "median_read_layer": 0,
+          "n_layers": 17,
+          "unrelated_expectation": 0.022097086912079608
+        },
+        {
+          "model": "olmo-2-1124-7b-instruct",
+          "cos_at_median_read_layer": -0.2381749802506739,
+          "max_abs_cos_over_layers": 0.24451208264741342,
+          "median_read_layer": 2,
+          "n_layers": 33,
+          "unrelated_expectation": 0.015625
+        },
+        {
+          "model": "olmo-2-1124-13b-instruct",
+          "cos_at_median_read_layer": -0.20861103418045313,
+          "max_abs_cos_over_layers": 0.20861103418045313,
+          "median_read_layer": 2,
+          "n_layers": 41,
+          "unrelated_expectation": 0.013975424859373685
+        },
+        {
+          "model": "olmo-2-0325-32b-instruct",
+          "cos_at_median_read_layer": -0.31584513022340494,
+          "max_abs_cos_over_layers": 0.31584513022340494,
+          "median_read_layer": 5,
+          "n_layers": 65,
+          "unrelated_expectation": 0.013975424859373685
+        }
+      ],
+      "repro_maxdiff": 2.5000000000052758e-05
+    }
+  },
+  "registration": "docs/sign-mechanism-registration.md",
+  "conventions": {
+    "kind": "measured",
+    "statistic": "paper's folded statistic; |cos| of each direction with the scoring set's class-mean difference at the direction's read layer; cos of that class axis with the mean evaluation-minus-deployment direction",
+    "note": "post-submission analysis registered before computation; not part of the submitted manuscript",
+    "pooling": "validated for directions and scoring (Qwen2.5: lf scoring, all-token directions, as pod_ladders)",
+    "layers": "ALL; read layer = argmax of the folded statistic per direction",
+    "scoring_array": "results/pod_*/*.npz and results/gstudy (via EAS_ACTIVATION_ROOT)",
+    "data_root": "pod",
+    "model_population": [
+      "olmo-2-0325-32b-instruct",
+      "olmo-2-0425-1b-instruct",
+      "olmo-2-1124-13b-instruct",
+      "olmo-2-1124-7b-instruct",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b",
+      "qwen3-0.6b",
+      "qwen3-1.7b",
+      "qwen3-14b",
+      "qwen3-32b",
+      "qwen3-4b",
+      "qwen3-8b",
+      "qwen3.5-0.8b",
+      "qwen3.5-27b",
+      "qwen3.5-2b",
+      "qwen3.5-4b",
+      "qwen3.5-9b"
+    ],
+    "producer": "scripts/sign_mechanism.py",
+    "producer_sha12": "06fde8279f15"
+  }
+}
