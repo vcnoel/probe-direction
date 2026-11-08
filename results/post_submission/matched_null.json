@@ -34648,7 +34648,7 @@
   ],
   "conventions": {
     "kind": "measured",
-    "statistic": "the pod_ladders pipeline on geometry-matched content-free directions; real value placed in each null by z and mid-rank percentile",
+    "statistic": "the pod_ladders pipeline on geometry-matched content-free directions; real value placed in each null by z and mid-rank percentile; per-cell statistic: folded max over all layers of |AUROC - 0.5|",
     "note": "post-submission audit; not part of the submitted manuscript or its recorded predictions",
     "pooling": "validated for scoring and for the direction arrays (Qwen2.5: lf scoring, all-token directions, as pod_ladders)",
     "layers": "ALL",
@@ -34676,6 +34676,6 @@
       "qwen3.5-9b"
     ],
     "producer": "scripts/matched_null.py",
-    "producer_sha12": "eea0d51e40bc"
+    "producer_sha12": "bf3fff6c9baa"
   }
 }
