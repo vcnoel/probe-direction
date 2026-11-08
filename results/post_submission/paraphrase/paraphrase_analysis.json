@@ -1,0 +1,155 @@
+{
+  "ladders": {
+    "qwen3_nothink": {
+      "models": [
+        "qwen3-0.6b",
+        "qwen3-1.7b",
+        "qwen3-4b"
+      ],
+      "status": "stopped by the reproduction gate",
+      "gate_failed": [
+        "qwen3-1.7b"
+      ],
+      "gates": {
+        "qwen3-0.6b": {
+          "max_abs_diff_activation": 2.0,
+          "mean_abs_diff_activation": 0.0063180578872561455,
+          "max_abs_stored_activation": 402.0,
+          "max_rel_row_norm_diff": 0.010187744162976742,
+          "max_abs_diff_fold": 0.007149994373321533,
+          "max_abs_diff_sign": 0.0031250007450580597,
+          "mean_abs_diff_fold": 0.0009791668918397692,
+          "min_direction_cosine": 0.9995805025100708,
+          "spearman_fold": 0.9973614796378276,
+          "passes_registered": true,
+          "floor_batch_max_abs_diff_fold": 0.0,
+          "amended_max_tolerance": 0.01,
+          "passes_amended": true,
+          "passes": true
+        },
+        "qwen3-1.7b": {
+          "max_abs_diff_activation": 16.0,
+          "mean_abs_diff_activation": 0.025382719933986664,
+          "max_abs_stored_activation": 1744.0,
+          "max_rel_row_norm_diff": 0.02100030519068241,
+          "max_abs_diff_fold": 0.030075013637542725,
+          "max_abs_diff_sign": 0.0027466658502817154,
+          "mean_abs_diff_fold": 0.0013076398107740614,
+          "min_direction_cosine": 0.9988143444061279,
+          "spearman_fold": 0.9878370571970998,
+          "passes_registered": false,
+          "floor_batch_max_abs_diff_fold": 0.0,
+          "amended_max_tolerance": 0.01,
+          "passes_amended": false,
+          "passes": false
+        },
+        "qwen3-4b": {
+          "max_abs_diff_activation": 4.0,
+          "mean_abs_diff_activation": 0.0037713022902607918,
+          "max_abs_stored_activation": 536.0,
+          "max_rel_row_norm_diff": 0.014363457448780537,
+          "max_abs_diff_fold": 0.017724990844726562,
+          "max_abs_diff_sign": 0.011526321526616812,
+          "mean_abs_diff_fold": 0.0012145870261722142,
+          "min_direction_cosine": 0.999508261680603,
+          "spearman_fold": 0.9963963963963964,
+          "passes_registered": false,
+          "floor_batch_max_abs_diff_fold": 0.01832503080368042,
+          "amended_max_tolerance": 0.03665006160736084,
+          "passes_amended": true,
+          "passes": true
+        }
+      }
+    },
+    "qwen3.5_nothink": {
+      "models": [
+        "qwen3.5-0.8b",
+        "qwen3.5-2b",
+        "qwen3.5-4b"
+      ],
+      "status": "stopped by the reproduction gate",
+      "gate_failed": [
+        "qwen3.5-4b"
+      ],
+      "gates": {
+        "qwen3.5-0.8b": {
+          "max_abs_diff_activation": 0.3125,
+          "mean_abs_diff_activation": 0.00087973743211478,
+          "max_abs_stored_activation": 30.125,
+          "max_rel_row_norm_diff": 0.030169494450092316,
+          "max_abs_diff_fold": 0.007200002670288086,
+          "max_abs_diff_sign": 0.0016875118017196655,
+          "mean_abs_diff_fold": 0.000533337394396464,
+          "min_direction_cosine": 0.9990246295928955,
+          "spearman_fold": 0.9958815958815961,
+          "passes_registered": true,
+          "floor_batch_max_abs_diff_fold": 0.0,
+          "amended_max_tolerance": 0.01,
+          "passes_amended": true,
+          "passes": true
+        },
+        "qwen3.5-2b": {
+          "max_abs_diff_activation": 0.25,
+          "mean_abs_diff_activation": 0.0007477128528989851,
+          "max_abs_stored_activation": 40.5,
+          "max_rel_row_norm_diff": 0.015160050243139267,
+          "max_abs_diff_fold": 0.002599954605102539,
+          "max_abs_diff_sign": 0.004246160387992859,
+          "mean_abs_diff_fold": 0.00037812027666303847,
+          "min_direction_cosine": 0.9994571805000305,
+          "spearman_fold": 0.9994851994851994,
+          "passes_registered": true,
+          "floor_batch_max_abs_diff_fold": 0.0,
+          "amended_max_tolerance": 0.01,
+          "passes_amended": true,
+          "passes": true
+        },
+        "qwen3.5-4b": {
+          "max_abs_diff_activation": 0.25,
+          "mean_abs_diff_activation": 0.0007547383429482579,
+          "max_abs_stored_activation": 36.5,
+          "max_rel_row_norm_diff": 0.017263220623135567,
+          "max_abs_diff_fold": 0.011500000953674316,
+          "max_abs_diff_sign": 0.001213235780596733,
+          "mean_abs_diff_fold": 0.0010777744981977674,
+          "min_direction_cosine": 0.9997889995574951,
+          "spearman_fold": 0.9956241956241957,
+          "passes_registered": false,
+          "floor_batch_max_abs_diff_fold": 0.0005500316619873047,
+          "amended_max_tolerance": 0.01,
+          "passes_amended": false,
+          "passes": false
+        }
+      }
+    }
+  },
+  "registration": "docs/paraphrase-registration.md",
+  "run": "gated as registered (amendment 2)",
+  "gate_tolerance_fold_registered": 0.01,
+  "gate_amended": {
+    "min_direction_cosine": 0.995,
+    "mean_abs_diff_fold": 0.005,
+    "max_abs_diff_fold": "max(0.01, 2 x floor_batch)"
+  },
+  "bootstrap_draws": 2000,
+  "repairings": 1000,
+  "conventions": {
+    "kind": "measured",
+    "statistic": "fold = max over all hidden states of |max(AUROC, 1-AUROC) - 0.5| on the SAD scoring set (verdicts); sign = mean over relative depth 0.25-0.75 of (AUROC - 0.5) (descriptive); P7d = Amendment 1 orientation of the controlled-transfer registration on held-out tasks",
+    "note": "post-submission analysis registered before computation; not part of the submitted manuscript",
+    "pooling": "validated (BOS and whitespace-only tokens dropped) for directions, scoring and held-out framing rows",
+    "layers": "ALL for fold; relative depth 0.25-0.75 for sign and P7d",
+    "scoring_array": "sad_validated of results/pod_qwen3/*__nothink.npz and results/pod_qwen35/*__nothink.npz (P7a-c); held-out framing rows of results/post_submission/paraphrase/acts/*__nothink.npz (P7d)",
+    "data_root": "pod + post_submission/paraphrase",
+    "model_population": [
+      "qwen3-0.6b",
+      "qwen3-1.7b",
+      "qwen3-4b",
+      "qwen3.5-0.8b",
+      "qwen3.5-2b",
+      "qwen3.5-4b"
+    ],
+    "producer": "scripts/paraphrase_analysis.py",
+    "producer_sha12": "152397d7920f"
+  }
+}

@@ -4,7 +4,9 @@
 #   P3  Qwen2.5-7B framing rows, validated and all-token pooling in one pass
 #       (scripts/extract_qwen25_validated.py)
 #   P7  original + paraphrased framings, non-thinking rendering
-#       (scripts/extract_paraphrase.py): Qwen3-8B, 14B, 32B and Qwen3.5-9B, 27B
+#       (scripts/extract_paraphrase.py): Qwen3-8B, 14B, 32B and Qwen3.5-9B, 27B, each preceded by
+#       the amendment-2 floor extraction (scripts/paraphrase_noise_floor.py: the paper's own 18
+#       framings x 60 tasks in the pod run's order and batch) under the same weight load cycle
 #
 # Only framing prompts are run. They are rendered here from committed data (framings and the task
 # pool, no benchmark text) by the same code as on the laptop, and the prompt hash is checked
@@ -21,8 +23,20 @@
 #   POD_DISK_GB     the volume's quota when statvfs cannot see it (see pod/extract.py free_gb)
 #   PY              python interpreter
 #
-# Estimated A100 80GB time (laptop forward passes scaled by parameters, plus downloads at
-# ~0.5 GB/s, plus load): see the table printed by the plan step and the session report.
+# Estimated time on one A100 80GB. Forward passes are the laptop's measured times (RTX 5080 Laptop,
+# batch 16) extrapolated linearly in parameters, with no credit for the A100 being faster, so they
+# are an upper estimate:
+#   step                     download  forward: floor + paraphrase (P3: framing rows)
+#   P3 Qwen2.5-7B             15.2 GB    2.3 min
+#   P7 Qwen3-8B               16.4 GB    2.1 +  3.4 min
+#   P7 Qwen3.5-9B             19.3 GB    3.3 +  5.8 min
+#   P7 Qwen3-14B              29.5 GB    3.6 +  5.8 min
+#   P7 Qwen3.5-27B            55.6 GB    9.3 + 16.0 min
+#   P7 Qwen3-32B              65.5 GB    7.8 + 12.5 min  (batch 10, the paper's pod rule)
+#   forward passes ~72 min; downloads 201.5 GB ~17 min at 200 MB/s; 11 weight loads ~15 min;
+#   compressed writes ~17 GB ~7 min; uploads ~3 min; setup ~10 min.
+#   Total about 2.1 A100-hours as an upper estimate (about 1.5 if the A100 runs the forward passes
+#   twice as fast as the laptop). Peak disk: one model (65.5 GB) plus outputs (~20 GB).
 #
 #   bash pod/run_post_submission.sh
 set -euo pipefail
@@ -38,7 +52,7 @@ export HF_HOME=${HF_HOME:-/workspace/hf}
 [ "$HF_HOME" = "/workspace/hf" ] || echo "NOTE HF_HOME is $HF_HOME, not /workspace/hf"
 export EAS_ACTIVATION_ROOT=${EAS_ACTIVATION_ROOT:-$ROOT}
 export HF_HUB_DISABLE_PROGRESS_BARS=1 TOKENIZERS_PARALLELISM=false PYTHONUNBUFFERED=1
-P7_MODELS="qwen3-8b qwen3.5-9b qwen3-14b qwen3.5-27b qwen3-32b"     # ascending: fail cheap
+P7_MODELS=${P7_MODELS:-"qwen3-8b qwen3.5-9b qwen3-14b qwen3.5-27b qwen3-32b"}   # ascending: fail cheap
 P3_MODELS="qwen2.5-7b"
 PROMPT_SHA12=39980ca8f0b8          # the laptop rendering of the 36 x 60 framing prompts
 
@@ -62,7 +76,7 @@ for p in ("/workspace", os.environ["HF_HOME"]):
         f = free_gb(p)
         print(f"  free disk at {p}: {f:.0f} GB")
         if f < 150:
-            sys.exit(f"  need at least 150 GB free at {p} (largest download 65.5 GB, outputs ~11 GB)")
+            sys.exit(f"  need at least 150 GB free at {p} (largest download 65.5 GB, outputs ~20 GB)")
 print(f"  HF_HOME={os.environ['HF_HOME']}  EAS_ACTIVATION_ROOT={os.environ['EAS_ACTIVATION_ROOT']}")
 PY
 
@@ -127,6 +141,7 @@ fi
 ACTS_P7=$EAS_ACTIVATION_ROOT/results/post_submission/paraphrase/acts
 ACTS_P7_SMALL=$EAS_ACTIVATION_ROOT/results/post_submission/paraphrase/acts_validated_only
 ACTS_P3=$EAS_ACTIVATION_ROOT/results/post_submission/qwen25_validated/acts
+FLOOR=$EAS_ACTIVATION_ROOT/results/post_submission/paraphrase/floor
 say "plan"
 for m in $P3_MODELS; do
   [ -f "$ACTS_P3/$m.npz" ] && echo "  P3 $m  done" || echo "  P3 $m  to extract"
@@ -150,6 +165,8 @@ for m in $P3_MODELS; do
 done
 for m in $P7_MODELS; do
   say "P7 $m"
+  "$PY" scripts/paraphrase_noise_floor.py extract --model "$m"
+  upload "$FLOOR/${m}__nothink.npz" paraphrase/floor
   "$PY" scripts/extract_paraphrase.py --model "$m" --batch 0 --delete-weights
   f=$ACTS_P7/${m}__nothink.npz
   # A validated-only copy: what scripts/paraphrase_analysis.py reads, at half the download.
@@ -173,6 +190,8 @@ On the analysis machine (which holds results/pod_qwen3, results/pod_qwen35 and r
   copy paraphrase/acts_validated_only/*.npz (or paraphrase/acts/*.npz) into
        \$EAS_ACTIVATION_ROOT/results/post_submission/paraphrase/acts/
   copy qwen25_validated/*.npz into \$EAS_ACTIVATION_ROOT/results/post_submission/qwen25_validated/acts/
+  copy paraphrase/floor/*.npz into \$EAS_ACTIVATION_ROOT/results/post_submission/paraphrase/floor/
+  python scripts/paraphrase_noise_floor.py summary   # amendment-2 floors, all rungs
   python scripts/qwen25_validated.py        # P3, four rungs
   python scripts/paraphrase_analysis.py     # P7a-d on both ladders, P7c now that >= 4 rungs exist
 EOF

@@ -46,7 +46,13 @@ ACT = xp.ACT
 FLOOR = ACT / "results" / "post_submission" / "paraphrase" / "floor"
 OUT = ROOT / "results" / "post_submission" / "paraphrase" / "noise_floor.json"
 LADDER_OF = {m: lad for lad in ("qwen3_nothink", "qwen3.5_nothink") for m in LADDERS[lad][1]}
-POD_BATCH = 16          # the pod rule on an 80 GB card for every laptop rung
+POD_VRAM_GB = 85.1      # what the paper's pod run read from its 80 GB card ("batch 16 from 85GB VRAM")
+
+
+def pod_batch(key):
+    """The batch the paper's pod run used for this model: pod/extract.py's rule at the pod's VRAM
+    (16 for every rung up to 27B, 10 for Qwen3-32B)."""
+    return xp.pod_extract.batch_for(xp.MODELS[key][2] / 1e9, POD_VRAM_GB)
 
 
 def extract(key):
@@ -73,13 +79,14 @@ def extract(key):
     model = AutoModelForCausalLM.from_pretrained(repo, revision=rev, dtype=torch.bfloat16,
                                                  attn_implementation="sdpa", device_map="cuda").eval()
     t0 = time.time()
-    out = xp.pod_extract.pool_reductions(model, tok, texts, POD_BATCH)
+    batch = pod_batch(key)
+    out = xp.pod_extract.pool_reductions(model, tok, texts, batch)
     keep = np.array([p.condition.startswith(("eval_", "deploy_")) for p in prompts])
     tmp = dest.with_suffix(".tmp.npz")
     np.savez_compressed(tmp, framing_validated=out["validated"][keep],
                         framing_name=np.array([p.condition for p in prompts])[keep],
                         framing_task=np.array([p.task_id for p in prompts])[keep],
-                        meta=np.array(json.dumps({"repo": repo, "revision": rev, "batch": POD_BATCH,
+                        meta=np.array(json.dumps({"repo": repo, "revision": rev, "batch": batch,
                                                   "n_prompts_run": len(texts),
                                                   "seconds_forward": time.time() - t0,
                                                   "gpu": torch.cuda.get_device_name(0)})))

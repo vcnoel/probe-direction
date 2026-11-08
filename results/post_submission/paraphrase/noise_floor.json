@@ -1,0 +1,150 @@
+{
+  "models": {
+    "qwen3-0.6b": {
+      "ladder": "qwen3_nothink",
+      "floor_batch": {
+        "max_abs_diff_fold": 0.0,
+        "mean_abs_diff_fold": 0.0,
+        "min_direction_cosine": 0.9999997019767761,
+        "spearman_fold": 1.0
+      },
+      "floor_machine": {
+        "max_abs_diff_fold": 0.007149994373321533,
+        "mean_abs_diff_fold": 0.0009791668918397692,
+        "min_direction_cosine": 0.9995805025100708,
+        "spearman_fold": 0.9973614796378276
+      },
+      "gate": {
+        "max_abs_diff_fold": 0.007149994373321533,
+        "mean_abs_diff_fold": 0.0009791668918397692,
+        "min_direction_cosine": 0.9995805025100708,
+        "spearman_fold": 0.9973614796378276
+      }
+    },
+    "qwen3-1.7b": {
+      "ladder": "qwen3_nothink",
+      "floor_batch": {
+        "max_abs_diff_fold": 0.0,
+        "mean_abs_diff_fold": 0.0,
+        "min_direction_cosine": 0.9999997615814209,
+        "spearman_fold": 0.9999999999999998
+      },
+      "floor_machine": {
+        "max_abs_diff_fold": 0.030075013637542725,
+        "mean_abs_diff_fold": 0.0013076398107740614,
+        "min_direction_cosine": 0.9988143444061279,
+        "spearman_fold": 0.9878370571970998
+      },
+      "gate": {
+        "max_abs_diff_fold": 0.030075013637542725,
+        "mean_abs_diff_fold": 0.0013076398107740614,
+        "min_direction_cosine": 0.9988143444061279,
+        "spearman_fold": 0.9878370571970998
+      }
+    },
+    "qwen3-4b": {
+      "ladder": "qwen3_nothink",
+      "floor_batch": {
+        "max_abs_diff_fold": 0.01832503080368042,
+        "mean_abs_diff_fold": 0.0006638914346694946,
+        "min_direction_cosine": 0.9998041391372681,
+        "spearman_fold": 0.9940797940797942
+      },
+      "floor_machine": {
+        "max_abs_diff_fold": 0.007300019264221191,
+        "mean_abs_diff_fold": 0.00080764459239112,
+        "min_direction_cosine": 0.9994823932647705,
+        "spearman_fold": 0.9974259974259974
+      },
+      "gate": {
+        "max_abs_diff_fold": 0.017724990844726562,
+        "mean_abs_diff_fold": 0.0012145870261722142,
+        "min_direction_cosine": 0.999508261680603,
+        "spearman_fold": 0.9963963963963964
+      }
+    },
+    "qwen3.5-0.8b": {
+      "ladder": "qwen3.5_nothink",
+      "floor_batch": {
+        "max_abs_diff_fold": 0.0,
+        "mean_abs_diff_fold": 0.0,
+        "min_direction_cosine": 0.9999997615814209,
+        "spearman_fold": 1.0
+      },
+      "floor_machine": {
+        "max_abs_diff_fold": 0.007200002670288086,
+        "mean_abs_diff_fold": 0.000533337394396464,
+        "min_direction_cosine": 0.9990246295928955,
+        "spearman_fold": 0.9958815958815961
+      },
+      "gate": {
+        "max_abs_diff_fold": 0.007200002670288086,
+        "mean_abs_diff_fold": 0.000533337394396464,
+        "min_direction_cosine": 0.9990246295928955,
+        "spearman_fold": 0.9958815958815961
+      }
+    },
+    "qwen3.5-2b": {
+      "ladder": "qwen3.5_nothink",
+      "floor_batch": {
+        "max_abs_diff_fold": 0.0,
+        "mean_abs_diff_fold": 0.0,
+        "min_direction_cosine": 0.9999997615814209,
+        "spearman_fold": 1.0
+      },
+      "floor_machine": {
+        "max_abs_diff_fold": 0.002599954605102539,
+        "mean_abs_diff_fold": 0.00037812027666303847,
+        "min_direction_cosine": 0.9994571805000305,
+        "spearman_fold": 0.9994851994851994
+      },
+      "gate": {
+        "max_abs_diff_fold": 0.002599954605102539,
+        "mean_abs_diff_fold": 0.00037812027666303847,
+        "min_direction_cosine": 0.9994571805000305,
+        "spearman_fold": 0.9994851994851994
+      }
+    },
+    "qwen3.5-4b": {
+      "ladder": "qwen3.5_nothink",
+      "floor_batch": {
+        "max_abs_diff_fold": 0.0005500316619873047,
+        "mean_abs_diff_fold": 7.986194557613797e-05,
+        "min_direction_cosine": 0.9999975562095642,
+        "spearman_fold": 0.9997425997425998
+      },
+      "floor_machine": {
+        "max_abs_diff_fold": 0.01162499189376831,
+        "mean_abs_diff_fold": 0.001084024707476298,
+        "min_direction_cosine": 0.9997807145118713,
+        "spearman_fold": 0.9958815958815961
+      },
+      "gate": {
+        "max_abs_diff_fold": 0.011500000953674316,
+        "mean_abs_diff_fold": 0.0010777744981977674,
+        "min_direction_cosine": 0.9997889995574951,
+        "spearman_fold": 0.9956241956241957
+      }
+    }
+  },
+  "registration": "docs/paraphrase-registration.md, amendment 2",
+  "conventions": {
+    "kind": "measured",
+    "statistic": "paper's fold statistic of the 36 original wrappers (full-task directions) from three extractions of the same original-framing prompts",
+    "note": "numerical floor for the reproduction gate; post-submission",
+    "pooling": "validated (BOS and whitespace-only tokens dropped)",
+    "layers": "ALL",
+    "scoring_array": "sad_validated of results/pod_qwen3/*__nothink.npz and results/pod_qwen35/*__nothink.npz",
+    "data_root": "pod + post_submission/paraphrase",
+    "model_population": [
+      "qwen3-0.6b",
+      "qwen3-1.7b",
+      "qwen3-4b",
+      "qwen3.5-0.8b",
+      "qwen3.5-2b",
+      "qwen3.5-4b"
+    ],
+    "producer": "scripts/paraphrase_noise_floor.py",
+    "producer_sha12": "ddb0728d4cbc"
+  }
+}
