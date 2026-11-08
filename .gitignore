@@ -32,3 +32,10 @@ data/sad/
 
 # Model caches
 hf/
+
+# SAD (Laine et al. 2024): item and answer text must never be committed or pushed. Harness clones,
+# decrypted struct files and raw evaluator results stay outside the repository; these guard mistakes.
+sad_harness/
+**/evalresult/
+**/structs/batch/
+results/post_submission/behaviour/smoke/
