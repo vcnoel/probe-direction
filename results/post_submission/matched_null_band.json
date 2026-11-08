@@ -5172,8 +5172,13 @@
           20,
           100
         ],
-        "statistic": "folded max over all layers of |AUROC - 0.5|",
-        "activation_root_relative_paths": "GSTUDY"
+        "statistic": "folded max of |AUROC - 0.5| over hidden states at relative depth 0.25 to 0.75 (index / (number of hidden states - 1); hidden state 0, the embedding output, counts in the depth)",
+        "activation_root_relative_paths": "GSTUDY",
+        "statistic_as_stored_in_cells": "folded max over all layers of |AUROC - 0.5|",
+        "layer_band": [
+          0.25,
+          0.75
+        ]
       }
     },
     "qwen3_nothink": {
@@ -10838,8 +10843,13 @@
           20,
           100
         ],
-        "statistic": "folded max over all layers of |AUROC - 0.5|",
-        "activation_root_relative_paths": "results/pod_qwen3/{}__nothink.npz"
+        "statistic": "folded max of |AUROC - 0.5| over hidden states at relative depth 0.25 to 0.75 (index / (number of hidden states - 1); hidden state 0, the embedding output, counts in the depth)",
+        "activation_root_relative_paths": "results/pod_qwen3/{}__nothink.npz",
+        "statistic_as_stored_in_cells": "folded max over all layers of |AUROC - 0.5|",
+        "layer_band": [
+          0.25,
+          0.75
+        ]
       }
     },
     "qwen3_think": {
@@ -16504,8 +16514,13 @@
           20,
           100
         ],
-        "statistic": "folded max over all layers of |AUROC - 0.5|",
-        "activation_root_relative_paths": "results/pod_qwen3/{}__think.npz"
+        "statistic": "folded max of |AUROC - 0.5| over hidden states at relative depth 0.25 to 0.75 (index / (number of hidden states - 1); hidden state 0, the embedding output, counts in the depth)",
+        "activation_root_relative_paths": "results/pod_qwen3/{}__think.npz",
+        "statistic_as_stored_in_cells": "folded max over all layers of |AUROC - 0.5|",
+        "layer_band": [
+          0.25,
+          0.75
+        ]
       }
     },
     "qwen3.5_nothink": {
@@ -21927,8 +21942,13 @@
           20,
           100
         ],
-        "statistic": "folded max over all layers of |AUROC - 0.5|",
-        "activation_root_relative_paths": "results/pod_qwen35/{}__nothink.npz"
+        "statistic": "folded max of |AUROC - 0.5| over hidden states at relative depth 0.25 to 0.75 (index / (number of hidden states - 1); hidden state 0, the embedding output, counts in the depth)",
+        "activation_root_relative_paths": "results/pod_qwen35/{}__nothink.npz",
+        "statistic_as_stored_in_cells": "folded max over all layers of |AUROC - 0.5|",
+        "layer_band": [
+          0.25,
+          0.75
+        ]
       }
     },
     "qwen3.5_think": {
@@ -27350,8 +27370,13 @@
           20,
           100
         ],
-        "statistic": "folded max over all layers of |AUROC - 0.5|",
-        "activation_root_relative_paths": "results/pod_qwen35/{}__think.npz"
+        "statistic": "folded max of |AUROC - 0.5| over hidden states at relative depth 0.25 to 0.75 (index / (number of hidden states - 1); hidden state 0, the embedding output, counts in the depth)",
+        "activation_root_relative_paths": "results/pod_qwen35/{}__think.npz",
+        "statistic_as_stored_in_cells": "folded max over all layers of |AUROC - 0.5|",
+        "layer_band": [
+          0.25,
+          0.75
+        ]
       }
     },
     "olmo2": {
@@ -32562,8 +32587,13 @@
           20,
           100
         ],
-        "statistic": "folded max over all layers of |AUROC - 0.5|",
-        "activation_root_relative_paths": "results/pod_all/{}.npz"
+        "statistic": "folded max of |AUROC - 0.5| over hidden states at relative depth 0.25 to 0.75 (index / (number of hidden states - 1); hidden state 0, the embedding output, counts in the depth)",
+        "activation_root_relative_paths": "results/pod_all/{}.npz",
+        "statistic_as_stored_in_cells": "folded max over all layers of |AUROC - 0.5|",
+        "layer_band": [
+          0.25,
+          0.75
+        ]
       }
     }
   },
@@ -34654,11 +34684,11 @@
   ],
   "conventions": {
     "kind": "measured",
-    "statistic": "the pod_ladders pipeline on geometry-matched content-free directions; real value placed in each null by z and mid-rank percentile",
+    "statistic": "the pod_ladders pipeline on geometry-matched content-free directions; real value placed in each null by z and mid-rank percentile; per-cell statistic: folded max of |AUROC - 0.5| over hidden states at relative depth 0.25 to 0.75 (index / (number of hidden states - 1); hidden state 0, the embedding output, counts in the depth)",
     "note": "post-submission audit; not part of the submitted manuscript or its recorded predictions",
     "pooling": "validated for scoring and for the direction arrays (Qwen2.5: lf scoring, all-token directions, as pod_ladders)",
-    "layers": "ALL",
-    "scoring_array": "results/post_submission/cells/matched_*.npz, from results/pod_*/*.npz and results/gstudy via scripts/matched_null_cells.py",
+    "layers": "hidden states at relative depth 0.25 to 0.75 (index / (number of hidden states - 1); hidden state 0, the embedding output, counts in the depth)",
+    "scoring_array": "results/post_submission/cells_band/matched_*.npz, from results/pod_*/*.npz and results/gstudy via scripts/matched_null_cells.py",
     "data_root": "pod",
     "model_population": [
       "olmo-2-0325-32b-instruct",
@@ -34682,6 +34712,6 @@
       "qwen3.5-9b"
     ],
     "producer": "scripts/matched_null.py",
-    "producer_sha12": "833bf02abc86"
+    "producer_sha12": "bf3fff6c9baa"
   }
 }
