@@ -30,7 +30,7 @@
 #   POD_STOP_LOG (default /tmp/pod_stop.log), POD_STATE_FILE, POD_PENDING_FLAG, POD_COMMIT
 #   POD_UPLOAD_PAIRS   "local=remote" subdirectory pairs under POD_OUTPUT_ROOT and POD_UPLOAD
 #   POD_STOP_TIMEOUT (120 s), POD_GET_TIMEOUT (60 s), POD_VERIFY_TRIES (6), POD_VERIFY_SLEEP (20 s),
-#   POD_UPLOAD_TIMEOUT (1800 s per directory), POD_MOUNTS_FILE (/proc/mounts),
+#   POD_UPLOAD_TIMEOUT (1800 s per directory), POD_MANIFEST_TIMEOUT (300 s), POD_MOUNTS_FILE (/proc/mounts),
 #   POD_NETWORK_MOUNT (/workspace)
 
 pod_stop_log() {
@@ -52,7 +52,7 @@ pod_state() {   # the state the preflight verified (output root, upload target, 
 }
 
 pod_upload_pairs() {
-  printf '%s\n' ${POD_UPLOAD_PAIRS:-paraphrase/acts=paraphrase/acts paraphrase/acts_validated_only=paraphrase/acts_validated_only paraphrase/floor=paraphrase/floor qwen25_validated/acts=qwen25_validated}
+  printf '%s\n' ${POD_UPLOAD_PAIRS:-paraphrase/acts=paraphrase/acts paraphrase/acts_validated_only=paraphrase/acts_validated_only paraphrase/floor=paraphrase/floor qwen25_validated/acts=qwen25_validated behaviour=behaviour}
 }
 
 pod_mount_of() {   # $1 path -> "mountpoint fstype" of the longest mount containing it
@@ -103,32 +103,30 @@ pod_verify_outputs_safe() {   # 0 if the outputs are safe; writes POD_STATE_FILE
   [ "$net" = 1 ] || [ "$up" = 1 ]
 }
 
+POD_STOP_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)
+
 pod_write_manifest() {   # $1 tag: every completed output with bytes and sha256, then upload it
-  local tag=$1 root=${POD_OUTPUT_ROOT:-} man pair d f n=0
-  if [ -z "$root" ] || [ ! -d "$root" ]; then
+  # Built by pod_manifest.sh under a timeout, on the local log disk first, so neither a slow hash nor
+  # a hung output filesystem can delay the stop; a timeout leaves a partial manifest marked as such.
+  local tag=$1 rc n dir man
+  dir=$(dirname "${POD_STOP_LOG:-/tmp/pod_stop.log}")
+  man=$dir/post_output_manifest.tsv
+  if [ -z "${POD_OUTPUT_ROOT:-}" ]; then
     pod_stop_log "$tag" "no output root yet; no manifest"
     return 0
   fi
-  man=$root/post_output_manifest.tsv
-  {
-    printf '# outputs at %s, written by %s; pod %s; commit %s; step in progress: %s\n' \
-      "$(date -u +%FT%TZ)" "$tag" "${RUNPOD_POD_ID:-?}" "${POD_COMMIT:-?}" \
-      "$(cat "${POD_PENDING_FLAG:-/nonexistent}" 2>/dev/null || echo none)"
-    printf 'path\tbytes\tsha256\n'
-    for pair in $(pod_upload_pairs); do
-      d=$root/${pair%%=*}
-      [ -d "$d" ] || continue
-      for f in "$d"/*.npz; do
-        [ -f "$f" ] || continue
-        case "$f" in *.tmp.npz) continue ;; esac            # partial writes are not outputs
-        printf '%s\t%s\t%s\n' "${f#"$root"/}" "$(stat -c %s "$f" 2>/dev/null || wc -c < "$f")" \
-          "$(timeout -k 10 600 sha256sum "$f" 2>/dev/null | cut -d' ' -f1)"
-      done
-    done
-  } > "$man.tmp" 2>/dev/null && mv -f "$man.tmp" "$man" 2>/dev/null
+  timeout -k 5 "${POD_MANIFEST_TIMEOUT:-300}" bash "$POD_STOP_DIR/pod_manifest.sh" "$tag" "$man.tmp" \
+    >/dev/null 2>&1
+  rc=$?
+  if [ "$rc" -ne 0 ]; then
+    { printf '# TRUNCATED: the manifest builder ended with status %s (timeout %s s)\n' "$rc" \
+        "${POD_MANIFEST_TIMEOUT:-300}" >> "$man.tmp"; } 2>/dev/null || true
+  fi
+  mv -f "$man.tmp" "$man" 2>/dev/null || true
   n=$(grep -cv '^#\|^path' "$man" 2>/dev/null || true)
-  pod_stop_log "$tag" "manifest $man: $n completed output files"
-  cp -f "$man" "$(dirname "${POD_STOP_LOG:-/tmp/pod_stop.log}")/" 2>/dev/null || true
+  pod_stop_log "$tag" "manifest $man: ${n:-0} completed output files (builder status $rc)"
+  timeout -k 5 30 cp -f "$man" "$POD_OUTPUT_ROOT/" >/dev/null 2>&1 \
+    || pod_stop_log "$tag" "could not copy the manifest beside the outputs"
   if [ -n "${POD_UPLOAD:-}" ] && command -v rclone >/dev/null 2>&1; then
     if timeout -k 10 120 rclone copy "$man" "$POD_UPLOAD/manifest" >> "$(pod_sink)" 2>&1; then
       pod_stop_log "$tag" "manifest uploaded to $POD_UPLOAD/manifest"
@@ -146,7 +144,7 @@ pod_upload_outputs() {   # $1 tag -> 0 when every output directory is uploaded
   fi
   for pair in $(pod_upload_pairs); do
     d=${POD_OUTPUT_ROOT:-/nonexistent}/${pair%%=*}
-    [ -d "$d" ] || continue
+    timeout -k 2 10 test -d "$d" || continue          # a hung filesystem must not hang the stop
     timeout -k 30 "${POD_UPLOAD_TIMEOUT:-1800}" rclone copy --checksum --exclude '*.tmp.npz' \
       "$d" "$POD_UPLOAD/${pair#*=}" >> "$(pod_sink)" 2>&1
     rc=$?

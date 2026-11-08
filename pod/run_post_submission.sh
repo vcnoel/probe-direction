@@ -111,7 +111,9 @@ autostop() {
   # falls back to /tmp only for the record.
   { : >> "$POD_STOP_LOG"; } 2>/dev/null || POD_STOP_LOG=/tmp/post_stop.$$.log
   { printf '%s [autostop] run ended with status %s\n' "$(date -u +%FT%TZ)" "$rc" >> "$POD_STOP_LOG"; } 2>/dev/null || true
-  if [ -n "${POD_UPLOAD:-}" ] && command -v rclone >/dev/null 2>&1; then
+  if [ -e "$LOGDIR/post_leak_detected" ]; then
+    { printf '%s [autostop] SAD item text was detected: logs NOT uploaded\n' "$(date -u +%FT%TZ)" >> "$POD_STOP_LOG"; } 2>/dev/null || true
+  elif [ -n "${POD_UPLOAD:-}" ] && command -v rclone >/dev/null 2>&1; then
     { timeout -k 10 120 rclone copy "$LOGDIR" "$POD_UPLOAD/logs" --include 'post_*' >> "$POD_STOP_LOG" 2>&1; } 2>/dev/null || true
     { printf '%s [autostop] log upload to %s/logs attempted\n' "$(date -u +%FT%TZ)" "$POD_UPLOAD" >> "$POD_STOP_LOG"; } 2>/dev/null || true
   fi
@@ -131,7 +133,7 @@ trap 'exit 130' INT TERM HUP
 exec > >(tee -a "$LOGDIR/post_run.log") 2>&1
 echo "== run started $(date -u +%FT%TZ); logs in $LOGDIR"
 
-POD_WATCHDOG_HOURS=${POD_WATCHDOG_HOURS:-5}
+POD_WATCHDOG_HOURS=${POD_WATCHDOG_HOURS:-6}      # P7 (~2.0 h) plus the behavioural step (cap 3 h)
 case "$POD_WATCHDOG_HOURS" in
   ''|*[!0-9]*|0*) echo "POD_WATCHDOG_HOURS must be a whole number of hours >= 1" >&2; exit 1 ;;
 esac
@@ -153,17 +155,26 @@ fi
 # The stop is only as good as the pod id: require a RUNNING row for it now, while stopping is cheap.
 # The legacy `get pod` filters the id on the client and exits 0 with only a header for an absent pod
 # or a key scoped away from it, so the exit status alone proves nothing.
+# The raw output is printed so a DRY run shows exactly what the stop path will parse.
 if [ -n "${RUNPOD_POD_ID:-}" ] && command -v runpodctl >/dev/null; then
-  if timeout -k 10 60 runpodctl get pod "$RUNPOD_POD_ID" 2>&1 | grep -F -- "$RUNPOD_POD_ID" | grep -q RUNNING; then
-    echo "runpodctl shows pod $RUNPOD_POD_ID RUNNING"
-  else
-    echo "runpodctl get pod shows no RUNNING row for $RUNPOD_POD_ID: the stop could not reach this pod" >&2
-    [ "$DRY" = "1" ] || exit 1
+  echo "runpodctl version: $(timeout -k 5 30 runpodctl version 2>&1 | tr '\n' ' ')"
+  raw=$(timeout -k 10 60 runpodctl get pod "$RUNPOD_POD_ID" 2>&1); grc=$?
+  echo "runpodctl get pod $RUNPOD_POD_ID (rc=$grc), raw output:"
+  printf '%s\n' "$raw" | sed 's/^/    | /'
+  nrun=$(printf '%s\n' "$raw" | grep -F -- "$RUNPOD_POD_ID" | grep -c RUNNING || true)
+  if [ "${nrun:-0}" -ne 1 ]; then
+    echo "expected exactly one row carrying $RUNPOD_POD_ID and RUNNING, found ${nrun:-0}: the stop could not be verified" >&2
+    exit 1
   fi
+  echo "exactly one RUNNING row for $RUNPOD_POD_ID"
+elif [ -n "${RUNPOD_POD_ID:-}" ]; then
+  echo "RUNPOD_POD_ID is set but runpodctl is not installed" >&2
+  exit 1
 fi
 # Hard cap on billing, independent of this shell: whatever happens to the run (a hang, a killed tmux
-# session, a trap that never fires), pod_stop runs POD_WATCHDOG_HOURS after the start.
-if [ "$DRY" != "1" ]; then
+# session, a trap that never fires), pod_stop runs POD_WATCHDOG_HOURS after the start. DRY and
+# DRY_INSTALL phases start it too: a pod left idle after a check must not bill indefinitely.
+if true; then
   if [ -n "${RUNPOD_POD_ID:-}" ] && command -v runpodctl >/dev/null; then
     pidf=$LOGDIR/post_watchdog.pid
     if [ -f "$pidf" ] && old=$(cat "$pidf") && kill -0 "$old" 2>/dev/null; then
@@ -374,6 +385,89 @@ for m in $P7_MODELS; do
 done
 
 ACTS_P7=$EAS_ACTIVATION_ROOT/results/post_submission/paraphrase/acts
+# --------------------------------------- behavioural anchor: the SAD authors' harness (registered)
+# docs/behavioural-anchor-registration.md. SAD at its registered commit, decrypted with the authors'
+# unzip.sh, in a clone on the container disk outside the repository; evalugator at its registered
+# commit and the client libraries it imports, installed without SAD's clashing pins.
+POD_BEHAVIOUR=${POD_BEHAVIOUR:-1}
+SAD_DIR=${POD_SAD_DIR:-${POD_LOCAL_DIR:-/root}/sad_harness}
+SAD_COMMIT=dfc5c9831a9bcc5c9a9dbdcaa2955aae983cd1d3
+EVALUGATOR_COMMIT=1787ab88cf2e4cdf79d054087b2814cc55654ec2
+BEHAV=$EAS_ACTIVATION_ROOT/results/post_submission/behaviour
+BEHAV_ONLY_MODELS=${BEHAV_ONLY_MODELS:-"qwen2.5-0.5b qwen3-0.6b qwen3.5-0.8b olmo-2-0425-1b-instruct qwen2.5-1.5b qwen3-1.7b qwen3.5-2b qwen2.5-3b qwen3-4b qwen3.5-4b olmo-2-1124-7b-instruct qwen2.5-7b olmo-2-1124-13b-instruct olmo-2-0325-32b-instruct"}
+behaviour_timeout_of() {   # minutes per model, both variants plus the same-prompt read (and download)
+  case "$1" in
+    *-0.5b|*-0.6b|*-0.8b|*-1b-instruct|*-1.5b|*-1.7b|*-2b|*-3b|*-4b) echo 20 ;;
+    *-7b|*-7b-instruct|*-8b|*-9b) echo 30 ;;
+    *-13b-instruct|*-14b) echo 40 ;;
+    *) echo 60 ;;
+  esac
+}
+if [ "$POD_BEHAVIOUR" = "1" ]; then
+  say "behavioural anchor: SAD harness"
+  command -v unzip >/dev/null || timeout -k 30s 10m bash -c "apt-get update -qq && apt-get install -y -qq unzip" || true
+  if [ ! -d "$SAD_DIR/.git" ]; then
+    timeout -k 30s 15m git clone -q https://github.com/LRudL/sad.git "$SAD_DIR"
+  fi
+  git -C "$SAD_DIR" checkout -q "$SAD_COMMIT"
+  [ "$(git -C "$SAD_DIR" rev-parse HEAD)" = "$SAD_COMMIT" ] || { echo "SAD clone is not at $SAD_COMMIT" >&2; exit 1; }
+  [ -f "$SAD_DIR/sad/stages/oversight/structs/batch/oversight.yaml" ] \
+    || (cd "$SAD_DIR" && timeout -k 30s 10m bash ./unzip.sh --dirs sad/stages/oversight > /dev/null 2>&1)
+  if [ "$DRY" != "1" ] || [ "$DRY_INSTALL" = "1" ]; then
+    timeout -k 2m 20m "$PY" -m pip install --quiet --no-deps \
+      "git+https://github.com/LRudL/evalugator.git@$EVALUGATOR_COMMIT" "replicate==0.23.0" "together==1.2.1"
+    timeout -k 2m 20m "$PY" -m pip install --quiet "backoff==2.2.1" "tenacity==8.2.3" "pydantic>=2.3.0" \
+      "tiktoken>=0.7.0" "openai>=1.0.0" "anthropic>=0.16.0" "plotly==5.18.0" "kaleido==0.2.1" \
+      "pdfkit>=1.0.0" "markdown2>=2.4.13" "PyPDF2>=3.0.1"
+  fi
+  if timeout -k 30s 5m "$PY" scripts/sad_behaviour.py setup --sad-dir "$SAD_DIR" \
+     && (cd "$SAD_DIR" && timeout -k 30s 5m "$PY" -c "import sys; sys.path.insert(0, '.'); import evalugator; from sad.stages.oversight.run import stages_oversight; import numpy, torch, transformers; print('  SAD harness imports ok: numpy', numpy.__version__, 'torch', torch.__version__, 'transformers', transformers.__version__)"); then
+    timeout -k 30s 10m "$PY" scripts/check_no_sad_text.py --sad-dir "$SAD_DIR" \
+      || { touch "$LOGDIR/post_leak_detected"; echo "SAD item text found before the run" >&2; exit 1; }
+  else
+    echo "  SAD harness setup or import check failed" >&2
+    [ "$DRY" = "1" ] || exit 1
+  fi
+  "$PY" -m pip freeze > "$LOGDIR/post_pip_freeze.txt" 2>&1 || true
+fi
+BEHAV_SECONDS=0
+BEHAV_CAP_SECONDS=$(( ${POD_BEHAVIOUR_CAP_HOURS:-3} * 3600 ))    # registered cap: 3 A100-hours
+behaviour_step() {   # $1 model: SAD both variants plus the same-prompt read; sanitised output only
+  local m=$1 tb t0 rc
+  [ "$POD_BEHAVIOUR" = "1" ] || return 0
+  if [ "$BEHAV_SECONDS" -ge "$BEHAV_CAP_SECONDS" ]; then
+    echo "  behavioural cap of ${POD_BEHAVIOUR_CAP_HOURS:-3} h reached: $m skipped"
+    return 0
+  fi
+  if [ -f "$BEHAV/$m.json" ]; then echo "  behaviour $m done"; return 0; fi
+  tb=$(behaviour_timeout_of "$m"); t0=$(date +%s)
+  echo "B $m" > "$POD_PENDING_FLAG"
+  # Raw output goes to a local file that is never uploaded (no post_ prefix): the authors' code
+  # should print no item text, but this does not depend on it.
+  timeout -k 2m "${tb}m" "$PY" scripts/sad_behaviour.py run --sad-dir "$SAD_DIR" --model "$m" \
+    --out "$BEHAV" > "$LOGDIR/sad_run_${m}.log" 2>&1
+  rc=$?
+  BEHAV_SECONDS=$(( BEHAV_SECONDS + $(date +%s) - t0 ))
+  grep -E "^\[$m\] (plain|sp_large|same-prompt|wrote)" "$LOGDIR/sad_run_${m}.log" | sed 's/^/  /' || true
+  if [ "$rc" -ne 0 ]; then
+    echo "  behavioural step failed for $m (status $rc; local log sad_run_${m}.log, not uploaded)" >&2
+    return 0                               # registered: reported as missing, the run continues
+  fi
+  if ! timeout -k 30s 10m "$PY" scripts/check_no_sad_text.py --sad-dir "$SAD_DIR" --extra "$LOGDIR/post_run.log"; then
+    touch "$LOGDIR/post_leak_detected"
+    echo "SAD item text found after $m: stopping the run without uploading logs" >&2
+    exit 1
+  fi
+  upload "$BEHAV/$m.json" behaviour
+  rm -f "$POD_PENDING_FLAG"
+  echo "  behaviour $m: $(( $(date +%s) - t0 )) s; behavioural total $(( BEHAV_SECONDS / 60 )) min"
+}
+delete_weights() {   # $1 model: remove its snapshot from the local cache
+  local repo
+  repo=$("$PY" -c "import importlib.util, sys; s = importlib.util.spec_from_file_location('p', 'pod/sad_provider/hf_local_provider.py'); m = importlib.util.module_from_spec(s); s.loader.exec_module(m); print(m.MODELS[sys.argv[1]][0])" "$1" 2>/dev/null) || return 0
+  rm -rf "$HF_HOME/hub/models--${repo//\//--}"* && echo "  deleted weights of $repo"
+}
+
 ACTS_P7_SMALL=$EAS_ACTIVATION_ROOT/results/post_submission/paraphrase/acts_validated_only
 ACTS_P3=$EAS_ACTIVATION_ROOT/results/post_submission/qwen25_validated/acts
 FLOOR=$EAS_ACTIVATION_ROOT/results/post_submission/paraphrase/floor
@@ -386,6 +480,11 @@ for m in $P7_MODELS; do
   [ -f "$ACTS_P7/${m}__nothink.npz" ] && echo "  P7 $m  done" \
     || echo "  P7 $m  to extract, batch $(batch_of "$m"), timeouts $tf + $tp min"
 done
+if [ "$POD_BEHAVIOUR" = "1" ]; then
+  for m in $P7_MODELS $BEHAV_ONLY_MODELS; do
+    [ -f "$BEHAV/$m.json" ] && echo "  B  $m  done" || echo "  B  $m  to run, timeout $(behaviour_timeout_of "$m") min"
+  done
+fi
 if [ "$DRY" = "1" ]; then say "DRY=1: stopping before the GPU"; exit 0; fi
 
 upload() {   # $1 file, $2 subdirectory of the target; with no target the verified volume holds it
@@ -412,6 +511,8 @@ for m in $P7_MODELS; do
   echo "P7 $m" > "$POD_PENDING_FLAG"      # from here an output may exist that is not uploaded
   timeout -k 2m "${tf}m" "$PY" scripts/paraphrase_noise_floor.py extract --model "$m"
   upload "$FLOOR/${m}__nothink.npz" paraphrase/floor
+  behaviour_step "$m"                       # same weight-load cycle: the snapshot is still cached
+  echo "P7 $m" > "$POD_PENDING_FLAG"
   timeout -k 2m "${tp}m" "$PY" scripts/extract_paraphrase.py --model "$m" --batch "$(batch_of "$m")" --delete-weights
   f=$ACTS_P7/${m}__nothink.npz
   # A validated-only copy: what scripts/paraphrase_analysis.py reads, at half the download.
@@ -430,6 +531,14 @@ PY
   echo "  elapsed $(( ($(date +%s) - T0) / 60 )) min"
 done
 
+for m in $BEHAV_ONLY_MODELS; do
+  [ "$POD_BEHAVIOUR" = "1" ] || break
+  say "B $m"
+  behaviour_step "$m"
+  delete_weights "$m"
+  echo "  elapsed $(( ($(date +%s) - T0) / 60 )) min"
+done
+
 say "done in $(( ($(date +%s) - T0) / 60 )) min"
 cat <<EOF
 On the analysis machine (which holds results/pod_qwen3, results/pod_qwen35 and results/gstudy):
@@ -439,6 +548,8 @@ On the analysis machine (which holds results/pod_qwen3, results/pod_qwen35 and r
   python scripts/paraphrase_noise_floor.py summary      # amendment-2 floors, all rungs
   python scripts/paraphrase_analysis.py                 # gated: records the registered stop
   python scripts/paraphrase_analysis.py --ungated       # descriptive, P7c now that >= 4 rungs exist
+  copy behaviour/*.json into results/post_submission/behaviour/, then run the leak check and
+  python scripts/behavioural_anchor.py                  # the registered comparison
 Extraction commit: $COMMIT (also in every npz's meta). Logs: $POD_UPLOAD/logs.
 Then terminate the pod (a stopped pod still bills its volume): runpodctl remove pod <id>.
 EOF
