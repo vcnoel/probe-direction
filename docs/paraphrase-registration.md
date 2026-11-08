@@ -212,3 +212,14 @@ statistic, mean 0.0013, directions within cosine 0.9988).
 - **Batch on Qwen3-32B.** The pod extraction uses `--batch 0`, the paper's pod rule, which gives
   batch 10 on Qwen3-32B (80 GB card) against the registered batch 16; every other pod rung runs at
   16. The floor extraction of amendment 2 uses the same rule on the same rungs.
+
+## Note on P7c statistics (2026-11-08, before any pod rung was extracted)
+
+When the pod rungs exist, `scripts/paraphrase_analysis.py` reports P7c under three statistics:
+- the registered folded statistic (all hidden states);
+- the signed band statistic, already reported beside it;
+- the folded statistic over hidden states 1..n-2, the layer set of the released implementations,
+  which drops the embedding output and the final state.
+
+The last is added after the adversarial audit's layer-set check (`docs/post-submission-checks.md`).
+It is descriptive, like every pod-rung number here (see the note on the pod scope).

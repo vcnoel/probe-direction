@@ -132,12 +132,15 @@ def model_cells(ladder, model):
     mu_old = full_dirs(s_fr, idx_old, frs)
     fold = np.zeros((3, len(pairs)))
     sign = np.zeros((3, len(pairs)))
+    fold_rel = np.zeros((3, len(pairs)))          # folded max over states 1..L-2 (released set)
     fold_old, sign_old = np.zeros(len(pairs)), np.zeros(len(pairs))
     cos_min = 1.0
     for j, (e, d) in enumerate(pairs):
         for v in VERSIONS:
             D = unit(mu_new[vname(e, v)] - mu_new[vname(d, v)])
-            fold[v, j], sign[v, j] = stats(y, np.einsum("ild,ld->il", sad, D), band)
+            proj = np.einsum("ild,ld->il", sad, D)
+            fold[v, j], sign[v, j] = stats(y, proj, band)
+            fold_rel[v, j] = peak(y, proj[:, 1:L - 1])
             if v == 0:
                 D0 = D
         D = unit(mu_old[e] - mu_old[d])
@@ -171,7 +174,8 @@ def model_cells(ladder, model):
             dtr = unit(m[a_i] - m[b_i])
             for v in VERSIONS:
                 G[v, s, li] = F[v][:, perm[half:], :].mean(1) @ dtr.T
-    return {"model": model, "fold": fold, "sign": sign, "fold_stored_v0": fold_old, "gate": gate,
+    return {"model": model, "fold": fold, "sign": sign, "fold_released": fold_rel,
+            "fold_stored_v0": fold_old, "gate": gate,
             "G": G, "pairs_pp": pp, "n_eval": len(ev), "pairs": pairs, "ev": ev, "dp": dp,
             "n_states": L, "n_band": int(bl.size), "extraction_meta": meta}
 
@@ -314,6 +318,7 @@ def main() -> None:
             per_model.append({"model": c["model"], "gate": c["gate"], "p7a": a, "p7d": d,
                               "n_states": c["n_states"], "n_band_states": c["n_band"],
                               "fold": c["fold"].tolist(), "sign": c["sign"].tolist(),
+                              "fold_released": c["fold_released"].tolist(),
                               "extraction": {k: c["extraction_meta"].get(k) for k in
                                              ("revision", "template_sha12", "prompt_sha256", "batch",
                                               "seconds_load", "seconds_forward", "gpu", "torch",
@@ -329,6 +334,7 @@ def main() -> None:
         lp = np.array([np.log10(params[m]) for m in models])
         Xf = np.stack([c["fold"].T for c in C])                     # [model, wrapper, version]
         Xs = np.stack([c["sign"].T for c in C])
+        Xr = np.stack([c["fold_released"].T for c in C])
         need = math.ceil(0.75 * len(models))
         lad = {"models": models, "params_b": [params[m] for m in models],
                "status": ("computed although the reproduction gate failed for " + ", ".join(bad)
@@ -341,7 +347,8 @@ def main() -> None:
                "p7d": {"models_needed": need, "n_pass": sum(r["p7d"]["holds"] for r in per_model),
                        "holds_on_ladder": sum(r["p7d"]["holds"] for r in per_model) >= need}}
         if len(models) >= 4:
-            lad["p7c"] = {"fold": p7c(Xf, lp), "sign": p7c(Xs, lp)}
+            # fold as registered; signed band and the released layer set (states 1..L-2) beside it
+            lad["p7c"] = {"fold": p7c(Xf, lp), "sign": p7c(Xs, lp), "fold_released": p7c(Xr, lp)}
         else:
             lad["p7c"] = {"status": f"not run: {len(models)} rungs, registered minimum 4 (pod step)"}
         b = lad["p7b"]["fold"]["shares"]
