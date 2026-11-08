@@ -34,6 +34,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "src"))
 from eval_awareness_spectral.prompts import build_prompts, load_framings, load_tasks  # noqa: E402
 from extract_model import cfg, pool_both  # noqa: E402
+from extract_paraphrase import git_state  # noqa: E402
 
 ACT = Path(os.environ.get("EAS_ACTIVATION_ROOT", str(ROOT)))
 OUT = ACT / "results" / "post_submission" / "qwen25_validated" / "acts"
@@ -73,7 +74,7 @@ def run(key, delete_weights=False):
             "attn": "eager", "pooling": "pool_both of scripts/extract_model.py",
             "seconds_load": t_load, "seconds_forward": t_fwd,
             "gpu": torch.cuda.get_device_name(0), "torch": torch.__version__,
-            "transformers": __import__("transformers").__version__}
+            "transformers": __import__("transformers").__version__, **git_state()}
     tmp = dest.with_suffix(".tmp.npz")
     np.savez_compressed(tmp, framing_validated=val, framing_alltokens=allt,
                         framing_name=np.array([p.condition for p in prompts]),

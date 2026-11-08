@@ -192,3 +192,23 @@ output `paraphrase_analysis_ungated.json`), with the registered decision rules e
 Its numbers are descriptive and are not registered results; any use of them must state that the
 registered reproduction gate failed on the change of machine (largest change 0.030 of the paper's
 statistic, mean 0.0013, directions within cosine 0.9988).
+
+## Note on the pod scope (2026-11-08, after the laptop results)
+
+- **Qwen2.5-7B is not re-extracted on the pod.** This departs from the companion section, which
+  made the 7B rung a pod step. The four-rung validated answer already exists:
+  `results/gstudy_v11/<model>/pooled.npz` holds both conventions from one forward pass of
+  `scripts/extract_model.py`, and its all-token array reproduces the stored
+  `results/gstudy/<model>/pooled.npz` bit for bit on all four rungs (max absolute difference 0,
+  `results/post_submission/qwen25_validated/table1.json`, condition `v11_validated_4rung`). A
+  re-extraction on a different machine would differ by bfloat16 arithmetic, fail the reproduction
+  gate of `scripts/qwen25_validated.py` and write nothing. `pod/run_post_submission.sh` therefore
+  runs no P3 model; `scripts/extract_qwen25_validated.py` stays usable.
+- **The registered gate also failed on Qwen3.5-4B**: largest change of the statistic 0.0115 > 0.01,
+  floor_batch 0.0006, floor_machine 0.0116 (`results/post_submission/paraphrase/noise_floor.json`).
+  It fails amendment 2 as well. P7 is therefore stopped on both ladders under the registered rules,
+  and the pod rungs (Qwen3-8B, 14B, 32B, Qwen3.5-9B, 27B) can add descriptive numbers only, chiefly
+  P7c, which needs at least 4 rungs, computed by `scripts/paraphrase_analysis.py --ungated`.
+- **Batch on Qwen3-32B.** The pod extraction uses `--batch 0`, the paper's pod rule, which gives
+  batch 10 on Qwen3-32B (80 GB card) against the registered batch 16; every other pod rung runs at
+  16. The floor extraction of amendment 2 uses the same rule on the same rungs.

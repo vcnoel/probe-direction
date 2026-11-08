@@ -1,44 +1,61 @@
 #!/usr/bin/env bash
 # Post-submission extractions on one A100 80GB, in one resumable run (docs/paraphrase-registration.md):
 #
-#   P3  Qwen2.5-7B framing rows, validated and all-token pooling in one pass
-#       (scripts/extract_qwen25_validated.py)
 #   P7  original + paraphrased framings, non-thinking rendering
 #       (scripts/extract_paraphrase.py): Qwen3-8B, 14B, 32B and Qwen3.5-9B, 27B, each preceded by
 #       the amendment-2 floor extraction (scripts/paraphrase_noise_floor.py: the paper's own 18
-#       framings x 60 tasks in the pod run's order and batch) under the same weight load cycle
+#       framings x 60 tasks in the pod run's order and batch) under the same weight load cycle.
+#       The registered gate already stopped P7 on both ladders, so these rungs add descriptive
+#       numbers only (P7c mainly, which needs at least 4 rungs); see the registration's notes.
+#   P3  not run here (P3_MODELS is empty): the four-rung validated Qwen2.5 answer exists from
+#       results/gstudy_v11, and a cross-machine re-extraction would fail qwen25_validated.py's
+#       reproduction gate and write nothing. scripts/extract_qwen25_validated.py stays pod-ready.
 #
 # Only framing prompts are run. They are rendered here from committed data (framings and the task
 # pool, no benchmark text) by the same code as on the laptop, and the prompt hash is checked
 # against the laptop's before any download. The SAD scoring set is NOT re-extracted: the analysis
 # scripts read it from the paper's stored arrays on the analysis machine.
 #
+# Provenance: run from a clean checkout of this branch at a recorded commit. The commit and the
+# working-tree status are printed here and written into every extraction's meta; a tree with
+# modified tracked files is refused. Do NOT apply rename_package.patch: it renames the package
+# but misses scripts/extract_paraphrase.py, scripts/extract_qwen25_validated.py and
+# scripts/paraphrase_noise_floor.py, which would then fail to import.
+#
+# Billing: run inside tmux, with POD_AUTOSTOP=1, so a dropped SSH session does not kill the run
+# and the pod stops itself when the run ends, whether it completes or aborts:
+#     tmux new -s post
+#     POD_AUTOSTOP=1 POD_UPLOAD=<rclone target> bash pod/run_post_submission.sh 2>&1 | tee post.log
+#     (detach with Ctrl-b d; reattach with tmux attach -t post)
+# POD_AUTOSTOP=1 runs `runpodctl stop pod "$RUNPOD_POD_ID"` from an EXIT trap: after the last
+# upload, or on any error, interrupt or termination. A real run refuses to start without it unless
+# POD_KEEP_RUNNING=1 says the pod is meant to stay up.
+#
 # Resumable: every extraction skips a model whose npz exists, so a re-run after a dropped session
 # continues. Each model is uploaded and checksummed before the next starts; weights are deleted
 # after the npz is written (the disk is smaller than the ladder).
 #
-#   POD_UPLOAD      rclone target for the npz files                  REQUIRED unless DRY=1
-#   DRY=1           preflight and plan only: no install, no download, no GPU
-#   POD_ALLOW_GPU=1 accept a GPU other than an A100 80GB (estimates below assume an A100)
-#   POD_DISK_GB     the volume's quota when statvfs cannot see it (see pod/extract.py free_gb)
-#   PY              python interpreter
+#   POD_UPLOAD          rclone target for the npz files                 REQUIRED unless DRY=1
+#   POD_AUTOSTOP=1      stop the pod (runpodctl, RUNPOD_POD_ID) when the run ends or aborts
+#   POD_KEEP_RUNNING=1  run without autostop, deliberately
+#   DRY=1               preflight and plan only: no install, no download, no GPU, no autostop
+#   POD_ALLOW_GPU=1     accept a GPU other than an A100 80GB (estimates below assume an A100)
+#   POD_DISK_GB         the volume's quota when statvfs cannot see it (see pod/extract.py free_gb)
+#   PY                  python interpreter
 #
 # Estimated time on one A100 80GB. Forward passes are the laptop's measured times (RTX 5080 Laptop,
 # batch 16) extrapolated linearly in parameters, with no credit for the A100 being faster, so they
 # are an upper estimate:
-#   step                     download  forward: floor + paraphrase (P3: framing rows)
-#   P3 Qwen2.5-7B             15.2 GB    2.3 min
+#   step                     download  forward: floor + paraphrase
 #   P7 Qwen3-8B               16.4 GB    2.1 +  3.4 min
 #   P7 Qwen3.5-9B             19.3 GB    3.3 +  5.8 min
 #   P7 Qwen3-14B              29.5 GB    3.6 +  5.8 min
 #   P7 Qwen3.5-27B            55.6 GB    9.3 + 16.0 min
 #   P7 Qwen3-32B              65.5 GB    7.8 + 12.5 min  (batch 10, the paper's pod rule)
-#   forward passes ~72 min; downloads 201.5 GB ~17 min at 200 MB/s; 11 weight loads ~15 min;
-#   compressed writes ~17 GB ~7 min; uploads ~3 min; setup ~10 min.
-#   Total about 2.1 A100-hours as an upper estimate (about 1.5 if the A100 runs the forward passes
-#   twice as fast as the laptop). Peak disk: one model (65.5 GB) plus outputs (~20 GB).
-#
-#   bash pod/run_post_submission.sh
+#   forward passes ~70 min; downloads 186.3 GB ~16 min at 200 MB/s; 10 weight loads ~14 min;
+#   compressed writes ~16 GB ~7 min; uploads ~3 min; setup ~10 min.
+#   Total about 2.0 A100-hours as an upper estimate (about 1.4 if the A100 runs the forward passes
+#   twice as fast as the laptop). Peak disk: one model (65.5 GB) plus outputs (~19 GB).
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -48,12 +65,48 @@ PY=${PY:-$(command -v python3 || command -v python)}
 [ -x "$PY" ] || { echo "no python found; set PY=/path/to/python" >&2; exit 1; }
 say() { printf '\n\033[1m== %s\033[0m\n' "$*"; }
 
+# ------------------------------------------------------------------------- billing guard
+autostop() {
+  local rc=$?
+  if [ "$DRY" != "1" ] && [ "${POD_AUTOSTOP:-0}" = "1" ]; then
+    echo "[autostop] run ended with status $rc; stopping pod ${RUNPOD_POD_ID:-<unset>}"
+    if command -v runpodctl >/dev/null && [ -n "${RUNPOD_POD_ID:-}" ]; then
+      runpodctl stop pod "$RUNPOD_POD_ID" \
+        || echo "[autostop] runpodctl stop FAILED: stop the pod by hand now" >&2
+    else
+      echo "[autostop] cannot stop (runpodctl or RUNPOD_POD_ID missing): stop the pod by hand now" >&2
+    fi
+  fi
+  exit $rc
+}
+trap autostop EXIT
+trap 'echo "[autostop] interrupted" >&2; exit 130' INT TERM HUP
+if [ "$DRY" != "1" ]; then
+  if [ "${POD_AUTOSTOP:-0}" = "1" ]; then
+    command -v runpodctl >/dev/null || { echo "POD_AUTOSTOP=1 but runpodctl is not installed" >&2; exit 1; }
+    [ -n "${RUNPOD_POD_ID:-}" ] || { echo "POD_AUTOSTOP=1 but RUNPOD_POD_ID is not set" >&2; exit 1; }
+  elif [ "${POD_KEEP_RUNNING:-0}" != "1" ]; then
+    echo "refusing to start without POD_AUTOSTOP=1 (set POD_KEEP_RUNNING=1 to run without it)" >&2
+    exit 1
+  fi
+fi
+
+# ------------------------------------------------------------------------- provenance
+COMMIT=$(git rev-parse HEAD)
+DIRTY=$(git status --porcelain --untracked-files=no)
+echo "commit $COMMIT"
+if [ -n "$DIRTY" ]; then
+  echo "modified tracked files:" >&2; echo "$DIRTY" >&2
+  [ "$DRY" = "1" ] || { echo "refusing to extract from a modified tree; commit or reset first" >&2; exit 1; }
+fi
+git status --porcelain | sed 's/^/  status: /'
+
 export HF_HOME=${HF_HOME:-/workspace/hf}
 [ "$HF_HOME" = "/workspace/hf" ] || echo "NOTE HF_HOME is $HF_HOME, not /workspace/hf"
 export EAS_ACTIVATION_ROOT=${EAS_ACTIVATION_ROOT:-$ROOT}
 export HF_HUB_DISABLE_PROGRESS_BARS=1 TOKENIZERS_PARALLELISM=false PYTHONUNBUFFERED=1
 P7_MODELS=${P7_MODELS:-"qwen3-8b qwen3.5-9b qwen3-14b qwen3.5-27b qwen3-32b"}   # ascending: fail cheap
-P3_MODELS="qwen2.5-7b"
+P3_MODELS=""                       # see the header: the Qwen2.5 four-rung answer exists already
 PROMPT_SHA12=39980ca8f0b8          # the laptop rendering of the 36 x 60 framing prompts
 
 # ------------------------------------------------------------------------------ 0. preflight
@@ -76,7 +129,7 @@ for p in ("/workspace", os.environ["HF_HOME"]):
         f = free_gb(p)
         print(f"  free disk at {p}: {f:.0f} GB")
         if f < 150:
-            sys.exit(f"  need at least 150 GB free at {p} (largest download 65.5 GB, outputs ~20 GB)")
+            sys.exit(f"  need at least 150 GB free at {p} (largest download 65.5 GB, outputs ~19 GB)")
 print(f"  HF_HOME={os.environ['HF_HOME']}  EAS_ACTIVATION_ROOT={os.environ['EAS_ACTIVATION_ROOT']}")
 PY
 
@@ -118,11 +171,18 @@ fi
 # --------------------------------------------- 2. the prompts are the laptop's prompts
 say "rendering check (tokenizers only)"
 for m in $P7_MODELS; do
-  line=$("$PY" scripts/extract_paraphrase.py --render-only --model "$m" 2>/dev/null | tail -1)
+  if ! out=$("$PY" scripts/extract_paraphrase.py --render-only --model "$m" 2>&1); then
+    echo "$out" >&2
+    echo "  render check failed for $m (output above); stopping" >&2
+    exit 1
+  fi
+  line=$(printf '%s\n' "$out" | grep -E "^$m: " | tail -1 || true)
   echo "  $line"
   case "$line" in
     *"sha $PROMPT_SHA12"*) ;;
-    *) echo "  $m renders differently from the laptop (want sha $PROMPT_SHA12); stopping" >&2; exit 1 ;;
+    *) echo "$out" >&2
+       echo "  $m renders differently from the laptop (want sha $PROMPT_SHA12); stopping" >&2
+       exit 1 ;;
   esac
 done
 
@@ -189,9 +249,9 @@ cat <<EOF
 On the analysis machine (which holds results/pod_qwen3, results/pod_qwen35 and results/gstudy):
   copy paraphrase/acts_validated_only/*.npz (or paraphrase/acts/*.npz) into
        \$EAS_ACTIVATION_ROOT/results/post_submission/paraphrase/acts/
-  copy qwen25_validated/*.npz into \$EAS_ACTIVATION_ROOT/results/post_submission/qwen25_validated/acts/
   copy paraphrase/floor/*.npz into \$EAS_ACTIVATION_ROOT/results/post_submission/paraphrase/floor/
-  python scripts/paraphrase_noise_floor.py summary   # amendment-2 floors, all rungs
-  python scripts/qwen25_validated.py        # P3, four rungs
-  python scripts/paraphrase_analysis.py     # P7a-d on both ladders, P7c now that >= 4 rungs exist
+  python scripts/paraphrase_noise_floor.py summary      # amendment-2 floors, all rungs
+  python scripts/paraphrase_analysis.py                 # gated: records the registered stop
+  python scripts/paraphrase_analysis.py --ungated       # descriptive, P7c now that >= 4 rungs exist
+Extraction commit: $COMMIT (also in every npz's meta)
 EOF

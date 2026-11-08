@@ -89,7 +89,8 @@ def extract(key):
                         meta=np.array(json.dumps({"repo": repo, "revision": rev, "batch": batch,
                                                   "n_prompts_run": len(texts),
                                                   "seconds_forward": time.time() - t0,
-                                                  "gpu": torch.cuda.get_device_name(0)})))
+                                                  "gpu": torch.cuda.get_device_name(0),
+                                                  **xp.git_state()})))
     tmp.replace(dest)
     print(f"{dest.name}: {len(texts)} prompts in {time.time() - t0:.0f}s")
     del model

@@ -145,6 +145,6 @@
       "qwen3.5-4b"
     ],
     "producer": "scripts/paraphrase_noise_floor.py",
-    "producer_sha12": "ddb0728d4cbc"
+    "producer_sha12": "d8d14d872744"
   }
 }

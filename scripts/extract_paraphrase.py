@@ -26,6 +26,7 @@ import importlib.util
 import json
 import os
 import shutil
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -60,6 +61,17 @@ MODELS = {
     "qwen3.5-9b": ("Qwen/Qwen3.5-9B", "c202236235762e1c871ad0ccb60c8ee5ba337b9a", 17907614208, "a4aee8afcf2e"),
     "qwen3.5-27b": ("Qwen/Qwen3.5-27B", "fc05daec18b0a78c049392ed2e771dde82bdf654", 53792013824, "a4aee8afcf2e"),
 }
+
+
+def git_state():
+    """Commit and working-tree state of this checkout, recorded in every extraction's meta."""
+    def run(*args):
+        try:
+            return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True,
+                                  timeout=30).stdout.strip()
+        except Exception as e:                           # no git on the host: say so
+            return f"unavailable: {e}"
+    return {"git_commit": run("rev-parse", "HEAD"), "git_status_porcelain": run("status", "--porcelain")}
 
 
 def framings():
@@ -128,7 +140,7 @@ def run(key, batch, delete_weights=False):
             "pooling_filter": "BOS and whitespace-only tokens dropped for 'validated'",
             "seconds_load": t_load, "seconds_forward": t_fwd,
             "gpu": torch.cuda.get_device_name(0), "torch": torch.__version__,
-            "transformers": __import__("transformers").__version__}
+            "transformers": __import__("transformers").__version__, **git_state()}
     tmp = dest.with_suffix(".tmp.npz")
     np.savez_compressed(tmp, framing_validated=out["validated"],
                         framing_alltokens=out["alltokens"],
