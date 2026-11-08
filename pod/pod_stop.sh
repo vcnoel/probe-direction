@@ -33,8 +33,11 @@
 #   POD_UPLOAD_TIMEOUT (1800 s per directory), POD_MANIFEST_TIMEOUT (300 s), POD_MOUNTS_FILE (/proc/mounts),
 #   POD_NETWORK_MOUNT (/workspace)
 
-pod_stop_log() {
-  { printf '%s [%s] %s\n' "$(date -u +%FT%TZ)" "$1" "$2" >> "${POD_STOP_LOG:-/tmp/pod_stop.log}"; } 2>/dev/null || true
+pod_stop_log() {   # to the stop log; to stderr if the log cannot be written
+  local line
+  line=$(printf '%s [%s] %s' "$(date -u +%FT%TZ)" "$1" "$2")
+  { printf '%s\n' "$line" >> "${POD_STOP_LOG:-/tmp/pod_stop.log}"; } 2>/dev/null \
+    || { printf '%s\n' "$line" >&2; } 2>/dev/null || true
 }
 
 pod_sink() {   # where command output may go: the log if writable, else nowhere
@@ -110,6 +113,7 @@ pod_write_manifest() {   # $1 tag: every completed output with bytes and sha256,
   # a hung output filesystem can delay the stop; a timeout leaves a partial manifest marked as such.
   local tag=$1 rc n dir man
   dir=$(dirname "${POD_STOP_LOG:-/tmp/pod_stop.log}")
+  { : >> "$dir/post_output_manifest.tsv.tmp"; } 2>/dev/null || dir=/tmp     # unwritable log dir
   man=$dir/post_output_manifest.tsv
   if [ -z "${POD_OUTPUT_ROOT:-}" ]; then
     pod_stop_log "$tag" "no output root yet; no manifest"

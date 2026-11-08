@@ -42,8 +42,9 @@
 # any GPU step the run refuses to start unless the outputs are safe: POD_UPLOAD passes a round trip
 # (upload, read back, compare), or NETWORK_VOLUME=1 and the mount table shows the outputs on a
 # network filesystem mounted at /workspace. A detached watchdog calls
-# the same function after POD_WATCHDOG_HOURS (default 5, above the expected 2 h; the step timeouts
-# alone could sum past 4 h) whatever happens to this shell: one stop attempt, then the remove path,
+# the same function after POD_WATCHDOG_HOURS (default 6, above the 4.6 h upper estimate for the
+# paraphrase and behavioural steps together; the step timeouts alone could sum past it)
+# whatever happens to this shell: one stop attempt, then the remove path,
 # never a stop retry. Every step of both is logged to $POD_LOG_DIR/post_stop.log on the container
 # disk; the trap uploads the logs before it stops the pod, and nothing in the stop depends on the log.
 # A STOPPED POD STILL BILLS ITS VOLUME STORAGE: after retrieving the outputs, terminate it
@@ -62,10 +63,12 @@
 #   POD_KEEP_RUNNING=1  run without autostop, deliberately
 #   POD_DISK_GB         the volume quota in GB (at least 70); REQUIRED whenever RUNPOD_POD_ID is
 #                       set or the outputs are on a network volume (statvfs reports the cluster there)
-#   POD_WATCHDOG_HOURS  whole hours >= 1 before the watchdog stops the pod (default 5)
+#   POD_WATCHDOG_HOURS  whole hours >= 1 before the watchdog stops the pod (default 6)
 #   POD_LOCAL_DIR       local container-disk directory (default /root): HF_HOME=$it/hf and the logs
 #   POD_LOG_DIR         logs, pid and pending-upload flag (default $POD_LOCAL_DIR/post_logs)
-#   DRY=1               preflight and plan only: no install, no download, no extraction, no stop
+#   DRY=1               preflight and plan only: no install, no download, no extraction, no stop at
+#                       exit; the watchdog still starts and stops the pod after POD_WATCHDOG_HOURS
+#                       unless a later run replaces it
 #   DRY_INSTALL=1       as DRY=1, but install the pinned dependencies first
 #   POD_ALLOW_GPU=1     accept a GPU other than an A100 80GB (estimates below assume an A100)
 #   PY                  python interpreter
