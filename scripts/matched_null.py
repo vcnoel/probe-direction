@@ -40,9 +40,15 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from gstudy_gtheory import coefficients, components_3way  # noqa: E402
 from ladder_audit import (LADDER_ORDER, N_BLOCKS, corr, crossed, erho_crossed, flat_summary,  # noqa: E402
                           grid, k_arm_080, rel_share_crossed, sb, sign_summary)
+from ladder_audit_cells import band_label  # noqa: E402
 from result_io import write_result  # noqa: E402
 
 CELLS = Path(os.environ.get("EAS_CELLS_DIR") or ROOT / "results" / "post_submission" / "cells")
+
+
+def _rel(p):
+    p = Path(p).resolve()
+    return p.relative_to(ROOT).as_posix() if p.is_relative_to(ROOT) else p.as_posix()
 OUT = Path(os.environ.get("EAS_MATCHED_OUT") or ROOT / "results" / "post_submission" / "matched_null.json")
 DRAWN = ("iso", "iso_rep", "iso_xl", "cov", "matched", "matched_wide", "taskperm")
 MATCHED = ("iso_xl", "matched", "matched_wide", "taskperm", "relabel")
@@ -209,6 +215,12 @@ def run(name, rng):
     ev_idx = [list(range(i * n_d, (i + 1) * n_d)) for i in range(n_e)]
     dp_idx = [list(range(j, n_e * n_d, n_d)) for j in range(n_d)]
     cfg = json.loads(str(z["config"]))
+    band = band_label()
+    if band["layer_band"] is not None and cfg.get("layer_band") is None:
+        # cells written before the cell scorers recorded their band carry the all-layer label
+        # although they were computed under EAS_LAYER_BAND; state what they were computed with
+        cfg["statistic_as_stored_in_cells"] = cfg.get("statistic")
+        cfg["statistic"], cfg["layer_band"] = band["statistic"], band["layer_band"]
 
     rf = z["real_full"].astype(float)
     repro = {"max_abs_diff_full_vs_ladder_audit_cells": float(np.abs(rf - old["real_full"]).max()),
@@ -321,17 +333,19 @@ def main() -> None:
                   f"({out[name]['floors'][k]['r_minus_floor_sign_stability']:.2f})", flush=True)
     conv = dict(pooling="validated for scoring and for the direction arrays "
                         "(Qwen2.5: lf scoring, all-token directions, as pod_ladders)",
-                layers="ALL", scoring_array="results/post_submission/cells/matched_*.npz, from "
+                layers=band_label()["layers"],
+                scoring_array=f"{_rel(CELLS)}/matched_*.npz, from "
                 "results/pod_*/*.npz and results/gstudy via scripts/matched_null_cells.py",
                 data_root="pod", model_population=sorted(set(pop)))
     write_result(OUT, {"ladders": out, "cross_ladder": cross_ladder(out), "claims": CLAIMS,
                        "matched_nulls": list(MATCHED)},
                  kind="measured",
                  statistic="the pod_ladders pipeline on geometry-matched content-free directions; "
-                           "real value placed in each null by z and mid-rank percentile",
+                           "real value placed in each null by z and mid-rank percentile; per-cell "
+                           "statistic: " + band_label()["statistic"],
                  note="post-submission audit; not part of the submitted manuscript or its "
                       "recorded predictions", **conv)
-    print(f"wrote {OUT.relative_to(ROOT).as_posix()}")
+    print(f"wrote {_rel(OUT)}")
 
 
 if __name__ == "__main__":

@@ -70,7 +70,8 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from ladder_audit_cells import band_layers, item_partitions, load_model, wrapper_rows  # noqa: E402
+from ladder_audit_cells import (band_label, band_layers, item_partitions, load_model,  # noqa: E402
+                                wrapper_rows)
 from pod_ladders import LADDERS, N_SPLITS  # noqa: E402
 
 OUT = Path(os.environ.get("EAS_CELLS_DIR") or ROOT / "results" / "post_submission" / "cells")
@@ -382,7 +383,7 @@ def run_ladder(ladder, li_ladder):
     out["config"] = np.array(json.dumps({
         "n_draws": N_DRAWS, "n_splits": N_SPLITS, "nulls": list(NULLS), "bands": BANDS,
         "seed": SEED, "n_diag_draws": N_DIAG, "topk": list(TOPK),
-        "statistic": "folded max over all layers of |AUROC - 0.5|",
+        "statistic": band_label()["statistic"], "layer_band": band_label()["layer_band"],
         "activation_root_relative_paths": tmpl}))
     OUT.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(OUT / f"matched_{ladder}.npz", **out)

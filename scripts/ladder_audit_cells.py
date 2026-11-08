@@ -73,6 +73,18 @@ def band_layers(n_layers):
     depth = np.arange(n_layers) / (n_layers - 1)
     return np.flatnonzero((depth >= lo) & (depth <= hi))
 
+
+def band_label():
+    """What the statistic is maximised over, for config and conventions records."""
+    if not _BAND:
+        return {"statistic": "folded max over all layers of |AUROC - 0.5|", "layers": "ALL",
+                "layer_band": None}
+    lo, hi = map(float, _BAND.split(","))
+    where = (f"hidden states at relative depth {lo:g} to {hi:g} (index / (number of hidden "
+             f"states - 1); hidden state 0, the embedding output, counts in the depth)")
+    return {"statistic": f"folded max of |AUROC - 0.5| over {where}", "layers": where,
+            "layer_band": [lo, hi]}
+
 N_BOOT = 200
 N_NULL = 20
 N_SPLITS_NULL = 10
@@ -280,7 +292,7 @@ def run_ladder(ladder):
     out["config"] = np.array(json.dumps({
         "n_boot": N_BOOT, "n_null": N_NULL, "n_splits": N_SPLITS, "n_splits_null": N_SPLITS_NULL,
         "nulls": list(NULLS), "seed_boot": SEED_BOOT, "seed_null": SEED_NULL,
-        "statistic": "folded max over all layers of |AUROC - 0.5|",
+        "statistic": band_label()["statistic"], "layer_band": band_label()["layer_band"],
         "activation_root_relative_paths": tmpl}))
     OUT.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(OUT / f"{ladder}.npz", **out)
