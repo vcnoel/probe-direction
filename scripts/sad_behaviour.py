@@ -155,7 +155,7 @@ def same_prompt(name: str, its, n):
             "per_item": rows}
 
 
-def run(sad_dir: Path, name: str, n, label: str, out: Path, skip_same: bool) -> None:
+def run(sad_dir: Path, name: str, n, label: str, out: Path, skip_same: bool, variants=VARIANTS) -> None:
     import torch
     import transformers
     t0 = time.time()
@@ -163,7 +163,7 @@ def run(sad_dir: Path, name: str, n, label: str, out: Path, skip_same: bool) -> 
     sys.path.insert(0, str(sad_dir))
     import evalugator  # noqa: F401
     res = {"model": name, "label": label, "variants": {}}
-    for v in VARIANTS:
+    for v in variants:
         t = time.time()
         res["variants"][v] = run_sad(name, v, n)
         r = res["variants"][v]
@@ -204,6 +204,7 @@ def main() -> None:
     ap.add_argument("--label", default="main", choices=("main", "smoke"))
     ap.add_argument("--out", type=Path, default=OUT)
     ap.add_argument("--skip-same-prompt", action="store_true")
+    ap.add_argument("--variants", nargs="+", default=list(VARIANTS), choices=list(VARIANTS))
     a = ap.parse_args()
     if a.n is not None and a.label != "smoke":
         ap.error("--n is for the smoke test only (use --label smoke)")
@@ -213,7 +214,9 @@ def main() -> None:
     else:
         if a.model not in provider_models():
             ap.error(f"unknown model {a.model}")
-        run(sad_dir, a.model, a.n, a.label, a.out.resolve(), a.skip_same_prompt)
+        if a.label == "main" and set(a.variants) != set(VARIANTS):
+            ap.error("the registered run evaluates both variants")
+        run(sad_dir, a.model, a.n, a.label, a.out.resolve(), a.skip_same_prompt, tuple(a.variants))
 
 
 if __name__ == "__main__":
