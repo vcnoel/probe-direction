@@ -34,13 +34,18 @@
 #     POD_AUTOSTOP=1 POD_DISK_GB=<quota> POD_UPLOAD=<rclone target> bash pod/run_post_submission.sh
 #     (detach with Ctrl-b d; reattach with tmux attach -t post; log in $POD_LOG_DIR/post_run.log)
 # The EXIT trap is set before anything else can fail. With POD_AUTOSTOP=1 it uploads the logs, then
-# calls pod_stop (pod/pod_stop.sh, bash and runpodctl only): `runpodctl stop pod`, a verified status
-# check, and, if the pod is still RUNNING (RunPod has documented stop as unavailable for pods with a
-# network volume), `runpodctl remove pod` provided no output awaits upload. A detached watchdog calls
+# calls pod_stop (pod/pod_stop.sh, no python): it writes and uploads the output manifest (every
+# completed npz with bytes and sha256, and the step in progress), runs `runpodctl stop pod` and
+# verifies it; if the stop is refused (RunPod has documented stop as unavailable for pods with a
+# network volume), hangs, or cannot be verified, it uploads the outputs (or relies on the verified
+# network volume), runs `runpodctl remove pod` and verifies that no row carries the pod id. Before
+# any GPU step the run refuses to start unless the outputs are safe: POD_UPLOAD passes a round trip
+# (upload, read back, compare), or NETWORK_VOLUME=1 and the mount table shows the outputs on a
+# network filesystem mounted at /workspace. A detached watchdog calls
 # the same function after POD_WATCHDOG_HOURS (default 5, above the expected 2 h; the step timeouts
-# alone could sum past 4 h) whatever happens to this shell, and removes the pod even with an upload
-# pending. Every step of both is logged to $POD_LOG_DIR/post_stop.log on the container disk; the
-# trap uploads the logs before it stops the pod, and nothing in the stop depends on the log.
+# alone could sum past 4 h) whatever happens to this shell: one stop attempt, then the remove path,
+# never a stop retry. Every step of both is logged to $POD_LOG_DIR/post_stop.log on the container
+# disk; the trap uploads the logs before it stops the pod, and nothing in the stop depends on the log.
 # A STOPPED POD STILL BILLS ITS VOLUME STORAGE: after retrieving the outputs, terminate it
 # (runpodctl remove pod <id>) and delete any network volume no longer needed.
 # A real run refuses to start without POD_AUTOSTOP=1 unless POD_KEEP_RUNNING=1.
@@ -50,7 +55,9 @@
 # after the npz is written. HF_HOME is on the local container disk (not the volume): one model at a
 # time, at most 65.5 GB.
 #
-#   POD_UPLOAD          rclone target for the npz files and logs        REQUIRED unless DRY=1
+#   POD_UPLOAD          rclone target for the npz files, manifest and logs; required unless
+#                       NETWORK_VOLUME=1 is verified (one of the two must pass before any GPU step)
+#   NETWORK_VOLUME=1    the outputs are on the network volume at /workspace (checked in the mount table)
 #   POD_AUTOSTOP=1      stop (or remove) the pod when the run ends or aborts
 #   POD_KEEP_RUNNING=1  run without autostop, deliberately
 #   POD_DISK_GB         the volume quota in GB (at least 70); REQUIRED whenever RUNPOD_POD_ID is
@@ -91,8 +98,9 @@ mkdir -p "$LOGDIR" 2>/dev/null || LOGDIR=/tmp
 LOGDIR=$(cd "$LOGDIR" 2>/dev/null && pwd) || LOGDIR=/tmp
 export POD_STOP_LOG=$LOGDIR/post_stop.log
 export POD_PENDING_FLAG=$LOGDIR/post_pending_upload
+export POD_STATE_FILE=$LOGDIR/post_state.env     # written by the outputs check, read by pod_stop
 export POD_OUTPUTS_ON_NETWORK=0
-rm -f "$POD_PENDING_FLAG" 2>/dev/null || true
+rm -f "$POD_PENDING_FLAG" "$POD_STATE_FILE" 2>/dev/null || true
 
 autostop() {
   local rc=$?
@@ -214,7 +222,25 @@ timeouts_of() {   # minutes: floor step (includes the download), paraphrase step
   esac
 }
 
-# ------------------------------------------------------------------------------ 2. preflight
+# ------------------------------------------- 2. outputs are safe before any GPU step
+# A failed or hung stop ends in `runpodctl remove pod`, which destroys the container disk. So before
+# anything touches the GPU, either the upload target passes a round trip, or NETWORK_VOLUME=1 and
+# the mount table shows the outputs on a network filesystem at /workspace. Otherwise: refuse.
+say "outputs safety"
+export POD_OUTPUT_ROOT=$EAS_ACTIVATION_ROOT/results/post_submission POD_COMMIT=$COMMIT
+mkdir -p "$POD_OUTPUT_ROOT"
+if [ -n "${POD_UPLOAD:-}" ] && ! command -v rclone >/dev/null; then
+  timeout -k 30s 5m bash -c "curl -fsSL https://rclone.org/install.sh | bash" || true
+fi
+if pod_verify_outputs_safe; then
+  echo "  state recorded in $POD_STATE_FILE"
+else
+  echo "  outputs would not survive a removal of the pod: set POD_UPLOAD to a working rclone target," >&2
+  echo "  or NETWORK_VOLUME=1 with the outputs on the network volume mounted at /workspace" >&2
+  [ "$DRY" = "1" ] || exit 1
+fi
+
+# ------------------------------------------------------------------------------ 3. preflight
 say "preflight"
 mkdir -p "$HF_HOME" "$EAS_ACTIVATION_ROOT"
 # statvfs on a network volume reports the cluster, not the quota (pod/extract.py free_gb), so a
@@ -225,7 +251,6 @@ for path in "$EAS_ACTIVATION_ROOT" "$HF_HOME"; do
   case "$fstype" in
     ext2/ext3|ext4|xfs|btrfs|overlayfs|overlay|tmpfs|zfs|f2fs) echo "  $path on local $fstype" ;;
     *) echo "  $path on $fstype: treated as a network volume"
-       [ "$path" = "$EAS_ACTIVATION_ROOT" ] && export POD_OUTPUTS_ON_NETWORK=1
        if [ -z "${POD_DISK_GB:-}" ]; then
          echo "  POD_DISK_GB is required when $path is on a network volume (the volume quota in GB)" >&2
          exit 1
@@ -261,7 +286,7 @@ for p, f, n in need:
         sys.exit(f"  {f:.0f} GB free at {p}, the run needs about {n} GB there")
 PY
 
-# ------------------------------------------------------------------- 3. dependencies, pinned
+# ------------------------------------------------------------------- 4. dependencies, pinned
 # The pins of pod/run.sh: transformers 5.8.0 is the version the paper's Qwen3.5 arrays were
 # extracted with, and it loads the Qwen3.5 text decoder through AutoModelForCausalLM.
 say "checking pinned dependencies"
@@ -330,7 +355,7 @@ for m in $P7_MODELS; do
   [ "$fb" = "$(batch_of "$m")" ] || { echo "  batch mismatch for $m: floor $fb, paraphrase $(batch_of "$m")" >&2; [ "$DRY" = "1" ] || exit 1; }
 done
 
-# --------------------------------------------- 4. the prompts are the laptop's prompts
+# --------------------------------------------- 5. the prompts are the laptop's prompts
 say "rendering check (tokenizers only)"
 for m in $P7_MODELS; do
   if ! out=$(timeout -k 30s 10m "$PY" scripts/extract_paraphrase.py --render-only --model "$m" 2>&1); then
@@ -348,19 +373,6 @@ for m in $P7_MODELS; do
   esac
 done
 
-# ------------------------------------------------- 5. the exit route, before any GPU work
-if [ "$DRY" != "1" ]; then
-  say "verifying the upload target"
-  : "${POD_UPLOAD:?set POD_UPLOAD to an rclone target, or DRY=1}"
-  command -v rclone >/dev/null || { timeout -k 30s 5m bash -c "curl -fsSL https://rclone.org/install.sh | bash"; }
-  probe=$(mktemp -d)/upload-probe.txt
-  date -u +%FT%TZ > "$probe"
-  timeout -k 30s 5m rclone copy --checksum "$probe" "$POD_UPLOAD" || { echo "cannot write to $POD_UPLOAD" >&2; exit 1; }
-  timeout -k 30s 2m rclone lsf "$POD_UPLOAD" --include upload-probe.txt | grep -q . \
-    || { echo "cannot read back $POD_UPLOAD" >&2; exit 1; }
-  timeout -k 30s 2m rclone deletefile "$POD_UPLOAD/upload-probe.txt" || true
-fi
-
 ACTS_P7=$EAS_ACTIVATION_ROOT/results/post_submission/paraphrase/acts
 ACTS_P7_SMALL=$EAS_ACTIVATION_ROOT/results/post_submission/paraphrase/acts_validated_only
 ACTS_P3=$EAS_ACTIVATION_ROOT/results/post_submission/qwen25_validated/acts
@@ -376,7 +388,11 @@ for m in $P7_MODELS; do
 done
 if [ "$DRY" = "1" ]; then say "DRY=1: stopping before the GPU"; exit 0; fi
 
-upload() {   # $1 file, $2 subdirectory of the target
+upload() {   # $1 file, $2 subdirectory of the target; with no target the verified volume holds it
+  if [ -z "${POD_UPLOAD:-}" ]; then
+    echo "  $(basename "$1") stays on the verified network volume (no POD_UPLOAD)"
+    return 0
+  fi
   timeout -k 2m 30m rclone copy --checksum "$1" "$POD_UPLOAD/$2" || { echo "upload failed for $1" >&2; exit 1; }
   echo "  uploaded $(basename "$1") -> $POD_UPLOAD/$2"
 }
