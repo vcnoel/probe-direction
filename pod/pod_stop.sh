@@ -37,7 +37,7 @@ pod_stop_log() {   # to the stop log; to stderr if the log cannot be written
   local line
   line=$(printf '%s [%s] %s' "$(date -u +%FT%TZ)" "$1" "$2")
   { printf '%s\n' "$line" >> "${POD_STOP_LOG:-/tmp/pod_stop.log}"; } 2>/dev/null \
-    || { printf '%s\n' "$line" >&2; } 2>/dev/null || true
+    || printf '%s\n' "$line" >&2 2>/dev/null || true    # order matters: stdout to stderr first
 }
 
 pod_sink() {   # where command output may go: the log if writable, else nowhere
