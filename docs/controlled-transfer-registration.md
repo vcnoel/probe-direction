@@ -85,3 +85,34 @@ draws' medians.
 
 Cosine between each null family's directions and the real directions, from
 `results/post_submission/matched_null.json`.
+
+## Amendment 1 (2026-11-08, after the OLMo-2 summary, before any other ladder's summary was read)
+
+**Observation.** On OLMo-2 every direction separates the two held-out framings perfectly at some
+layer: the fold statistic is 0.500 for real directions, null contrasts and isotropic directions
+alike, and real directions reach AUROC 1.0 across the whole band. The two classes differ in their
+whole framing text, so any direction separates them. The registered fold statistic and the Q1 rule
+therefore tie at the ceiling and cannot discriminate on this scoring set; Q1 to Q3 are reported as
+registered and marked uninformative. Q4 and Q5 are unaffected.
+
+**What remains informative is orientation**: whether a direction built from one evaluation and one
+deployment wording points from an unseen deployment framing to an unseen evaluation framing.
+
+**A1. Orientation transfer.** Per split and layer in the registered band, train means m and test
+means t of the 12 framings (30 tasks each). For a direction u - v (unit(m_u - m_v)) and a test pair
+(u', v'), orientation is correct if t_u' . dir > t_v' . dir. Real: u, v = (e, d) with disjoint test
+pairs (e', d'). Baseline: all 200 crossing partitions of the 12 framings into two groups of six, each
+holding 3 evaluation and 3 deployment framings; a partition's directions are (a - b) for a in group 1,
+b in group 2, scored on test pairs (a', b') with a' != a, b' != b, orientation taken with respect to
+the groups. Per model, R_o = mean correct orientation over real directions, test pairs, band layers
+and splits; the baseline is the 200 per-partition means. A model passes if R_o exceeds the
+baseline's 95th percentile; A1 holds on a ladder if at least 75 percent of its models pass.
+
+**A2. Alignment, for the scaling question and the variance components.** For a direction (u, v) and
+a test pair (u', v'), alignment = cos(unit(m_u - m_v), unit(t_u' - t_v')), averaged over band
+layers and splits. Real and crossing-partition baseline as in A1. Because the cosine of unrelated
+directions shrinks with width, the per-model score used across models is the real median minus the
+baseline median (excess alignment). Q2 is recomputed with excess alignment per wrapper (median over
+its disjoint test pairs) in place of the fold score, under the same rule (A1 must hold, at least 6
+wrappers of each sign). Q3 is recomputed with x[model, train wrapper, test wrapper] = alignment
+averaged over splits and band layers, all 36 x 36 cells, with the same imputation sensitivity.
