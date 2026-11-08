@@ -116,3 +116,25 @@ baseline median (excess alignment). Q2 is recomputed with excess alignment per w
 its disjoint test pairs) in place of the fold score, under the same rule (A1 must hold, at least 6
 wrappers of each sign). Q3 is recomputed with x[model, train wrapper, test wrapper] = alignment
 averaged over splits and band layers, all 36 x 36 cells, with the same imputation sensitivity.
+
+## Amendment 2 (2026-11-08, after the Amendment 1 summary of all ladders, before computing these)
+
+The amended Q2 counts both signs on every ladder, but the registered rule compares real directions
+with nothing. Two analyses are added, both on the alignment statistic of Amendment 1.
+
+**B1. Null for the sign split.** For each of the 200 crossing partitions, its 36 directions (a in
+group 1, b in group 2) get a per-direction excess alignment (median over test pairs sharing no
+framing with the direction, minus the model's baseline median) and a Pearson r with log10
+parameters. Reported: the real minority-sign count and the real SD of r, each placed as a mid-rank
+percentile in the 200 partition values.
+
+**B2. Split-half reliability of the per-wrapper sign on controlled items.** For each of the 200
+partitions of the evaluation framings into 3 + 3 and the deployment framings into 3 + 3, test set A
+holds the test pairs with both framings in the first halves, test set B the pairs with both in the
+second halves. For each real direction, r_A and r_B use only the test pairs of that set sharing no
+framing with the direction (directions with fewer than 2 such pairs in a set are dropped for that
+partition). Reliability = Pearson correlation of r_A and r_B across directions, Spearman-Brown
+corrected, median over partitions. The same computation on each crossing partition's 36 directions
+(test sets restricted to that partition's groups in the same way) gives the null distribution of
+the median. The per-wrapper sign is "reliable beyond the null" if the real value exceeds the null's
+95th percentile.
