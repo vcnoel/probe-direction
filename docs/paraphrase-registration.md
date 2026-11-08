@@ -124,3 +124,24 @@ the Table 1 quantities from both are reported). Then the Table 1 quantities of
 E rho^2 for one wrapper on the full item set, k for 0.80) are recomputed with validated directions,
 next to the submitted values and to all-token values on the same rungs. Rungs now: 0.5B, 1.5B, 3B;
 the 7B rung is a pod step. Output: `results/post_submission/qwen25_validated/table1.json`.
+
+## Amendment 1 (2026-11-08, before any Qwen3.5 prompt was extracted and before any number of this analysis was computed)
+
+The paraphrase test must not rest on one family, so the Qwen3.5 ladder is added in the paper's
+non-thinking rendering: Qwen3.5-0.8B, 2B and 4B on the laptop, Qwen3.5-9B and 27B on the pod.
+
+- Weights at the revisions recorded in `results/pod_qwen35/<model>__nothink.npz` (`meta.revision`),
+  bfloat16, text decoder loaded alone through `AutoModelForCausalLM` as in the paper's extraction.
+- Rendering: `enable_thinking=False` passed explicitly, date pinned to 01 Jan 2025, the same
+  `build_prompts` call. The chat-template hash must equal the paper's for that rung: `273d8e0e683b`
+  for 0.8B and 2B, `a4aee8afcf2e` for 4B, 9B and 27B.
+- Scoring set: `sad_validated` and `sad_label` of `results/pod_qwen35/<model>__nothink.npz`.
+- Parameter counts for P7c: `scripts/pod_ladders.py`, ladder `qwen3.5_nothink`.
+- The reproduction gate of the original design applies per model, against the stored Qwen3.5
+  arrays.
+- The same P7a to P7d design and decision rules apply per ladder: P7a holds on a ladder if it holds
+  on every model run on that ladder; P7b is computed within each ladder (x[model, wrapper, version]
+  over that ladder's models); P7c runs on a ladder once it has at least 4 rungs; P7d holds on a
+  ladder if at least 75 percent of that ladder's models pass. No verdict pools the two ladders.
+- The pod run (`pod/run_post_submission.sh`) covers Qwen3-8B, 14B, 32B and Qwen3.5-9B, 27B in one
+  resumable run, together with the Qwen2.5-7B rung of the companion analysis.
