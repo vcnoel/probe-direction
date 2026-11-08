@@ -1,0 +1,194 @@
+{
+  "released_cells": {
+    "qwen2.5-0.5b__system": {
+      "n_items": 204,
+      "n_scored_states": 23,
+      "abscos_flip_real_median": 0.09199171754660651,
+      "abscos_flip_real_max_per_state_median": 0.3070616097160449,
+      "abscos_flip_real_argmax_state": 1,
+      "abscos_flip_real_max": 0.9682431541347354,
+      "abscos_between_flips_median": 0.9805728848560893,
+      "one_over_sqrt_n": 0.07001400420140048,
+      "perm_mean": 0.14779625,
+      "ar1_mean": 0.20324166666666663,
+      "perm_minus_ar1": -0.055445416666666636,
+      "rebuilt_statistic": 0.2047
+    },
+    "qwen2.5-0.5b__user": {
+      "n_items": 204,
+      "n_scored_states": 23,
+      "abscos_flip_real_median": 0.05651948698271597,
+      "abscos_flip_real_max_per_state_median": 0.3411149876724289,
+      "abscos_flip_real_argmax_state": 1,
+      "abscos_flip_real_max": 0.9659361241870422,
+      "abscos_between_flips_median": 0.9796462572371353,
+      "one_over_sqrt_n": 0.07001400420140048,
+      "perm_mean": 0.20624537500000004,
+      "ar1_mean": 0.20324166666666663,
+      "perm_minus_ar1": 0.0030037083333334103,
+      "rebuilt_statistic": 0.16405000000000003
+    },
+    "qwen2.5-1.5b__system": {
+      "n_items": 204,
+      "n_scored_states": 27,
+      "abscos_flip_real_median": 0.15033122021902523,
+      "abscos_flip_real_max_per_state_median": 0.27957608478569274,
+      "abscos_flip_real_argmax_state": 27,
+      "abscos_flip_real_max": 0.9852416728569245,
+      "abscos_between_flips_median": 0.9496934626903295,
+      "one_over_sqrt_n": 0.07001400420140048,
+      "perm_mean": 0.229591875,
+      "ar1_mean": 0.18442750000000002,
+      "perm_minus_ar1": 0.04516437499999998,
+      "rebuilt_statistic": 0.29585000000000006
+    },
+    "qwen2.5-1.5b__user": {
+      "n_items": 204,
+      "n_scored_states": 27,
+      "abscos_flip_real_median": 0.12123928202991607,
+      "abscos_flip_real_max_per_state_median": 0.2910128533870864,
+      "abscos_flip_real_argmax_state": 7,
+      "abscos_flip_real_max": 0.9852794471678774,
+      "abscos_between_flips_median": 0.9597111026481467,
+      "one_over_sqrt_n": 0.07001400420140048,
+      "perm_mean": 0.208059875,
+      "ar1_mean": 0.18442750000000002,
+      "perm_minus_ar1": 0.023632374999999983,
+      "rebuilt_statistic": 0.31375
+    },
+    "qwen2.5-3b__system": {
+      "n_items": 204,
+      "n_scored_states": 35,
+      "abscos_flip_real_median": 0.12985837202638456,
+      "abscos_flip_real_max_per_state_median": 0.5959253083226983,
+      "abscos_flip_real_argmax_state": 35,
+      "abscos_flip_real_max": 0.9825291134294183,
+      "abscos_between_flips_median": 0.9405604382586088,
+      "one_over_sqrt_n": 0.07001400420140048,
+      "perm_mean": 0.241997625,
+      "ar1_mean": 0.21648166666666666,
+      "perm_minus_ar1": 0.02551595833333334,
+      "rebuilt_statistic": 0.2843
+    },
+    "qwen2.5-3b__user": {
+      "n_items": 204,
+      "n_scored_states": 35,
+      "abscos_flip_real_median": 0.11739842257667549,
+      "abscos_flip_real_max_per_state_median": 0.4281239644129914,
+      "abscos_flip_real_argmax_state": 34,
+      "abscos_flip_real_max": 0.9844608994342056,
+      "abscos_between_flips_median": 0.9494437992364483,
+      "one_over_sqrt_n": 0.07001400420140048,
+      "perm_mean": 0.20337874999999997,
+      "ar1_mean": 0.21648166666666666,
+      "perm_minus_ar1": -0.013102916666666686,
+      "rebuilt_statistic": 0.22467499999999996
+    },
+    "qwen2.5-7b__system": {
+      "n_items": 204,
+      "n_scored_states": 27,
+      "abscos_flip_real_median": 0.17892325442508572,
+      "abscos_flip_real_max_per_state_median": 0.529548531597687,
+      "abscos_flip_real_argmax_state": 20,
+      "abscos_flip_real_max": 0.9919628580129467,
+      "abscos_between_flips_median": 0.8378835672776886,
+      "one_over_sqrt_n": 0.07001400420140048,
+      "perm_mean": 0.22033950000000002,
+      "ar1_mean": 0.25290375,
+      "perm_minus_ar1": -0.03256424999999996,
+      "rebuilt_statistic": 0.241475
+    },
+    "qwen2.5-7b__user": {
+      "n_items": 204,
+      "n_scored_states": 27,
+      "abscos_flip_real_median": 0.18120879066786405,
+      "abscos_flip_real_max_per_state_median": 0.5037962594344523,
+      "abscos_flip_real_argmax_state": 20,
+      "abscos_flip_real_max": 0.9933647142576266,
+      "abscos_between_flips_median": 0.8666116526720108,
+      "one_over_sqrt_n": 0.07001400420140048,
+      "perm_mean": 0.20260525000000001,
+      "ar1_mean": 0.25290375,
+      "perm_minus_ar1": -0.05029849999999997,
+      "rebuilt_statistic": 0.25997500000000007
+    }
+  },
+  "ladder_cells_cos_signflip": {
+    "qwen3_nothink": {
+      "qwen3-0.6b": 0.9899641275405884,
+      "qwen3-1.7b": 0.9871705174446106,
+      "qwen3-4b": 0.9875631928443909,
+      "qwen3-8b": 0.9895021915435791,
+      "qwen3-14b": 0.9913222789764404,
+      "qwen3-32b": 0.9889764785766602
+    },
+    "qwen3_think": {
+      "qwen3-0.6b": 0.9898979961872101,
+      "qwen3-1.7b": 0.9870871007442474,
+      "qwen3-4b": 0.9876841306686401,
+      "qwen3-8b": 0.9893808960914612,
+      "qwen3-14b": 0.9914505481719971,
+      "qwen3-32b": 0.9888279438018799
+    },
+    "qwen3.5_nothink": {
+      "qwen3.5-0.8b": 0.9921755790710449,
+      "qwen3.5-2b": 0.9899417161941528,
+      "qwen3.5-4b": 0.9891334176063538,
+      "qwen3.5-9b": 0.989689826965332,
+      "qwen3.5-27b": 0.9926975965499878
+    },
+    "qwen3.5_think": {
+      "qwen3.5-0.8b": 0.9922367334365845,
+      "qwen3.5-2b": 0.9899652004241943,
+      "qwen3.5-4b": 0.9892199635505676,
+      "qwen3.5-9b": 0.9898389577865601,
+      "qwen3.5-27b": 0.9925827980041504
+    },
+    "qwen2.5_paper": {
+      "qwen2.5-0.5b": 0.9915380477905273,
+      "qwen2.5-1.5b": 0.9879631400108337,
+      "qwen2.5-3b": 0.9895777106285095,
+      "qwen2.5-7b": 0.9865449070930481
+    },
+    "olmo2": {
+      "olmo-2-0425-1b-instruct": 0.9852854013442993,
+      "olmo-2-1124-7b-instruct": 0.9842246770858765,
+      "olmo-2-1124-13b-instruct": 0.9857600927352905,
+      "olmo-2-0325-32b-instruct": 0.9881998300552368
+    }
+  },
+  "draws": 200,
+  "check": "post-submission descriptive check, not registered (docs/post-submission-checks.md)",
+  "conventions": {
+    "kind": "measured",
+    "statistic": "|cosine| between paired sign-flip directions and the real direction (and between independent sign-flip draws), per hidden state",
+    "note": "released cells: the released 204-item paired construction, hidden states 1..L-2 as the released statistic; ladder cells: median over draws and wrappers as stored by scripts/ladder_audit_cells.py",
+    "pooling": "released: answer-token activations (paired differences); ladder cells: validated framing means",
+    "layers": "1..L-2 (released cells); as stored (ladder cells)",
+    "scoring_array": "results/released_label_permuted/*__diffs.npz; results/post_submission/cells/*.npz cos_signflip",
+    "data_root": "gstudy + pod",
+    "model_population": [
+      "olmo-2-0325-32b-instruct",
+      "olmo-2-0425-1b-instruct",
+      "olmo-2-1124-13b-instruct",
+      "olmo-2-1124-7b-instruct",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b",
+      "qwen3-0.6b",
+      "qwen3-1.7b",
+      "qwen3-14b",
+      "qwen3-32b",
+      "qwen3-4b",
+      "qwen3-8b",
+      "qwen3.5-0.8b",
+      "qwen3.5-27b",
+      "qwen3.5-2b",
+      "qwen3.5-4b",
+      "qwen3.5-9b"
+    ],
+    "producer": "scripts/signflip_cosine.py",
+    "producer_sha12": "912a180214c3"
+  }
+}
