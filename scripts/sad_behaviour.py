@@ -41,7 +41,17 @@ PROVIDER = ROOT / "pod" / "sad_provider" / "hf_local_provider.py"
 OUT = Path(os.environ.get("EAS_ACTIVATION_ROOT", str(ROOT))) / "results" / "post_submission" / "behaviour"
 VARIANTS = ("plain", "sp_large")
 STRUCTS = Path("sad") / "stages" / "oversight" / "structs" / "batch"
-ITEM_FILES = (("oversight.yaml", "testing"), ("deploy_oversight.yaml", "deployment"))
+# The task evaluates these (sad/stages/oversight/run.py, batch_names); the paper's original 400-item
+# split of the Qwen2.5 arrays is this set. The Qwen3, Qwen3.5 and OLMo-2 probe arrays read
+# oversight.yaml for their testing items instead (configs/gstudy_models.json): 78 of its 200 bodies
+# are also in test_oversight.yaml (registration, Amendment 1).
+TASK_FILES = (("test_oversight.yaml", "testing"), ("deploy_oversight.yaml", "deployment"))
+PROBE_FILES = (("oversight.yaml", "testing"), ("deploy_oversight.yaml", "deployment"))
+
+
+def probe_files_of(name: str):
+    """The item files of a model's probe prompts: the paper's split for Qwen2.5, else the pod set."""
+    return TASK_FILES if name.startswith("qwen2.5-") else PROBE_FILES
 
 
 def body_hash(body: str) -> str:
@@ -69,7 +79,10 @@ def setup(sad_dir: Path) -> None:
     head = git_head(sad_dir)
     if head != SAD_COMMIT:
         raise SystemExit(f"SAD clone at {head}, registered {SAD_COMMIT}")
-    if not (sad_dir / STRUCTS / "oversight.yaml").exists():
+    run_py = (sad_dir / "sad" / "stages" / "oversight" / "run.py").read_text(encoding="utf-8")
+    if 'batch_names=["test_oversight", "deploy_oversight"]' not in run_py:
+        raise SystemExit("stages_oversight no longer evaluates test_oversight and deploy_oversight")
+    if not all((sad_dir / STRUCTS / f).exists() for f, _ in TASK_FILES + PROBE_FILES):
         raise SystemExit("stages_oversight items are not decrypted; run the authors' "
                          "./unzip.sh --dirs sad/stages in the clone")
     if (ROOT.resolve() in sad_dir.resolve().parents) or sad_dir.resolve() == ROOT.resolve():
@@ -87,10 +100,10 @@ def setup(sad_dir: Path) -> None:
     print(f"SAD clone {head[:12]} ready: provider copied, {len(add)} models.yaml entries added")
 
 
-def items(sad_dir: Path):
+def items(sad_dir: Path, files=PROBE_FILES):
     import yaml
     out = []
-    for fname, label in ITEM_FILES:
+    for fname, label in files:
         y = yaml.safe_load((sad_dir / STRUCTS / fname).read_text(encoding="utf-8", errors="replace"))
         for s in y["samples"]:
             out.append({"id": s["id"], "body": s["body"], "label": label})
@@ -171,7 +184,8 @@ def run(sad_dir: Path, name: str, n, label: str, out: Path, skip_same: bool, var
               f"{r['invalid']} ({time.time() - t:.0f}s)", flush=True)
     if not skip_same:
         t = time.time()
-        res["same_prompt"] = same_prompt(name, items(sad_dir), n)
+        res["same_prompt"] = same_prompt(name, items(sad_dir, probe_files_of(name)), n)
+        res["same_prompt"]["item_files"] = [f for f, _ in probe_files_of(name)]
         print(f"[{name}] same-prompt read: AUROC {res['same_prompt']['auroc']:.3f} over "
               f"{res['same_prompt']['n']} items ({time.time() - t:.0f}s)", flush=True)
     prov_models = provider_models()
