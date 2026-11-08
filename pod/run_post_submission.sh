@@ -29,7 +29,8 @@
 #     (detach with Ctrl-b d; reattach with tmux attach -t post)
 # POD_AUTOSTOP=1 runs `runpodctl stop pod "$RUNPOD_POD_ID"` from an EXIT trap: after the last
 # upload, or on any error, interrupt or termination. A real run refuses to start without it unless
-# POD_KEEP_RUNNING=1 says the pod is meant to stay up.
+# POD_KEEP_RUNNING=1 says the pod is meant to stay up. Preflight probes `runpodctl get pod`, and a
+# detached watchdog stops the pod after POD_WATCHDOG_HOURS (4) whatever happens to this shell.
 #
 # Resumable: every extraction skips a model whose npz exists, so a re-run after a dropped session
 # continues. Each model is uploaded and checksummed before the next starts; weights are deleted
@@ -40,7 +41,9 @@
 #   POD_KEEP_RUNNING=1  run without autostop, deliberately
 #   DRY=1               preflight and plan only: no install, no download, no GPU, no autostop
 #   POD_ALLOW_GPU=1     accept a GPU other than an A100 80GB (estimates below assume an A100)
-#   POD_DISK_GB         the volume's quota when statvfs cannot see it (see pod/extract.py free_gb)
+#   POD_DISK_GB         the volume's quota in GB; REQUIRED when the output or HF_HOME is on a
+#                       network volume, where statvfs reports the cluster (pod/extract.py free_gb)
+#   POD_WATCHDOG_HOURS  hard stop of the pod after this many hours whatever happens (default 4)
 #   PY                  python interpreter
 #
 # Estimated time on one A100 80GB. Forward passes are the laptop's measured times (RTX 5080 Laptop,
@@ -64,6 +67,10 @@ DRY=${DRY:-0}
 PY=${PY:-$(command -v python3 || command -v python)}
 [ -x "$PY" ] || { echo "no python found; set PY=/path/to/python" >&2; exit 1; }
 say() { printf '\n\033[1m== %s\033[0m\n' "$*"; }
+# The result files hash their producers with ast.dump, which changes between Python minor versions,
+# and the repository is written for 3.11 (README); older interpreters are refused, DRY=1 included.
+"$PY" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)' \
+  || { echo "python >= 3.11 required, have $("$PY" -V 2>&1)" >&2; exit 1; }
 
 # ------------------------------------------------------------------------- billing guard
 autostop() {
@@ -90,6 +97,28 @@ if [ "$DRY" != "1" ]; then
     exit 1
   fi
 fi
+# The stop command is only as good as the pod id: probe it now, while stopping is still cheap.
+if [ -n "${RUNPOD_POD_ID:-}" ] && command -v runpodctl >/dev/null; then
+  if runpodctl get pod "$RUNPOD_POD_ID" >/dev/null 2>&1; then
+    echo "runpodctl sees pod $RUNPOD_POD_ID"
+  else
+    echo "runpodctl get pod $RUNPOD_POD_ID failed: the autostop could not stop this pod" >&2
+    [ "$DRY" = "1" ] || exit 1
+  fi
+fi
+# Hard cap on billing, independent of this shell: whatever happens to the run (a hang, a killed
+# tmux session, a trap that never fires), the pod is stopped POD_WATCHDOG_HOURS after the start.
+if [ "$DRY" != "1" ]; then
+  if [ -n "${RUNPOD_POD_ID:-}" ] && command -v runpodctl >/dev/null; then
+    WD_S=$(( ${POD_WATCHDOG_HOURS:-4} * 3600 ))
+    nohup bash -c "sleep $WD_S; echo \"[watchdog] \$(date -u +%FT%TZ): ${POD_WATCHDOG_HOURS:-4} h elapsed, stopping pod\"; runpodctl stop pod '$RUNPOD_POD_ID'" \
+      > "$ROOT/post_watchdog.log" 2>&1 < /dev/null &
+    echo "watchdog pid $! stops pod $RUNPOD_POD_ID in ${POD_WATCHDOG_HOURS:-4} h (log post_watchdog.log)"
+    disown || true
+  else
+    echo "WARNING no watchdog: RUNPOD_POD_ID or runpodctl missing; stop the pod by hand" >&2
+  fi
+fi
 
 # ------------------------------------------------------------------------- provenance
 COMMIT=$(git rev-parse HEAD)
@@ -111,7 +140,21 @@ PROMPT_SHA12=39980ca8f0b8          # the laptop rendering of the 36 x 60 framing
 
 # ------------------------------------------------------------------------------ 0. preflight
 say "preflight"
-mkdir -p "$HF_HOME"
+mkdir -p "$HF_HOME" "$EAS_ACTIVATION_ROOT"
+# statvfs on a network volume reports the cluster, not the quota (pod/extract.py free_gb), so a
+# free-space check there means nothing unless POD_DISK_GB declares the quota. Local filesystems are
+# listed; anything else is treated as a network volume.
+for path in "$EAS_ACTIVATION_ROOT" "$HF_HOME"; do
+  fstype=$(stat -f -c %T "$path" 2>/dev/null || echo unknown)
+  case "$fstype" in
+    ext2/ext3|ext4|xfs|btrfs|overlayfs|overlay|tmpfs|zfs|f2fs) echo "  $path on local $fstype" ;;
+    *) echo "  $path on $fstype: treated as a network volume"
+       if [ -z "${POD_DISK_GB:-}" ]; then
+         echo "  POD_DISK_GB is required when $path is on a network volume (set it to the volume quota in GB)" >&2
+         exit 1
+       fi ;;
+  esac
+done
 "$PY" - <<'PY'
 import os, shutil, subprocess, sys
 gpu = subprocess.run(["nvidia-smi", "--query-gpu=name,memory.total", "--format=csv,noheader,nounits"],
@@ -124,10 +167,13 @@ if not ("A100" in name and int(mem) >= 79000) and os.environ.get("POD_ALLOW_GPU"
     sys.exit("  expected an A100 80GB; set POD_ALLOW_GPU=1 to proceed on this GPU")
 sys.path.insert(0, "pod")
 from extract import free_gb
-for p in ("/workspace", os.environ["HF_HOME"]):
+PEAK_GB = 85      # one model (Qwen3-32B, 65.5 GB) plus every output (~19 GB)
+for p in ("/workspace", os.environ["HF_HOME"], os.environ["EAS_ACTIVATION_ROOT"]):
     if os.path.isdir(p):
         f = free_gb(p)
-        print(f"  free disk at {p}: {f:.0f} GB")
+        print(f"  free disk at {p}: {f:.0f} GB" + (" (POD_DISK_GB quota)" if os.environ.get("POD_DISK_GB") else ""))
+        if f < PEAK_GB:
+            sys.exit(f"  {f:.0f} GB free at {p} is below the run's peak of about {PEAK_GB} GB")
         if f < 150:
             sys.exit(f"  need at least 150 GB free at {p} (largest download 65.5 GB, outputs ~19 GB)")
 print(f"  HF_HOME={os.environ['HF_HOME']}  EAS_ACTIVATION_ROOT={os.environ['EAS_ACTIVATION_ROOT']}")
@@ -148,7 +194,8 @@ for p, v in want.items():
         bad.append(f"{p} missing"); continue
     if not got.startswith(v):
         bad.append(f"{p} {got}, want {v}")
-for p in ("huggingface_hub", "accelerate"):
+# scipy and scikit-learn are imported by the floor extraction (gstudy_gtheory -> gstudy_analyze)
+for p in ("huggingface_hub", "accelerate", "scipy", "scikit-learn"):
     try:
         md.version(p)
     except md.PackageNotFoundError:
@@ -160,8 +207,23 @@ then :
 elif [ "$DRY" = "1" ]; then
   echo "  DRY=1: not installing anything"
 else
+  # one resolver call, so pip picks scipy and scikit-learn builds that declare numpy 2.4.4 supported
   "$PY" -m pip install --quiet "torch==2.11.0" "transformers==5.8.0" "numpy==2.4.4" \
-      huggingface_hub accelerate
+      huggingface_hub accelerate scipy scikit-learn
+fi
+# Import check of everything the extraction scripts load, binary compatibility included: a scipy
+# built against another numpy fails here, before any download, not inside the floor extraction.
+if ! "$PY" - <<'PY'
+import sys
+sys.path.insert(0, "scripts"); sys.path.insert(0, "src")
+import numpy, scipy, scipy.stats, sklearn.metrics                      # noqa: F401
+import extract_paraphrase, paraphrase_noise_floor                       # noqa: F401
+print(f"  imports ok: numpy {numpy.__version__}, scipy {scipy.__version__}, "
+      f"scikit-learn {sklearn.__version__}")
+PY
+then
+  echo "  import check failed (output above)" >&2
+  [ "$DRY" = "1" ] || exit 1
 fi
 if [ "$DRY" != "1" ] && ! "$PY" -c "import hf_transfer" 2>/dev/null; then
   "$PY" -m pip install --quiet hf_transfer || true
