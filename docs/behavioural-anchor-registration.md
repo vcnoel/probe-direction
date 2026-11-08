@@ -140,3 +140,63 @@ If any fails, the result is "uninformative", not "undercut".
   appears in `results/` or in any tracked file.
 - **Analysis code:** `scripts/behavioural_anchor.py` implements the comparison above. It is
   committed before the pod outputs are opened.
+
+## Amendment 1 (2026-11-08): the task's items and the probe arrays' items
+
+Written after the CPU smoke test (Qwen3-0.6B, 10 items, `plain`, labelled smoke and never used) and
+before any output of the registered run. It was prompted by SAD's code, read while writing the
+analysis, not by the smoke result. Everything not named here stands as registered.
+
+**What was found.** SAD's `stages_oversight` evaluates `test_oversight.yaml` (testing) and
+`deploy_oversight.yaml` (deployment): `sad/stages/oversight/run.py`, `batch_names`. The probe arrays
+do not all hold those items:
+
+| probe arrays | item source | items shared with the task |
+|---|---|---|
+| Qwen2.5, the paper's arrays | the paper's 400-item split | 400: 392 identical bodies, 2 in an identical-body pair, 6 with recovery noise (word 5-gram overlap 0.97-0.99, next best at most 0.06) |
+| Qwen3, Qwen3.5, OLMo-2 | `oversight.yaml` and `deploy_oversight.yaml` (`configs/gstudy_models.json`) | 278: all 200 deployment items and 78 of the 200 testing items (identical bodies); 122 testing items are not in the task |
+
+So "the 400 items of the paper's scoring set" and "on the same 400 items" above hold for the four
+Qwen2.5 models only. The same split separates the ladders of the post-submission analyses: their
+testing items share 78 of 200 with the Qwen2.5 arrays'. The index of all three item sets, with SAD
+ids and body hashes only, is `results/post_submission/sad_item_index.json`
+(`scripts/sad_item_index.py`). SAD ids are content hashes, so identical bodies share an id; the
+index names every item by its position as well.
+
+**Unchanged.** The task, its items, templates, parsing and scoring. B, F, S and O as defined, from
+the stored arrays and files. The pooled Spearman comparison, the within-ladder permutation null, the
+matched null for F, the preconditions and the reading rules.
+
+**Changed: the item join of the bootstrap.** Each draw resamples the task's 400 items. B is the
+accuracy over the drawn task items. Each probe array takes its own positions of the drawn items
+from the index; for a drawn task testing item that the array does not hold (possible only for the
+15 Qwen3, Qwen3.5 and OLMo-2 arrays), it takes a uniform draw from its own 122 testing items that
+are not in the task. Every resampled array keeps 400 items and the draw's label counts.
+
+**Added, a declared secondary (descriptive, no reading).** The comparison on the 278 items that
+every probe array shares with the task (78 testing, 200 deployment): B, F and S recomputed on those
+items, rho with its within-ladder permutation p. O does not use the items and is unchanged.
+
+**Same-prompt read.** For the Qwen2.5 models it uses the task's item files (the paper's split, up to
+the recovery noise); for the other 15 the files of their probe arrays.
+
+**Leak check.** The check of the registration matched only the two files the probe pipeline reads.
+It now also matches `test_oversight.yaml`, which the task runs. Rerun on the smoke outputs, the smoke
+log and the repository: no item text. A positive control with a `test_oversight.yaml` body fails it.
+
+**Points the registration left open, fixed here before any output.**
+
+- Split-half reliability: Pearson correlation across the included models between the two halves'
+  accuracies, Spearman-Brown corrected; halves split each label stratum in two equal parts.
+- Between-model standard deviation with ddof 1, over the included models.
+- A model without an output file (a timeout, or the 3-hour cap reached) counts as excluded and is
+  listed with the invalid-answer exclusions; the 15-model condition applies to the remainder.
+- The item bootstrap is not stratified: 400 task items drawn with replacement.
+- One-sided permutation p = (1 + number of permuted rho at or above the observed rho) / (1 +
+  100,000). The same permutations serve F, S and O; the bootstrap draws serve both variants.
+- The matched null's 36-wrapper mean uses draws 0-99 of `matched_full`; its percentile is the
+  mid-rank of the real rho among the 100 null rho.
+- Reading precedence when the preconditions hold: supports, then anti-aligned, then undercuts; a
+  result that meets none is reported as "no registered reading applies".
+- Implementation: `scripts/behavioural_anchor.py`, committed with this amendment and tested on
+  synthetic files only.
