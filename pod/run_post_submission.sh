@@ -162,6 +162,13 @@ esac
 # An SSH session on a pod carries no RUNPOD_* variables; PID 1 has them. Values already exported win,
 # so an account key exported as RUNPOD_API_KEY replaces the pod-injected one, which cannot read the pod.
 set +e; pod_import_env; set -e
+# STOP_POD=0: the pod is stopped from outside (the author's laptop, with an account key that never
+# reaches the pod), so this run uses no pod id: no pod check, no watchdog stop, no autostop. The
+# per-step timeouts still bound every step.
+if [ "${STOP_POD:-}" = "0" ] && [ -n "${RUNPOD_POD_ID:-}" ]; then
+  echo "STOP_POD=0: pod $RUNPOD_POD_ID is stopped from outside this pod; no pod id is used here"
+  unset RUNPOD_POD_ID
+fi
 if [ -z "${RUNPOD_POD_ID:-}" ]; then
   if [ "${STOP_POD:-}" = "0" ]; then
     echo "STOP_POD=0 and no RUNPOD_POD_ID: nothing will stop a pod (a run off RunPod, or a deliberate choice)"
