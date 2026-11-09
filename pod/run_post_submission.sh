@@ -23,33 +23,45 @@
 # scripts/paraphrase_noise_floor.py, which would then fail to import.
 #
 # Pod: a container disk of at least 80 GB (the model cache, one model at a time, up to 65.5 GB) and
-# a volume quota POD_DISK_GB of at least 70 GB. Run DRY_INSTALL=1 once on the pod first: it installs
-# the pins and runs every check (GPU, CUDA matmul, imports, disk, prompts, pod id) without
-# extracting.
+# a volume quota POD_DISK_GB of at least 70 GB. Copy the tree with pod/bundle.sh or git clone (never a
+# Windows working tree: the preflight refuses any script with a CR byte). Run DRY_INSTALL=1 once on
+# the pod first: it installs the pins and runs every check (GPU, CUDA matmul, imports, disk,
+# prompts, pod id and pod state) without extracting.
 #
 # Billing. Launch inside tmux so a dropped SSH session does not kill the run; the script keeps its
-# own log, so no outer tee is needed:
+# own log, so no outer tee is needed. An SSH session carries no RUNPOD_* variables: the launcher
+# imports RUNPOD_POD_ID and RUNPOD_API_KEY from /proc/1/environ, and values already exported win.
+# The pod-injected key cannot read the pod (runpodctl answers "Error: Unauthorized", the REST API
+# 403), so export an account API key as RUNPOD_API_KEY; the run refuses to start (fails closed)
+# unless the pod reads RUNNING:
 #     tmux new -s post
+#     export RUNPOD_API_KEY=<account key>     # read by runpodctl (env first) and the REST fallback
 #     POD_DISK_GB=<quota> DRY_INSTALL=1 bash pod/run_post_submission.sh          # once, checks only
 #     POD_AUTOSTOP=1 POD_DISK_GB=<quota> POD_UPLOAD=<rclone target> bash pod/run_post_submission.sh
 #     (detach with Ctrl-b d; reattach with tmux attach -t post; log in $POD_LOG_DIR/post_run.log)
+# Keep the laptop-side backstop and the account spending limit of README.md ("Pod runs: billing
+# backstops") in place as well.
 # The EXIT trap is set before anything else can fail. With POD_AUTOSTOP=1 it uploads the logs, then
-# calls pod_stop (pod/pod_stop.sh, no python): it writes and uploads the output manifest (every
-# completed npz with bytes and sha256, and the step in progress), runs `runpodctl stop pod` and
-# verifies it; if the stop is refused (RunPod has documented stop as unavailable for pods with a
-# network volume), hangs, or cannot be verified, it uploads the outputs (or relies on the verified
-# network volume), runs `runpodctl remove pod` and verifies that no row carries the pod id. Before
-# any GPU step the run refuses to start unless the outputs are safe: POD_UPLOAD passes a round trip
-# (upload, read back, compare), or NETWORK_VOLUME=1 and the mount table shows the outputs on a
-# network filesystem mounted at /workspace. A detached watchdog calls
-# the same function after POD_WATCHDOG_HOURS (default 6, above the 4.6 h upper estimate for the
-# paraphrase and behavioural steps together; the step timeouts alone could sum past it)
-# whatever happens to this shell: one stop attempt, then the remove path,
+# calls pod_stop (pod/pod_stop.sh): under a lock in /tmp it writes and uploads the output manifest
+# (every completed output with bytes and sha256, and the step in progress); if a step was in progress
+# and the outputs are not on a network volume, it uploads them and confirms every manifest line on
+# the target; it stops the pod once and verifies the stop by desiredStatus (runpodctl JSON, the
+# legacy table, or the REST API). If the stop is refused (RunPod has documented stop as unavailable
+# for pods with a network volume), hangs, or cannot be verified, it uploads the outputs and confirms
+# every manifest line (or relies on the verified network volume), removes the pod, and counts the
+# removal only when remove returned 0 and the pod then reads absent. Before any GPU step the run
+# refuses to start unless the outputs are safe: POD_UPLOAD passes a round trip (upload, read back,
+# compare), or NETWORK_VOLUME=1 and the mount table shows the outputs on a network filesystem
+# mounted at /workspace. A detached watchdog calls the same function after POD_WATCHDOG_HOURS
+# (default 6, above the 4.7 h upper estimate for the paraphrase and behavioural steps together; the
+# step timeouts alone could sum past it) whatever happens to this shell: it first sends TERM to this
+# launcher and its running step, then writes the manifest; one stop attempt, then the remove path,
 # never a stop retry. Every step of both is logged to $POD_LOG_DIR/post_stop.log on the container
 # disk; the trap uploads the logs before it stops the pod, and nothing in the stop depends on the log.
 # A STOPPED POD STILL BILLS ITS VOLUME STORAGE: after retrieving the outputs, terminate it
 # (runpodctl remove pod <id>) and delete any network volume no longer needed.
-# A real run refuses to start without POD_AUTOSTOP=1 unless POD_KEEP_RUNNING=1.
+# A real run refuses to start without POD_AUTOSTOP=1 unless POD_KEEP_RUNNING=1, and every run refuses
+# to start without a pod id unless STOP_POD=0 is set explicitly.
 #
 # Resumable: every extraction skips a model whose npz exists, so a re-run after a dropped session
 # continues. Each model is uploaded and checksummed before the next starts; weights are deleted
@@ -71,6 +83,8 @@
 #                       unless a later run replaces it
 #   DRY_INSTALL=1       as DRY=1, but install the pinned dependencies first
 #   POD_ALLOW_GPU=1     accept a GPU other than an A100 80GB (estimates below assume an A100)
+#   RUNPOD_API_KEY      an account key that can read and stop the pod (the pod-injected one cannot read it)
+#   STOP_POD=0          run without a pod id (off RunPod); nothing will stop a pod
 #   PY                  python interpreter
 #
 # Estimated time on one A100 80GB. Forward passes are the laptop's measured times (RTX 5080 Laptop,
@@ -103,7 +117,12 @@ export POD_STOP_LOG=$LOGDIR/post_stop.log
 export POD_PENDING_FLAG=$LOGDIR/post_pending_upload
 export POD_STATE_FILE=$LOGDIR/post_state.env     # written by the outputs check, read by pod_stop
 export POD_OUTPUTS_ON_NETWORK=0
-rm -f "$POD_PENDING_FLAG" "$POD_STATE_FILE" 2>/dev/null || true
+export POD_LEAK_FLAG=$LOGDIR/post_leak_detected
+export POD_LAUNCHER_PID=$$                       # the watchdog sends TERM here before its manifest
+# The stop lock and the marker of an issued stop or removal live in /tmp and belong to one run.
+export POD_STOP_LOCK=${POD_STOP_LOCK:-/tmp/pod_stop.lock} POD_STOP_MARKER=${POD_STOP_MARKER:-/tmp/pod_stop_marker}
+rm -rf "$POD_STOP_LOCK" 2>/dev/null || true
+rm -f "$POD_PENDING_FLAG" "$POD_STATE_FILE" "$POD_STOP_MARKER" 2>/dev/null || true
 
 autostop() {
   local rc=$?
@@ -140,6 +159,18 @@ POD_WATCHDOG_HOURS=${POD_WATCHDOG_HOURS:-6}      # P7 (~2.0 h) plus the behaviou
 case "$POD_WATCHDOG_HOURS" in
   ''|*[!0-9]*|0*) echo "POD_WATCHDOG_HOURS must be a whole number of hours >= 1" >&2; exit 1 ;;
 esac
+# An SSH session on a pod carries no RUNPOD_* variables; PID 1 has them. Values already exported win,
+# so an account key exported as RUNPOD_API_KEY replaces the pod-injected one, which cannot read the pod.
+set +e; pod_import_env; set -e
+if [ -z "${RUNPOD_POD_ID:-}" ]; then
+  if [ "${STOP_POD:-}" = "0" ]; then
+    echo "STOP_POD=0 and no RUNPOD_POD_ID: nothing will stop a pod (a run off RunPod, or a deliberate choice)"
+  else
+    echo "RUNPOD_POD_ID is empty (also in /proc/1/environ): refusing, since nothing could stop the pod;" >&2
+    echo "set STOP_POD=0 explicitly to run without a pod to stop" >&2
+    exit 1
+  fi
+fi
 if [ -n "${RUNPOD_POD_ID:-}" ] && [ -z "${POD_DISK_GB:-}" ]; then
   echo "POD_DISK_GB (the volume quota in GB) is required on a pod" >&2; exit 1
 fi
@@ -155,24 +186,23 @@ if [ "$DRY" != "1" ]; then
     exit 1
   fi
 fi
-# The stop is only as good as the pod id: require a RUNNING row for it now, while stopping is cheap.
-# The legacy `get pod` filters the id on the client and exits 0 with only a header for an absent pod
-# or a key scoped away from it, so the exit status alone proves nothing.
-# The raw output is printed so a DRY run shows exactly what the stop path will parse.
-if [ -n "${RUNPOD_POD_ID:-}" ] && command -v runpodctl >/dev/null; then
+# The stop is only as good as the pod id and the key: the pod must read RUNNING now, while stopping is
+# cheap, through the same pod_status the stop path verifies with (runpodctl JSON, the legacy table, or
+# the REST API). ABSENT is never accepted here (the legacy `get pod` filters the id on the client and
+# prints only a header for an absent pod or a key that cannot see it), and neither is UNKNOWN: runpodctl
+# 1.14 prints "Error: Unauthorized" and exits 0 when the key cannot read the pod, as the pod-injected
+# key cannot. Fail closed. Every raw answer is printed so a DRY run shows what the stop path will parse.
+if [ -n "${RUNPOD_POD_ID:-}" ]; then
+  command -v runpodctl >/dev/null || { echo "RUNPOD_POD_ID is set but runpodctl is not installed" >&2; exit 1; }
   echo "runpodctl version: $(timeout -k 5 30 runpodctl version 2>&1 | tr '\n' ' ')"
-  raw=$(timeout -k 10 60 runpodctl get pod "$RUNPOD_POD_ID" 2>&1) && grc=0 || grc=$?
-  echo "runpodctl get pod $RUNPOD_POD_ID (rc=$grc), raw output:"
-  printf '%s\n' "$raw" | sed 's/^/    | /'
-  nrun=$(printf '%s\n' "$raw" | grep -F -- "$RUNPOD_POD_ID" | grep -c RUNNING || true)
-  if [ "${nrun:-0}" -ne 1 ]; then
-    echo "expected exactly one row carrying $RUNPOD_POD_ID and RUNNING, found ${nrun:-0}: the stop could not be verified" >&2
+  set +e; pod_status; set -e            # its probes fail by design (an old CLI, a missing key)
+  printf '%s\n' "$POD_RAW_ALL" | sed 's/^/    | /'
+  echo "pod state: $POD_STATUS (from $POD_SOURCE: $POD_DETAIL)"
+  if [ "$POD_STATUS" != RUNNING ]; then
+    echo "the pod must read RUNNING before anything runs; it reads $POD_STATUS, so the stop could not be verified" >&2
+    [ "$POD_STATUS" = UNKNOWN ] && echo "if the key is not authorised to read the pod (the pod-injected one is not), export an account API key as RUNPOD_API_KEY" >&2
     exit 1
   fi
-  echo "exactly one RUNNING row for $RUNPOD_POD_ID"
-elif [ -n "${RUNPOD_POD_ID:-}" ]; then
-  echo "RUNPOD_POD_ID is set but runpodctl is not installed" >&2
-  exit 1
 fi
 # Hard cap on billing, independent of this shell: whatever happens to the run (a hang, a killed tmux
 # session, a trap that never fires), pod_stop runs POD_WATCHDOG_HOURS after the start. DRY and
@@ -209,6 +239,18 @@ say() { printf '\n\033[1m== %s\033[0m\n' "$*"; }
 # and the repository is written for 3.11 (README); older interpreters are refused, DRY=1 included.
 "$PY" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)' \
   || { echo "python >= 3.11 required, have $("$PY" -V 2>&1)" >&2; exit 1; }
+# No script may carry a CR byte (a copy of a Windows working tree): a CR breaks bash and changes what
+# python writes. Read in python, since MSYS bash drops CR inside $(...). Copy with pod/bundle.sh or git.
+"$PY" - <<'PY' || { echo "refusing: scripts with CR bytes (listed above); copy the tree with pod/bundle.sh or git clone" >&2; exit 1; }
+import pathlib
+bad = [p.as_posix() for pat in ("pod/**/*.sh", "pod/**/*.py", "scripts/**/*.py", "scripts/**/*.sh",
+                                "src/**/*.py")
+       for p in sorted(pathlib.Path(".").glob(pat)) if b"\r" in p.read_bytes()]
+for p in bad:
+    print(f"  CR byte in {p}")
+print(f"  line endings: {'CR found' if bad else 'no CR byte in any script'}")
+raise SystemExit(1 if bad else 0)
+PY
 
 COMMIT=$(git rev-parse HEAD)
 DIRTY=$(git status --porcelain --untracked-files=no)
@@ -514,19 +556,27 @@ for m in $P3_MODELS; do
   upload "$ACTS_P3/$m.npz" qwen25_validated
   rm -f "$POD_PENDING_FLAG"
 done
+# A failed P7 step (a download, an out-of-memory error, a timeout) is recorded and the run goes on, so
+# one failure cannot cancel the behavioural steps or the other models. An upload failure still ends
+# the run: the outputs would not be safe, and the stop path uploads and confirms them.
+P7_FAILED=""
 for m in $P7_MODELS; do
   say "P7 $m"
   read -r tf tp <<< "$(timeouts_of "$m")"
   echo "P7 $m" > "$POD_PENDING_FLAG"      # from here an output may exist that is not uploaded
-  timeout -k 2m "${tf}m" "$PY" scripts/paraphrase_noise_floor.py extract --model "$m"
-  upload "$FLOOR/${m}__nothink.npz" paraphrase/floor
+  if timeout -k 2m "${tf}m" "$PY" scripts/paraphrase_noise_floor.py extract --model "$m"; then
+    upload "$FLOOR/${m}__nothink.npz" paraphrase/floor
+  else
+    echo "  P7 floor step failed for $m (status $?): recorded; the run goes on" >&2
+    P7_FAILED="$P7_FAILED $m:floor"
+  fi
   behaviour_step "$m"                       # same weight-load cycle: the snapshot is still cached
   echo "P7 $m" > "$POD_PENDING_FLAG"
-  timeout -k 2m "${tp}m" "$PY" scripts/extract_paraphrase.py --model "$m" --batch "$(batch_of "$m")" --delete-weights
   f=$ACTS_P7/${m}__nothink.npz
-  # A validated-only copy: what scripts/paraphrase_analysis.py reads, at half the download.
-  mkdir -p "$ACTS_P7_SMALL"
-  [ -f "$ACTS_P7_SMALL/$(basename "$f")" ] || timeout -k 2m 20m "$PY" - "$f" "$ACTS_P7_SMALL/$(basename "$f")" <<'PY'
+  if timeout -k 2m "${tp}m" "$PY" scripts/extract_paraphrase.py --model "$m" --batch "$(batch_of "$m")" --delete-weights; then
+    # A validated-only copy: what scripts/paraphrase_analysis.py reads, at half the download.
+    mkdir -p "$ACTS_P7_SMALL"
+    if [ -f "$ACTS_P7_SMALL/$(basename "$f")" ] || timeout -k 2m 20m "$PY" - "$f" "$ACTS_P7_SMALL/$(basename "$f")" <<'PY'
 import sys, numpy as np
 with np.load(sys.argv[1], allow_pickle=False) as z:
     keep = {k: z[k] for k in z.files if k != "framing_alltokens"}
@@ -534,9 +584,19 @@ tmp = sys.argv[2] + ".tmp.npz"
 np.savez_compressed(tmp, **keep)
 import os; os.replace(tmp, sys.argv[2])
 PY
-  upload "$f" paraphrase/acts
-  upload "$ACTS_P7_SMALL/$(basename "$f")" paraphrase/acts_validated_only
-  rm -f "$POD_PENDING_FLAG"                 # everything of this model is uploaded
+    then
+      upload "$ACTS_P7_SMALL/$(basename "$f")" paraphrase/acts_validated_only
+    else
+      echo "  validated-only copy failed for $m: the full file is uploaded alone" >&2
+      P7_FAILED="$P7_FAILED $m:copy"
+    fi
+    upload "$f" paraphrase/acts
+  else
+    echo "  P7 paraphrase step failed for $m (status $?): recorded; the run goes on" >&2
+    P7_FAILED="$P7_FAILED $m:paraphrase"
+    delete_weights "$m"                     # the step deletes them only when it succeeds
+  fi
+  rm -f "$POD_PENDING_FLAG"                 # everything of this model that exists is uploaded
   echo "  elapsed $(( ($(date +%s) - T0) / 60 )) min"
 done
 
@@ -549,6 +609,7 @@ for m in $BEHAV_ONLY_MODELS; do
 done
 
 say "done in $(( ($(date +%s) - T0) / 60 )) min"
+[ -z "$P7_FAILED" ] || echo "P7 steps that failed (the run went on):$P7_FAILED" >&2
 cat <<EOF
 On the analysis machine (which holds results/pod_qwen3, results/pod_qwen35 and results/gstudy):
   copy paraphrase/acts_validated_only/*.npz (or paraphrase/acts/*.npz) into
@@ -562,3 +623,4 @@ On the analysis machine (which holds results/pod_qwen3, results/pod_qwen35 and r
 Extraction commit: $COMMIT (also in every npz's meta). Logs: $POD_UPLOAD/logs.
 Then terminate the pod (a stopped pod still bills its volume): runpodctl remove pod <id>.
 EOF
+[ -z "$P7_FAILED" ] || exit 1                 # the run is reported as failed; the stop runs either way
