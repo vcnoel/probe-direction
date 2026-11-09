@@ -96,6 +96,36 @@ python scripts/backfill_conventions.py --write          # required after rerunni
 
 `python scripts/pipeline.py --list` prints the dependency graph; `make all` runs the same graph.
 
+## Pod runs: billing backstops
+
+`pod/run_post_submission.sh` stops its own pod: an EXIT trap, a detached watchdog
+(`POD_WATCHDOG_HOURS`, default 6) and a preflight that refuses to start unless the pod reads
+RUNNING with a key that can see it. The pod-injected `RUNPOD_API_KEY` cannot read the pod, so
+export an account key. Copy the code with `bash pod/bundle.sh` or `git clone`, never from a Windows
+working tree. The launcher refuses any script with a CR byte. Every guard on the pod dies with the
+pod or depends on its key, so keep two backstops outside it.
+
+**Account spending limit.** In the RunPod console, set a spending limit just above the planned cost
+and turn auto-reload (automatic top-up) off. Then an account balance that runs out ends billing even
+if every other guard has failed.
+
+**Laptop-side backstop.** Before launching, start a timer on the laptop that stops the pod after
+the watchdog horizon plus a margin. It is independent of the pod's processes, its key and its
+network. Run it in a terminal that stays open, or as a scheduled task, with an account key in
+`RUNPOD_API_KEY`:
+
+```bash
+POD=<pod id>; sleep $(( 7 * 3600 ))                  # watchdog horizon (6 h) plus 1 h
+runpodctl stop pod "$POD" || runpodctl pod stop "$POD"
+# or, without runpodctl: curl -X POST -H "Authorization: Bearer $RUNPOD_API_KEY" \
+#                          https://rest.runpod.io/v1/pods/$POD/stop
+sleep 120; runpodctl get pod "$POD"                  # check: the status must no longer be RUNNING
+```
+
+A pod with a network volume may refuse `stop`. Use `runpodctl remove pod "$POD"` instead, but only
+once its outputs are uploaded or on the network volume. A stopped pod still bills its volume, so
+remove it once the outputs are retrieved.
+
 ## Not included, and why
 
 | Item | Reason |
