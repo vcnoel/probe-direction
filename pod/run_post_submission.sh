@@ -627,7 +627,7 @@ On the analysis machine (which holds results/pod_qwen3, results/pod_qwen35 and r
   python scripts/paraphrase_analysis.py --ungated       # descriptive, P7c now that >= 4 rungs exist
   copy behaviour/*.json into results/post_submission/behaviour/, then run the leak check and
   python scripts/behavioural_anchor.py                  # the registered comparison
-Extraction commit: $COMMIT (also in every npz's meta). Logs: $POD_UPLOAD/logs.
+Extraction commit: $COMMIT (also in every npz's meta). Logs: ${POD_UPLOAD:-$LOGDIR}${POD_UPLOAD:+/logs}.
 Then terminate the pod (a stopped pod still bills its volume): runpodctl remove pod <id>.
 EOF
 [ -z "$P7_FAILED" ] || exit 1                 # the run is reported as failed; the stop runs either way
