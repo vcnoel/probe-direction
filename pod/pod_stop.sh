@@ -108,9 +108,13 @@ pod_marker() { printf '%s' "${POD_STOP_MARKER:-/tmp/pod_stop_marker}"; }
 pod_mount_of() {   # $1 path -> "mountpoint<TAB>fstype<TAB>source" of the longest mount containing it
   local p
   p=$(realpath -m "$1" 2>/dev/null || printf '%s' "$1")
-  awk -v p="$p" '{ mp = $2; gsub(/\\040/, " ", mp)
+  # /proc/mounts escapes space, tab, newline, backslash and '#' as octal (\040 \011 \012 \134 \043);
+  # a RunPod network volume reads "mfs\043<dc>.runpod.net:9421" there, so both fields are decoded
+  awk -v p="$p" 'function dec(s) { gsub(/\\040/, " ", s); gsub(/\\011/, "\t", s); gsub(/\\043/, "#", s)
+                                    gsub(/\\134/, "\\", s); return s }
+                 { mp = dec($2); src = dec($1)
                    if ((p == mp || index(p, (mp == "/" ? "/" : mp "/")) == 1) && length(mp) > best) {
-                     best = length(mp); out = mp "\t" $3 "\t" $1 } }
+                     best = length(mp); out = mp "\t" $3 "\t" src } }
                  END { if (out != "") print out }' "${POD_MOUNTS_FILE:-/proc/mounts}" 2>/dev/null
 }
 
