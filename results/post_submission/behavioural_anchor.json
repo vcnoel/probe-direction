@@ -1,0 +1,1043 @@
+{
+  "registration": "docs/behavioural-anchor-registration.md (with Amendment 1)",
+  "test_run": false,
+  "models": [
+    "qwen3-0.6b",
+    "qwen3-1.7b",
+    "qwen3-4b",
+    "qwen3-8b",
+    "qwen3-14b",
+    "qwen3-32b",
+    "qwen3.5-0.8b",
+    "qwen3.5-2b",
+    "qwen3.5-4b",
+    "qwen3.5-9b",
+    "qwen3.5-27b",
+    "olmo-2-0425-1b-instruct",
+    "olmo-2-1124-7b-instruct",
+    "olmo-2-1124-13b-instruct",
+    "olmo-2-0325-32b-instruct",
+    "qwen2.5-0.5b",
+    "qwen2.5-1.5b",
+    "qwen2.5-3b",
+    "qwen2.5-7b"
+  ],
+  "ladder_of": {
+    "qwen3-0.6b": "qwen3_nothink",
+    "qwen3-1.7b": "qwen3_nothink",
+    "qwen3-4b": "qwen3_nothink",
+    "qwen3-8b": "qwen3_nothink",
+    "qwen3-14b": "qwen3_nothink",
+    "qwen3-32b": "qwen3_nothink",
+    "qwen3.5-0.8b": "qwen3.5_nothink",
+    "qwen3.5-2b": "qwen3.5_nothink",
+    "qwen3.5-4b": "qwen3.5_nothink",
+    "qwen3.5-9b": "qwen3.5_nothink",
+    "qwen3.5-27b": "qwen3.5_nothink",
+    "olmo-2-0425-1b-instruct": "olmo2",
+    "olmo-2-1124-7b-instruct": "olmo2",
+    "olmo-2-1124-13b-instruct": "olmo2",
+    "olmo-2-0325-32b-instruct": "olmo2",
+    "qwen2.5-0.5b": "qwen2.5_paper",
+    "qwen2.5-1.5b": "qwen2.5_paper",
+    "qwen2.5-3b": "qwen2.5_paper",
+    "qwen2.5-7b": "qwen2.5_paper"
+  },
+  "item_order_of_model": {
+    "qwen3-0.6b": "struct",
+    "qwen3-1.7b": "struct",
+    "qwen3-4b": "struct",
+    "qwen3-8b": "struct",
+    "qwen3-14b": "struct",
+    "qwen3-32b": "struct",
+    "qwen3.5-0.8b": "struct",
+    "qwen3.5-2b": "struct",
+    "qwen3.5-4b": "struct",
+    "qwen3.5-9b": "struct",
+    "qwen3.5-27b": "struct",
+    "olmo-2-0425-1b-instruct": "struct",
+    "olmo-2-1124-7b-instruct": "struct",
+    "olmo-2-1124-13b-instruct": "struct",
+    "olmo-2-0325-32b-instruct": "struct",
+    "qwen2.5-0.5b": "split",
+    "qwen2.5-1.5b": "split",
+    "qwen2.5-3b": "split",
+    "qwen2.5-7b": "split"
+  },
+  "F": [
+    0.21929652777777775,
+    0.20568125000000004,
+    0.2201298611111111,
+    0.24234861111111108,
+    0.23954131944444443,
+    0.24119791666666668,
+    0.21690208333333336,
+    0.2105833333333333,
+    0.23148368055555554,
+    0.24336076388888891,
+    0.2499590277777777,
+    0.2154982638888889,
+    0.2482284722222222,
+    0.23963506944444443,
+    0.2703840277777777,
+    0.20329583333333334,
+    0.18354166666666666,
+    0.19527499999999998,
+    0.20688888888888887
+  ],
+  "S": [
+    0.06169608796296296,
+    0.025770902777777778,
+    0.032261293859649126,
+    0.030836842105263156,
+    0.022248181216931215,
+    -0.00899453914141414,
+    -0.06251760149572648,
+    -0.08767283653846153,
+    -0.05335996732026143,
+    -0.04171013071895425,
+    -0.057246327861952856,
+    -0.018908294753086426,
+    -0.08923766339869282,
+    -0.050743865740740746,
+    0.004285227272727276,
+    0.03786875,
+    0.019872268518518522,
+    0.05333362573099416,
+    0.0850952314814815
+  ],
+  "O": [
+    0.7900629629629631,
+    0.8415296296296296,
+    0.7738304093567251,
+    0.8210760233918128,
+    0.9670952380952382,
+    0.9634107744107744,
+    0.9685512820512822,
+    0.9843333333333333,
+    0.9984150326797385,
+    0.9944346405228758,
+    0.9997962962962964,
+    0.9896481481481482,
+    0.9998169934640522,
+    0.9966349206349205,
+    0.9986952861952862,
+    0.875145299145299,
+    0.8138925925925926,
+    0.9039298245614036,
+    0.7965333333333333
+  ],
+  "F_278": [
+    0.28932514245014246,
+    0.28284900284900283,
+    0.29746438746438747,
+    0.3173557692307692,
+    0.3178436609686609,
+    0.3344943019943021,
+    0.28174323361823356,
+    0.269059829059829,
+    0.30001335470085466,
+    0.29987535612535615,
+    0.3267423433048433,
+    0.24954594017094012,
+    0.2880217236467237,
+    0.28103098290598294,
+    0.33037571225071233,
+    0.2804184472934472,
+    0.3099020655270655,
+    0.28517628205128204,
+    0.26215811965811964
+  ],
+  "S_278": [
+    0.09698397435897436,
+    0.03210470085470085,
+    0.04900209926525715,
+    0.04749578272604588,
+    0.036487204924704926,
+    -0.018686733790900467,
+    -0.1429252958579882,
+    -0.16200032873109796,
+    -0.09192548600636835,
+    -0.07065836056644881,
+    -0.08257912997496332,
+    -0.05822234093067426,
+    -0.08194622507122508,
+    -0.05032186948853615,
+    0.01208441250107916,
+    -0.017019230769230773,
+    0.010842473884140549,
+    0.07866612310691257,
+    0.03209870607787275
+  ],
+  "n_permutations": 100000,
+  "n_bootstrap": 2000,
+  "seed": 0,
+  "variants": {
+    "sp_large": {
+      "B": [
+        0.45,
+        0.485,
+        0.49,
+        0.5875,
+        0.655,
+        0.7,
+        0.48,
+        0.495,
+        0.565,
+        0.5875,
+        0.75,
+        0.515,
+        0.525,
+        0.575,
+        0.6575,
+        0.455,
+        0.585,
+        0.5225,
+        0.5425
+      ],
+      "invalid_rate": [
+        0.0,
+        0.0,
+        0.005,
+        0.005,
+        0.0,
+        0.0025,
+        0.0175,
+        0.0,
+        0.0,
+        0.01,
+        0.005,
+        0.0025,
+        0.01,
+        0.0025,
+        0.0,
+        0.01,
+        0.03,
+        0.0,
+        0.0
+      ],
+      "included": [
+        "qwen3-0.6b",
+        "qwen3-1.7b",
+        "qwen3-4b",
+        "qwen3-8b",
+        "qwen3-14b",
+        "qwen3-32b",
+        "qwen3.5-0.8b",
+        "qwen3.5-2b",
+        "qwen3.5-4b",
+        "qwen3.5-9b",
+        "qwen3.5-27b",
+        "olmo-2-0425-1b-instruct",
+        "olmo-2-1124-7b-instruct",
+        "olmo-2-1124-13b-instruct",
+        "olmo-2-0325-32b-instruct",
+        "qwen2.5-0.5b",
+        "qwen2.5-1.5b",
+        "qwen2.5-3b",
+        "qwen2.5-7b"
+      ],
+      "excluded": {},
+      "preconditions": {
+        "split_half_reliability": {
+          "value": 0.9421822256909116,
+          "threshold": 0.5,
+          "holds": true
+        },
+        "between_model_sd": {
+          "value": 0.08361290822027799,
+          "threshold": 0.05,
+          "holds": true
+        },
+        "models_after_invalid_exclusion": {
+          "value": 19,
+          "threshold": 15,
+          "holds": true
+        }
+      },
+      "informative": true,
+      "comparison": {
+        "F": {
+          "rho": 0.6274682482067009,
+          "perm_p_one_sided": 0.0008599914000859991,
+          "boot_95": [
+            0.4049191041878485,
+            0.7164322619256651
+          ],
+          "matched_null": {
+            "rho_draws": [
+              0.2308030059837235,
+              0.3589293895336233,
+              0.2738043264901967,
+              0.2123738686238064,
+              0.3659500132897821,
+              0.2606406569473988,
+              0.21588418050188585,
+              0.20272051095908794,
+              0.303641977453872,
+              0.08688021898246627,
+              0.1930671532943695,
+              0.23343573989228308,
+              0.3562966556250637,
+              0.30276439948435213,
+              0.26239581288643854,
+              0.2123738686238064,
+              0.2562527670997995,
+              0.2448442534960413,
+              0.21676175847140572,
+              0.4896885069920826,
+              0.2641509688254782,
+              0.20096535502004823,
+              0.1061869343119032,
+              0.23168058395324337,
+              0.2562527670997995,
+              0.303641977453872,
+              0.28784557400251454,
+              0.15620887857453528,
+              0.19569988720292902,
+              0.15971919045261473,
+              0.09390084273862515,
+              -0.02018429329895681,
+              0.24835456537412073,
+              0.06055287989687043,
+              0.17902590578205166,
+              0.27555948242923645,
+              0.2922334638501138,
+              0.23343573989228308,
+              0.24747698740460086,
+              0.10530935634238335,
+              0.3984203981620171,
+              0.3554190776555438,
+              -0.011408513603758198,
+              0.10443177837286349,
+              0.27994737227683575,
+              0.17814832781253184,
+              0.18692410750773045,
+              0.010530935634238335,
+              0.2351908958313228,
+              0.3378675182651466,
+              0.2904783079110741,
+              0.24133394161796184,
+              0.15094341075741616,
+              0.34488814202130547,
+              0.278192216337796,
+              0.2597630789778789,
+              0.27994737227683575,
+              0.057042568018790984,
+              0.07283897147014848,
+              0.18253621766013117,
+              0.16849497014781337,
+              0.17376043796493254,
+              0.02808249502463556,
+              0.30715228933195143,
+              0.2290478500446838,
+              0.16410708030021404,
+              0.13251427339749905,
+              0.1061869343119032,
+              0.2544976111607598,
+              0.2308030059837235,
+              0.16235192436117432,
+              0.22114964831900505,
+              0.0587977239578307,
+              0.1930671532943695,
+              0.3659500132897821,
+              0.360684545472663,
+              0.37209305907642115,
+              0.00702062375615889,
+              0.12637122761086003,
+              0.3694603251678616,
+              0.1693725481173332,
+              0.366827591259302,
+              0.2220272262885249,
+              0.2290478500446838,
+              0.13602458527557848,
+              0.35717423359458356,
+              0.2176393364409256,
+              0.11232998009854224,
+              0.28258010618539536,
+              0.27555948242923645,
+              0.2939886197891535,
+              0.3519087657774643,
+              0.183413795629651,
+              0.386134306588739,
+              0.03598069675031432,
+              0.1746380159344524,
+              0.2711715925816371,
+              0.08688021898246627,
+              0.23431331786180296,
+              0.35717423359458356
+            ],
+            "p95": 0.36695922795472996,
+            "mid_rank_percentile": 1.0
+          },
+          "reading": "supports",
+          "flags": {
+            "rho_positive": true,
+            "perm_p_below_alpha": true,
+            "interval_excludes_0": true,
+            "rho_above_matched_p95": true
+          }
+        },
+        "S": {
+          "rho": -0.23957878567892213,
+          "perm_p_one_sided": 0.7702522974770253,
+          "boot_95": [
+            -0.39142171385509605,
+            -0.04826678832359237
+          ],
+          "reading": "anti-aligned",
+          "flags": {
+            "rho_positive": false,
+            "perm_p_below_alpha": false,
+            "interval_excludes_0": true
+          }
+        },
+        "O": {
+          "rho": 0.42562531521713276,
+          "perm_p_one_sided": 0.013939860601393987,
+          "boot_95": [
+            0.2648741996636433,
+            0.5256692037423969
+          ],
+          "reading": "supports",
+          "flags": {
+            "rho_positive": true,
+            "perm_p_below_alpha": true,
+            "interval_excludes_0": true
+          }
+        }
+      },
+      "per_wrapper_F": {
+        "rho": [
+          0.11320755806806208,
+          0.49670913074824147,
+          0.2702940146121173,
+          0.44931992039416896,
+          -0.03773585268935404,
+          0.3475208759298651,
+          0.09477842070814502,
+          0.5449759190718338,
+          -0.11325724319578576,
+          0.029837650963675282,
+          -0.14918825481837641,
+          -0.006143045786639028,
+          0.366827591259302,
+          0.556384432675592,
+          0.0772268613177478,
+          0.14129005309269768,
+          0.10969724618998265,
+          0.3483984538993849,
+          0.6494076974446973,
+          0.683633238255972,
+          0.5842844600526778,
+          0.6537955872922966,
+          0.49758670871776134,
+          0.5897323955173468,
+          0.6125494227248632,
+          0.7117157332806074,
+          0.8249232913486696,
+          0.6634489449570151,
+          0.7275121367319649,
+          0.7319000265795642,
+          0.120228181824221,
+          0.36419485735074236,
+          -0.041246164567433484,
+          0.18253621766013117,
+          -0.21851691441044543,
+          0.0386134306588739
+        ],
+        "share_positive": 0.8333333333333334,
+        "min": -0.21851691441044543,
+        "max": 0.8249232913486696
+      },
+      "shared_278_items": {
+        "n_items": 278,
+        "n_testing": 78,
+        "comparison": {
+          "F": {
+            "rho": 0.6180862786027504,
+            "perm_p_one_sided": 0.0001999980000199998
+          },
+          "S": {
+            "rho": -0.13345044651650295,
+            "perm_p_one_sided": 0.4867751322486775
+          },
+          "O": {
+            "rho": 0.352063349033669,
+            "perm_p_one_sided": 0.008279917200827991
+          }
+        }
+      }
+    },
+    "plain": {
+      "B": [
+        0.4575,
+        0.47,
+        0.4975,
+        0.49,
+        0.5175,
+        0.5375,
+        0.5075,
+        0.465,
+        0.49,
+        0.4675,
+        0.52,
+        0.46,
+        0.56,
+        0.5125,
+        0.515,
+        0.4625,
+        0.525,
+        0.505,
+        0.465
+      ],
+      "invalid_rate": [
+        0.0,
+        0.0,
+        0.005,
+        0.015,
+        0.0,
+        0.0,
+        0.0125,
+        0.005,
+        0.0,
+        0.0225,
+        0.0025,
+        0.005,
+        0.04,
+        0.0025,
+        0.01,
+        0.01,
+        0.0175,
+        0.0025,
+        0.02
+      ],
+      "included": [
+        "qwen3-0.6b",
+        "qwen3-1.7b",
+        "qwen3-4b",
+        "qwen3-8b",
+        "qwen3-14b",
+        "qwen3-32b",
+        "qwen3.5-0.8b",
+        "qwen3.5-2b",
+        "qwen3.5-4b",
+        "qwen3.5-9b",
+        "qwen3.5-27b",
+        "olmo-2-0425-1b-instruct",
+        "olmo-2-1124-7b-instruct",
+        "olmo-2-1124-13b-instruct",
+        "olmo-2-0325-32b-instruct",
+        "qwen2.5-0.5b",
+        "qwen2.5-1.5b",
+        "qwen2.5-3b",
+        "qwen2.5-7b"
+      ],
+      "excluded": {},
+      "preconditions": {
+        "split_half_reliability": {
+          "value": 0.5246223114568178,
+          "threshold": 0.5,
+          "holds": true
+        },
+        "between_model_sd": {
+          "value": 0.02974796666106502,
+          "threshold": 0.05,
+          "holds": false
+        },
+        "models_after_invalid_exclusion": {
+          "value": 19,
+          "threshold": 15,
+          "holds": true
+        }
+      },
+      "informative": false,
+      "comparison": {
+        "F": {
+          "rho": 0.42054449921976916,
+          "perm_p_one_sided": 0.038139618603813964,
+          "boot_95": [
+            -0.07121994814656267,
+            0.6450262195003393
+          ],
+          "matched_null": {
+            "rho_draws": [
+              0.28182627191972004,
+              0.2669008930330059,
+              0.17647065624879668,
+              0.2528534776102161,
+              0.28884997963111486,
+              0.11764710416586444,
+              0.25899922185768665,
+              0.22300271983678785,
+              0.27480256420832516,
+              0.2651449661051572,
+              0.2756805276722495,
+              0.19841974284690572,
+              0.1826164004962672,
+              0.2651449661051572,
+              0.1510097157949902,
+              0.23178235447603143,
+              0.2827042353836444,
+              0.06057947901078094,
+              0.03950835587659627,
+              0.3485514951779715,
+              0.2844601623114931,
+              0.28884997963111486,
+              0.25460940453806485,
+              0.13608433690827604,
+              0.2870940527032662,
+              0.33977186053872793,
+              0.2862160892393419,
+              0.06672522325825148,
+              0.13608433690827604,
+              0.1255487753411837,
+              0.08516245600066306,
+              0.09920987142345286,
+              0.18876214474373776,
+              0.12642673880510805,
+              0.23617217179565322,
+              0.24407384297097248,
+              0.32309055472416504,
+              0.2906059065589637,
+              0.11062339645446956,
+              0.02985075777342829,
+              0.3906937414463409,
+              0.11150135991839392,
+              0.09745394449560413,
+              0.16066731389815816,
+              0.28358219884756874,
+              0.20105363323867878,
+              0.27480256420832516,
+              0.1940299255272839,
+              0.28884997963111486,
+              0.3309922258994843,
+              0.22124679290893912,
+              0.0869183829285118,
+              0.09043023678420925,
+              0.2853381257754175,
+              0.19754177938298134,
+              0.3713785452400049,
+              0.17647065624879668,
+              -0.014925378886714144,
+              0.10184376181522592,
+              0.1369623003722004,
+              0.24582976989882124,
+              0.15276564272283888,
+              0.2265145736924853,
+              0.2853381257754175,
+              0.2949957238785854,
+              0.17734861971272103,
+              0.04916595397976424,
+              -0.008779634639243616,
+              0.01229148849494106,
+              0.16856898507347742,
+              0.1571554600424607,
+              0.1668130581456287,
+              0.12730470226903243,
+              0.1343284099804273,
+              0.31957870086846757,
+              0.32133462779631633,
+              0.17032491200132613,
+              -0.07111504057787328,
+              0.18612825435196464,
+              0.17910454664056974,
+              0.12818266573295678,
+              0.12993859266080549,
+              0.08516245600066306,
+              0.18788418127981338,
+              0.2870940527032662,
+              0.1738367658570236,
+              0.22475864676463655,
+              0.22827050062033397,
+              0.2344162448678045,
+              0.2098332678779224,
+              0.11764710416586444,
+              0.3854259606627948,
+              0.22036882944501474,
+              0.38191410680709725,
+              0.11852506762978882,
+              0.08252856560888999,
+              0.12028099455763752,
+              0.1510097157949902,
+              0.18525029088804026,
+              0.24143995257919942
+            ],
+            "p95": 0.3402108422706901,
+            "mid_rank_percentile": 1.0
+          },
+          "reading": "uninformative",
+          "flags": {
+            "rho_positive": true,
+            "perm_p_below_alpha": true,
+            "interval_excludes_0": false,
+            "rho_above_matched_p95": true
+          }
+        },
+        "S": {
+          "rho": -0.39683948569381144,
+          "perm_p_one_sided": 0.997070029299707,
+          "boot_95": [
+            -0.5456971178000558,
+            0.02728238697120535
+          ],
+          "reading": "uninformative",
+          "flags": {
+            "rho_positive": false,
+            "perm_p_below_alpha": false,
+            "interval_excludes_0": false
+          }
+        },
+        "O": {
+          "rho": 0.374012435631778,
+          "perm_p_one_sided": 0.01039989600103999,
+          "boot_95": [
+            -0.008000019321407995,
+            0.5590233055825432
+          ],
+          "reading": "uninformative",
+          "flags": {
+            "rho_positive": true,
+            "perm_p_below_alpha": true,
+            "interval_excludes_0": false
+          }
+        }
+      },
+      "per_wrapper_F": {
+        "rho": [
+          0.27041274688870337,
+          0.27480256420832516,
+          0.1571554600424607,
+          0.40298522994128194,
+          0.07989467521711689,
+          0.32221259126024066,
+          0.37928021641532417,
+          0.466198599343836,
+          -0.08607818133582155,
+          0.010535561567092339,
+          -0.250219587218443,
+          0.10798950606269646,
+          0.2168569755893173,
+          0.32221259126024066,
+          -0.02370501352595776,
+          0.008779634639243616,
+          -0.2844601623114931,
+          0.10184376181522592,
+          0.5302899322103144,
+          0.46356470895206286,
+          0.556873132315417,
+          0.32221259126024066,
+          0.3748903990957024,
+          0.28358219884756874,
+          0.4591748916324411,
+          0.39683948569381144,
+          0.6084286804995825,
+          0.4451274762096513,
+          0.48639175901409626,
+          0.49341546672549114,
+          0.10096579835130157,
+          0.18612825435196464,
+          -0.1071115425987721,
+          -0.16066731389815816,
+          -0.30114146812605597,
+          -0.04828799051583988
+        ],
+        "share_positive": 0.7777777777777778,
+        "min": -0.30114146812605597,
+        "max": 0.6084286804995825
+      },
+      "shared_278_items": {
+        "n_items": 278,
+        "n_testing": 78,
+        "comparison": {
+          "F": {
+            "rho": 0.2933687219061635,
+            "perm_p_one_sided": 0.007599924000759992
+          },
+          "S": {
+            "rho": -0.03952572600532144,
+            "perm_p_one_sided": 0.7799922000779992
+          },
+          "O": {
+            "rho": 0.23539765709835875,
+            "perm_p_one_sided": 0.01967980320196798
+          }
+        }
+      }
+    }
+  },
+  "behaviour_files_sha256": {
+    "qwen3-0.6b.json": "b44c40f23bbf22832ec661ba1ed302760f8f61b9fa509fdc3e19dac9fd3ae3c4",
+    "qwen3-1.7b.json": "80f7fa84354a5c1f5ff92367889d6933ce63025f558399dc8a0b7987b3c30537",
+    "qwen3-4b.json": "7b372b2a1daba80820d35070515296589faeadbefeea679ed96962c427336eee",
+    "qwen3-8b.json": "cf9e6d8650412690a3dd22ad3567e1510f9c19695c2a70901b87ce6f7f466ea0",
+    "qwen3-14b.json": "fd057d9219fd0166a8c5bc20c0e378b4696f838ff3fbfeea9162bc1e49edfe84",
+    "qwen3-32b.json": "d4122588d151f7b419b13d0e34da4b5c8e58157ef7a66e31d9e88c29867d88ed",
+    "qwen3.5-0.8b.json": "c5bafbae5f43345d0f39e732e21acaa013dd53efa9336665bacda4f90a042426",
+    "qwen3.5-2b.json": "40c98f8a029f5370ae4dbbcb54f246b8473f440486c02e85b4f01a8b9348752e",
+    "qwen3.5-4b.json": "92c999891abc106191f4d74a1a00732a12a4315eee5877616665f2a1733039e4",
+    "qwen3.5-9b.json": "3dfbde9b06e44d0fe0bcdf2d414ccb29e091ad01ac48494780dc1d73f7e5a1e7",
+    "qwen3.5-27b.json": "bc7e4282cf48abaf9d435d073c45500262bae2cabc32da220adc64ec116c386b",
+    "olmo-2-0425-1b-instruct.json": "757a3b85c13757871a307020aa2a42e5d717a971dfa3b20df2e4f90babb25018",
+    "olmo-2-1124-7b-instruct.json": "aac293295c484acd820aca69423b238664afaed4065976b8aee4353ac73f4481",
+    "olmo-2-1124-13b-instruct.json": "ec6f758d4a3de89c2d63bf13c1ef0a443aa125495964ec81a5c84a6b656f5b94",
+    "olmo-2-0325-32b-instruct.json": "4b9bfd31aba535587726ad9800205766aeabc3e5c4f89167e0d95ff4288de5fc",
+    "qwen2.5-0.5b.json": "65375be5a3d28d831a32bd2918b4f6799c146a64bbc517a3fdd64d44a9a27343",
+    "qwen2.5-1.5b.json": "a8fa2b5d2f3785ce8960c91d180eddce3089692796d6a812161a4b06dd461715",
+    "qwen2.5-3b.json": "296499cb209ffc25a38f805df5cb16f0375f588e7863188f81adc43157f8ebdd",
+    "qwen2.5-7b.json": "b9f1f4856b26b2a1e0a7fa67d532dbcb0d89f07c6e625b130efeb9b63981f89b"
+  },
+  "array_sha256": {
+    "qwen3_nothink__qwen3-0.6b.npz": "fe6a4ec68460faf69ba5c7bb923d8e6affcd8d5d9e27744b8fcc19d7eafba257",
+    "qwen3_nothink__qwen3-1.7b.npz": "d8a4509f2a95a2bcac98133393bb35ab2b5de108a82a1041335d2f0dffe7f9b1",
+    "qwen3_nothink__qwen3-4b.npz": "bab3e9cdc1f028e408de4a346747aa3b2da4e1a1051dfb8907c030dddefbd737",
+    "qwen3_nothink__qwen3-8b.npz": "db84fc992b82389d15b873204b8bd4cea5070bc61d7fd637c7d73455f70c8e29",
+    "qwen3_nothink__qwen3-14b.npz": "9eee085802fa42b8da911f332bb91fdd88b17ed6fb6069cc5446bb7a47a0bad4",
+    "qwen3_nothink__qwen3-32b.npz": "7bacb7bfb903cef3be9333251e523c87937c8ba213123dd28cf6ba505135fce9",
+    "qwen3.5_nothink__qwen3.5-0.8b.npz": "44e1239a915846ec96f55d3e3d3b5aa2f8626541b3c081d33bbbe34d3e32760d",
+    "qwen3.5_nothink__qwen3.5-2b.npz": "cdac8247a4bac040b67e0a0b11efaa8ee09bc0bd1022f9650c73c2a7a152726b",
+    "qwen3.5_nothink__qwen3.5-4b.npz": "8a93af4f6f2a4ac26068d6b3b1300abc1953cc859b34f15a009ae842c6e4676c",
+    "qwen3.5_nothink__qwen3.5-9b.npz": "e1a05c03d239198dba1a8a3b1a8983f20a841385f14e009004f5f8dd35d06606",
+    "qwen3.5_nothink__qwen3.5-27b.npz": "ee51d8eb8f4cb32579a9efb7b1153499ac8fa41dfedfb3b27d20f300b8fcdd9a",
+    "olmo2__olmo-2-0425-1b-instruct.npz": "6dcd9d0b130ceb38b94f40099af05c4d4c330cf0b9c5230f7768c31c2a7060ce",
+    "olmo2__olmo-2-1124-7b-instruct.npz": "8295f31b15216e648abe94618b6771bb7a2bd024359672cb816c28ecd5adcc5d",
+    "olmo2__olmo-2-1124-13b-instruct.npz": "31746bc12b0bb6cbdcf7d58132dde0270b8d033081d71028078dfc1d706d2a61",
+    "olmo2__olmo-2-0325-32b-instruct.npz": "5fdd6125100327c08dd2942af431e43927644a61f85c6f9286ac6a1d35a85983",
+    "qwen2.5_paper__qwen2.5-0.5b.npz": "5673531a7aec7dfee81ad1f2c9a3ec66b3e354d5eab09d0ff8cb561a8d730a18",
+    "qwen2.5_paper__qwen2.5-1.5b.npz": "b718d951399d9f501e7e218482b95ef77af8ab7e0288c864911e99bb23fc8d34",
+    "qwen2.5_paper__qwen2.5-3b.npz": "95f5eb80f39c7fb1e48dadd1832aeba6d0c252db85587c95d930618cc26febda",
+    "qwen2.5_paper__qwen2.5-7b.npz": "1efd14671a52767b5e984b21cf3f2bc16158b276120f04c40a7188e7ab1ad601",
+    "matched_qwen3_nothink.npz": "796011569ffb380f5ec0e8c58810eb234496ff219436683c7b1c87b0a449b3a2",
+    "matched_qwen3.5_nothink.npz": "e8ceef9264735e0d43949b911acb32d91db7056c98cf87b38b122649601a5b2e",
+    "matched_olmo2.npz": "4823058e24d8da172393f76ba69855313ee154bce5d054501245e19ad678ffab",
+    "matched_qwen2.5_paper.npz": "9cfe961bdd4eb4c222a148e264a34c72035ccfc92df92eacbba97613c89b8078"
+  },
+  "same_prompt": {
+    "qwen3-0.6b": {
+      "n": 400,
+      "auroc": 0.439175,
+      "auroc_folded": 0.560825,
+      "item_files": [
+        "oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "qwen3-1.7b": {
+      "n": 400,
+      "auroc": 0.4100375,
+      "auroc_folded": 0.5899625,
+      "item_files": [
+        "oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "qwen3-4b": {
+      "n": 400,
+      "auroc": 0.3573375,
+      "auroc_folded": 0.6426625,
+      "item_files": [
+        "oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "qwen3-8b": {
+      "n": 400,
+      "auroc": 0.6339,
+      "auroc_folded": 0.6339,
+      "item_files": [
+        "oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "qwen3-14b": {
+      "n": 400,
+      "auroc": 0.4545375,
+      "auroc_folded": 0.5454625,
+      "item_files": [
+        "oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "qwen3-32b": {
+      "n": 400,
+      "auroc": 0.6173125,
+      "auroc_folded": 0.6173125,
+      "item_files": [
+        "oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "qwen3.5-0.8b": {
+      "n": 400,
+      "auroc": 0.522375,
+      "auroc_folded": 0.522375,
+      "item_files": [
+        "oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "qwen3.5-2b": {
+      "n": 400,
+      "auroc": 0.6433,
+      "auroc_folded": 0.6433,
+      "item_files": [
+        "oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "qwen3.5-4b": {
+      "n": 400,
+      "auroc": 0.48085,
+      "auroc_folded": 0.51915,
+      "item_files": [
+        "oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "qwen3.5-9b": {
+      "n": 400,
+      "auroc": 0.2759375,
+      "auroc_folded": 0.7240625,
+      "item_files": [
+        "oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "qwen3.5-27b": {
+      "n": 400,
+      "auroc": 0.5151,
+      "auroc_folded": 0.5151,
+      "item_files": [
+        "oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "olmo-2-0425-1b-instruct": {
+      "n": 400,
+      "auroc": 0.61505,
+      "auroc_folded": 0.61505,
+      "item_files": [
+        "oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "olmo-2-1124-7b-instruct": {
+      "n": 400,
+      "auroc": 0.170975,
+      "auroc_folded": 0.829025,
+      "item_files": [
+        "oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "olmo-2-1124-13b-instruct": {
+      "n": 400,
+      "auroc": 0.369375,
+      "auroc_folded": 0.630625,
+      "item_files": [
+        "oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "olmo-2-0325-32b-instruct": {
+      "n": 400,
+      "auroc": 0.7040375,
+      "auroc_folded": 0.7040375,
+      "item_files": [
+        "oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "qwen2.5-0.5b": {
+      "n": 400,
+      "auroc": 0.3345375,
+      "auroc_folded": 0.6654625000000001,
+      "item_files": [
+        "test_oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "qwen2.5-1.5b": {
+      "n": 400,
+      "auroc": 0.5345375,
+      "auroc_folded": 0.5345375,
+      "item_files": [
+        "test_oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "qwen2.5-3b": {
+      "n": 400,
+      "auroc": 0.368925,
+      "auroc_folded": 0.631075,
+      "item_files": [
+        "test_oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    },
+    "qwen2.5-7b": {
+      "n": 400,
+      "auroc": 0.4589,
+      "auroc_folded": 0.5411,
+      "item_files": [
+        "test_oversight.yaml",
+        "deploy_oversight.yaml"
+      ]
+    }
+  },
+  "conventions": {
+    "kind": "derived",
+    "sources": [
+      "post_submission/sad_item_index.json",
+      "post_submission/signed_statistic.json",
+      "post_submission/controlled_transfer.json",
+      "post_submission/behaviour/olmo-2-0325-32b-instruct.json",
+      "post_submission/behaviour/olmo-2-0425-1b-instruct.json",
+      "post_submission/behaviour/olmo-2-1124-13b-instruct.json",
+      "post_submission/behaviour/olmo-2-1124-7b-instruct.json",
+      "post_submission/behaviour/qwen2.5-0.5b.json",
+      "post_submission/behaviour/qwen2.5-1.5b.json",
+      "post_submission/behaviour/qwen2.5-3b.json",
+      "post_submission/behaviour/qwen2.5-7b.json",
+      "post_submission/behaviour/qwen3-0.6b.json",
+      "post_submission/behaviour/qwen3-1.7b.json",
+      "post_submission/behaviour/qwen3-14b.json",
+      "post_submission/behaviour/qwen3-32b.json",
+      "post_submission/behaviour/qwen3-4b.json",
+      "post_submission/behaviour/qwen3-8b.json",
+      "post_submission/behaviour/qwen3.5-0.8b.json",
+      "post_submission/behaviour/qwen3.5-27b.json",
+      "post_submission/behaviour/qwen3.5-2b.json",
+      "post_submission/behaviour/qwen3.5-4b.json",
+      "post_submission/behaviour/qwen3.5-9b.json"
+    ],
+    "statistic": "Spearman rho across models between SAD stages_oversight accuracy and the probe statistics F (fold), S (signed band) and O (orientation)",
+    "note": "registered behavioural anchor",
+    "source_hashes": {
+      "post_submission/sad_item_index.json": "b4063fa03884",
+      "post_submission/signed_statistic.json": "cc97f83ac626",
+      "post_submission/controlled_transfer.json": "5a97d0cd598c",
+      "post_submission/behaviour/olmo-2-0325-32b-instruct.json": "e039feaed428",
+      "post_submission/behaviour/olmo-2-0425-1b-instruct.json": "52a30174df8e",
+      "post_submission/behaviour/olmo-2-1124-13b-instruct.json": "b70e4e82c95d",
+      "post_submission/behaviour/olmo-2-1124-7b-instruct.json": "8b5aed124c4d",
+      "post_submission/behaviour/qwen2.5-0.5b.json": "1fbfa219d57c",
+      "post_submission/behaviour/qwen2.5-1.5b.json": "07f59b3e4aa4",
+      "post_submission/behaviour/qwen2.5-3b.json": "03078f18ff56",
+      "post_submission/behaviour/qwen2.5-7b.json": "8020bee9f186",
+      "post_submission/behaviour/qwen3-0.6b.json": "c7e5570d89cb",
+      "post_submission/behaviour/qwen3-1.7b.json": "ab6524d86c31",
+      "post_submission/behaviour/qwen3-14b.json": "50d9dd5775a9",
+      "post_submission/behaviour/qwen3-32b.json": "ee17902c3dc8",
+      "post_submission/behaviour/qwen3-4b.json": "6ef0b3992c55",
+      "post_submission/behaviour/qwen3-8b.json": "753ea778f539",
+      "post_submission/behaviour/qwen3.5-0.8b.json": "e8f1984f0c45",
+      "post_submission/behaviour/qwen3.5-27b.json": "3e871d78ded5",
+      "post_submission/behaviour/qwen3.5-2b.json": "8f0456ab547a",
+      "post_submission/behaviour/qwen3.5-4b.json": "537e5a91a428",
+      "post_submission/behaviour/qwen3.5-9b.json": "e5765d9b9677"
+    },
+    "producer": "scripts/behavioural_anchor.py",
+    "producer_sha12": "f7251e1be157"
+  }
+}
