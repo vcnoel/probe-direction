@@ -161,7 +161,7 @@ fi
 # The raw output is printed so a DRY run shows exactly what the stop path will parse.
 if [ -n "${RUNPOD_POD_ID:-}" ] && command -v runpodctl >/dev/null; then
   echo "runpodctl version: $(timeout -k 5 30 runpodctl version 2>&1 | tr '\n' ' ')"
-  raw=$(timeout -k 10 60 runpodctl get pod "$RUNPOD_POD_ID" 2>&1); grc=$?
+  raw=$(timeout -k 10 60 runpodctl get pod "$RUNPOD_POD_ID" 2>&1) && grc=0 || grc=$?
   echo "runpodctl get pod $RUNPOD_POD_ID (rc=$grc), raw output:"
   printf '%s\n' "$raw" | sed 's/^/    | /'
   nrun=$(printf '%s\n' "$raw" | grep -F -- "$RUNPOD_POD_ID" | grep -c RUNNING || true)
@@ -421,7 +421,10 @@ if [ "$POD_BEHAVIOUR" = "1" ]; then
       "git+https://github.com/LRudL/evalugator.git@$EVALUGATOR_COMMIT" "replicate==0.23.0" "together==1.2.1"
     timeout -k 2m 20m "$PY" -m pip install --quiet "backoff==2.2.1" "tenacity==8.2.3" "pydantic>=2.3.0" \
       "tiktoken>=0.7.0" "openai>=1.0.0" "anthropic>=0.16.0" "plotly==5.18.0" "kaleido==0.2.1" \
-      "pdfkit>=1.0.0" "markdown2>=2.4.13" "PyPDF2>=3.0.1"
+      "pdfkit>=1.0.0" "markdown2>=2.4.13" "PyPDF2>=3.0.1" "fire" "pandas"
+    # together is imported by evalugator's dispatcher: install its own dependencies, holding the pinned stack fixed
+    "$PY" -m pip freeze | grep -E '^(torch|transformers|numpy)==' > "$LOGDIR/pins_constraints.txt" || true
+    timeout -k 2m 20m "$PY" -m pip install --quiet "together==1.2.1" -c "$LOGDIR/pins_constraints.txt"
   fi
   if timeout -k 30s 5m "$PY" scripts/sad_behaviour.py setup --sad-dir "$SAD_DIR" \
      && (cd "$SAD_DIR" && timeout -k 30s 5m "$PY" -c "import sys; sys.path.insert(0, '.'); import evalugator; from sad.stages.oversight.run import stages_oversight; import numpy, torch, transformers; print('  SAD harness imports ok: numpy', numpy.__version__, 'torch', torch.__version__, 'transformers', transformers.__version__)"); then
@@ -447,9 +450,12 @@ behaviour_step() {   # $1 model: SAD both variants plus the same-prompt read; sa
   echo "B $m" > "$POD_PENDING_FLAG"
   # Raw output goes to a local file that is never uploaded (no post_ prefix): the authors' code
   # should print no item text, but this does not depend on it.
-  timeout -k 2m "${tb}m" "$PY" scripts/sad_behaviour.py run --sad-dir "$SAD_DIR" --model "$m" \
-    --out "$BEHAV" > "$LOGDIR/sad_run_${m}.log" 2>&1
-  rc=$?
+  # evalugator logs every request and response (item text included) to the temp directory: keep it
+  # inside the SAD clone, which is never committed or uploaded
+  mkdir -p "$SAD_DIR/tmp"
+  rc=0
+  TMPDIR="$SAD_DIR/tmp" timeout -k 2m "${tb}m" "$PY" scripts/sad_behaviour.py run --sad-dir "$SAD_DIR" \
+    --model "$m" --out "$BEHAV" > "$LOGDIR/sad_run_${m}.log" 2>&1 || rc=$?
   BEHAV_SECONDS=$(( BEHAV_SECONDS + $(date +%s) - t0 ))
   grep -E "^\[$m\] (plain|sp_large|same-prompt|wrote)" "$LOGDIR/sad_run_${m}.log" | sed 's/^/  /' || true
   if [ "$rc" -ne 0 ]; then

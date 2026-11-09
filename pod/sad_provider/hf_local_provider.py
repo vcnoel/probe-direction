@@ -19,6 +19,7 @@ SAD's items, templates, answer parsing and scoring are untouched.
 from __future__ import annotations
 
 import os
+import threading
 
 from evalugator.api.requests import GetTextRequest, GetTextResponse
 
@@ -89,7 +90,18 @@ def provides_model(model_id: str) -> bool:
     return model_id in MODELS
 
 
+# evalugator calls execute from worker pools (10 workers per model under a 20-thread pool). One lock
+# serialises load, render, tokenise, generate and decode, so each model is loaded once and only one
+# generation holds GPU memory at a time.
+_LOCK = threading.Lock()
+
+
 def execute(model_id: str, request):
+    with _LOCK:
+        return _execute(model_id, request)
+
+
+def _execute(model_id: str, request):
     if not isinstance(request, GetTextRequest):
         raise NotImplementedError("stages_oversight issues text requests only")
     if request.temperature and request.temperature > 0:
