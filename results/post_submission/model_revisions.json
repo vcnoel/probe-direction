@@ -1,0 +1,304 @@
+{
+  "models": {
+    "qwen3-0.6b": {
+      "repo": "Qwen/Qwen3-0.6B",
+      "provider_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "sources": [
+        {
+          "source": "results/pod_qwen3/qwen3-0.6b__nothink.npz (meta.revision, EAS_ACTIVATION_ROOT; not in the repository)",
+          "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+          "repo": "Qwen/Qwen3-0.6B",
+          "array_sha256": "ba1feb3b589b89074e1979d39e8e50e5ec9093352e40248b8bb912b33f53c70d"
+        }
+      ],
+      "agrees": true
+    },
+    "qwen3-1.7b": {
+      "repo": "Qwen/Qwen3-1.7B",
+      "provider_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+      "sources": [
+        {
+          "source": "results/pod_qwen3/qwen3-1.7b__nothink.npz (meta.revision, EAS_ACTIVATION_ROOT; not in the repository)",
+          "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+          "repo": "Qwen/Qwen3-1.7B",
+          "array_sha256": "88791b15176a012f60bd4a51cc1b8c81891ec6ba047fab092b171364cd4ba3d6"
+        }
+      ],
+      "agrees": true
+    },
+    "qwen3-4b": {
+      "repo": "Qwen/Qwen3-4B",
+      "provider_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+      "sources": [
+        {
+          "source": "results/pod_qwen3/qwen3-4b__nothink.npz (meta.revision, EAS_ACTIVATION_ROOT; not in the repository)",
+          "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+          "repo": "Qwen/Qwen3-4B",
+          "array_sha256": "aa2ee3088d153f1352515d39358e3ee403caaed52801a306951a2061a1f94fe2"
+        }
+      ],
+      "agrees": true
+    },
+    "qwen3-8b": {
+      "repo": "Qwen/Qwen3-8B",
+      "provider_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+      "sources": [
+        {
+          "source": "results/pod_qwen3/qwen3-8b__nothink.npz (meta.revision, EAS_ACTIVATION_ROOT; not in the repository)",
+          "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+          "repo": "Qwen/Qwen3-8B",
+          "array_sha256": "14a764729ec87ea36f7e80f8d8380e01e0f683d1303bacbc75ed61539645e6ce"
+        }
+      ],
+      "agrees": true
+    },
+    "qwen3-14b": {
+      "repo": "Qwen/Qwen3-14B",
+      "provider_revision": "40c069824f4251a91eefaf281ebe4c544efd3e18",
+      "sources": [
+        {
+          "source": "results/pod_qwen3/qwen3-14b__nothink.npz (meta.revision, EAS_ACTIVATION_ROOT; not in the repository)",
+          "revision": "40c069824f4251a91eefaf281ebe4c544efd3e18",
+          "repo": "Qwen/Qwen3-14B",
+          "array_sha256": "64b4d6ca9cdbe8a312b81d6d551cdf44239bba783701ae49b0cb144ae0e72150"
+        }
+      ],
+      "agrees": true
+    },
+    "qwen3-32b": {
+      "repo": "Qwen/Qwen3-32B",
+      "provider_revision": "9216db5781bf21249d130ec9da846c4624c16137",
+      "sources": [
+        {
+          "source": "results/pod_qwen3/qwen3-32b__nothink.npz (meta.revision, EAS_ACTIVATION_ROOT; not in the repository)",
+          "revision": "9216db5781bf21249d130ec9da846c4624c16137",
+          "repo": "Qwen/Qwen3-32B",
+          "array_sha256": "61cd47910a9305779abde5af612086cd0a69ae05d35d227aca433a415ac53e4d"
+        }
+      ],
+      "agrees": true
+    },
+    "qwen3.5-0.8b": {
+      "repo": "Qwen/Qwen3.5-0.8B",
+      "provider_revision": "2fc06364715b967f1860aea9cf38778875588b17",
+      "sources": [
+        {
+          "source": "results/pod_qwen35/qwen3.5-0.8b__nothink.npz (meta.revision, EAS_ACTIVATION_ROOT; not in the repository)",
+          "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+          "repo": "Qwen/Qwen3.5-0.8B",
+          "array_sha256": "47e66fd47899c47f5b8d12be1d032334ecde084b14f3d06e0bd12cbd7cf96691"
+        },
+        {
+          "source": "configs/ladders.json",
+          "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+          "repo": "Qwen/Qwen3.5-0.8B"
+        }
+      ],
+      "agrees": true
+    },
+    "qwen3.5-2b": {
+      "repo": "Qwen/Qwen3.5-2B",
+      "provider_revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+      "sources": [
+        {
+          "source": "results/pod_qwen35/qwen3.5-2b__nothink.npz (meta.revision, EAS_ACTIVATION_ROOT; not in the repository)",
+          "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+          "repo": "Qwen/Qwen3.5-2B",
+          "array_sha256": "78b5627a0b92fa7e9e3563968c643e81e2a19d7dc6b247ba685e304c58e862ea"
+        },
+        {
+          "source": "configs/ladders.json",
+          "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+          "repo": "Qwen/Qwen3.5-2B"
+        }
+      ],
+      "agrees": true
+    },
+    "qwen3.5-4b": {
+      "repo": "Qwen/Qwen3.5-4B",
+      "provider_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "sources": [
+        {
+          "source": "results/pod_qwen35/qwen3.5-4b__nothink.npz (meta.revision, EAS_ACTIVATION_ROOT; not in the repository)",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+          "repo": "Qwen/Qwen3.5-4B",
+          "array_sha256": "1afd7104b2a20b02207d0b7504ef55beefcb59e29db577e26aff4ef17e452a75"
+        },
+        {
+          "source": "configs/ladders.json",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+          "repo": "Qwen/Qwen3.5-4B"
+        }
+      ],
+      "agrees": true
+    },
+    "qwen3.5-9b": {
+      "repo": "Qwen/Qwen3.5-9B",
+      "provider_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+      "sources": [
+        {
+          "source": "results/pod_qwen35/qwen3.5-9b__nothink.npz (meta.revision, EAS_ACTIVATION_ROOT; not in the repository)",
+          "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+          "repo": "Qwen/Qwen3.5-9B",
+          "array_sha256": "cd07147fb9dd8d0676cade23f99c3291bfd8edffe35d5288b0ad811e30e0bc27"
+        },
+        {
+          "source": "configs/ladders.json",
+          "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+          "repo": "Qwen/Qwen3.5-9B"
+        }
+      ],
+      "agrees": true
+    },
+    "qwen3.5-27b": {
+      "repo": "Qwen/Qwen3.5-27B",
+      "provider_revision": "fc05daec18b0a78c049392ed2e771dde82bdf654",
+      "sources": [
+        {
+          "source": "results/pod_qwen35/qwen3.5-27b__nothink.npz (meta.revision, EAS_ACTIVATION_ROOT; not in the repository)",
+          "revision": "fc05daec18b0a78c049392ed2e771dde82bdf654",
+          "repo": "Qwen/Qwen3.5-27B",
+          "array_sha256": "0b02ac2c916371cda73ddd4aa52b540d2d95d0d054c9a21c3e39bb47b529d54f"
+        },
+        {
+          "source": "configs/ladders.json",
+          "revision": "fc05daec18b0a78c049392ed2e771dde82bdf654",
+          "repo": "Qwen/Qwen3.5-27B"
+        }
+      ],
+      "agrees": true
+    },
+    "olmo-2-0425-1b-instruct": {
+      "repo": "allenai/OLMo-2-0425-1B-Instruct",
+      "provider_revision": "48d788eca847d4d7548f375ad03d3c9312f6139e",
+      "sources": [
+        {
+          "source": "results/pod_all/olmo-2-0425-1b-instruct.npz (meta.revision, EAS_ACTIVATION_ROOT; not in the repository)",
+          "revision": "48d788eca847d4d7548f375ad03d3c9312f6139e",
+          "repo": "allenai/OLMo-2-0425-1B-Instruct",
+          "array_sha256": "7361c6d482d7bd36cea4e670b85e0b23ef0144dac4085597c8b7392d360aaade"
+        }
+      ],
+      "agrees": true
+    },
+    "olmo-2-1124-7b-instruct": {
+      "repo": "allenai/OLMo-2-1124-7B-Instruct",
+      "provider_revision": "470b1fba1ae01581f270116362ee4aa1b97f4c84",
+      "sources": [
+        {
+          "source": "results/pod_all/olmo-2-1124-7b-instruct.npz (meta.revision, EAS_ACTIVATION_ROOT; not in the repository)",
+          "revision": "470b1fba1ae01581f270116362ee4aa1b97f4c84",
+          "repo": "allenai/OLMo-2-1124-7B-Instruct",
+          "array_sha256": "dd229baedd50b20753a4b8efb9283ae940b6cb553063ea49234757acc4624cd5"
+        }
+      ],
+      "agrees": true
+    },
+    "olmo-2-1124-13b-instruct": {
+      "repo": "allenai/OLMo-2-1124-13B-Instruct",
+      "provider_revision": "3a5c85baefbb1896a54d56fe2e76c0395627ddf4",
+      "sources": [
+        {
+          "source": "results/pod_all/olmo-2-1124-13b-instruct.npz (meta.revision, EAS_ACTIVATION_ROOT; not in the repository)",
+          "revision": "3a5c85baefbb1896a54d56fe2e76c0395627ddf4",
+          "repo": "allenai/OLMo-2-1124-13B-Instruct",
+          "array_sha256": "0cf6811c55240d85309dffd298b6a2ebaeeb80e24a41df58540fa36f1547ba30"
+        }
+      ],
+      "agrees": true
+    },
+    "olmo-2-0325-32b-instruct": {
+      "repo": "allenai/OLMo-2-0325-32B-Instruct",
+      "provider_revision": "b96024342a77a69aa0dda815c3454a671f477463",
+      "sources": [
+        {
+          "source": "results/pod_all/olmo-2-0325-32b-instruct.npz (meta.revision, EAS_ACTIVATION_ROOT; not in the repository)",
+          "revision": "b96024342a77a69aa0dda815c3454a671f477463",
+          "repo": "allenai/OLMo-2-0325-32B-Instruct",
+          "array_sha256": "7bffdfe4070805603c2f13a1f010aa921308b0f5fd54870968a2f5cf9cc1f5f2"
+        }
+      ],
+      "agrees": true
+    },
+    "qwen2.5-0.5b": {
+      "repo": "Qwen/Qwen2.5-0.5B-Instruct",
+      "provider_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+      "sources": [
+        {
+          "source": "configs/gstudy_models.json",
+          "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+          "repo": "Qwen/Qwen2.5-0.5B-Instruct"
+        }
+      ],
+      "agrees": true
+    },
+    "qwen2.5-1.5b": {
+      "repo": "Qwen/Qwen2.5-1.5B-Instruct",
+      "provider_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+      "sources": [
+        {
+          "source": "configs/gstudy_models.json",
+          "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+          "repo": "Qwen/Qwen2.5-1.5B-Instruct"
+        }
+      ],
+      "agrees": true
+    },
+    "qwen2.5-3b": {
+      "repo": "Qwen/Qwen2.5-3B-Instruct",
+      "provider_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+      "sources": [
+        {
+          "source": "configs/gstudy_models.json",
+          "revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+          "repo": "Qwen/Qwen2.5-3B-Instruct"
+        }
+      ],
+      "agrees": true
+    },
+    "qwen2.5-7b": {
+      "repo": "Qwen/Qwen2.5-7B-Instruct",
+      "provider_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+      "sources": [
+        {
+          "source": "configs/gstudy_models.json",
+          "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+          "repo": "Qwen/Qwen2.5-7B-Instruct"
+        }
+      ],
+      "agrees": true
+    }
+  },
+  "conventions": {
+    "kind": "measured",
+    "statistic": "none: model revisions with their sources",
+    "note": "Qwen3 and OLMo-2 revisions are recorded only in the stored probe arrays' meta",
+    "pooling": "not applicable",
+    "layers": "not applicable",
+    "scoring_array": "not applicable",
+    "data_root": "EAS_ACTIVATION_ROOT probe arrays and configs/",
+    "model_population": [
+      "olmo-2-0325-32b-instruct",
+      "olmo-2-0425-1b-instruct",
+      "olmo-2-1124-13b-instruct",
+      "olmo-2-1124-7b-instruct",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "qwen2.5-3b",
+      "qwen2.5-7b",
+      "qwen3-0.6b",
+      "qwen3-1.7b",
+      "qwen3-14b",
+      "qwen3-32b",
+      "qwen3-4b",
+      "qwen3-8b",
+      "qwen3.5-0.8b",
+      "qwen3.5-27b",
+      "qwen3.5-2b",
+      "qwen3.5-4b",
+      "qwen3.5-9b"
+    ],
+    "producer": "scripts/record_revisions.py",
+    "producer_sha12": "46c23df374f8"
+  }
+}

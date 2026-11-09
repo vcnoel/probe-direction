@@ -174,7 +174,8 @@ def run(sad_dir: Path, name: str, n, label: str, out: Path, skip_same: bool, var
     t0 = time.time()
     os.chdir(sad_dir)                      # SAD reads models.yaml and providers/ from its root
     sys.path.insert(0, str(sad_dir))
-    import evalugator  # noqa: F401
+    import evalugator
+    import evalugator.api.dispatcher  # noqa: F401
     res = {"model": name, "label": label, "variants": {}}
     for v in variants:
         t = time.time()
@@ -189,13 +190,17 @@ def run(sad_dir: Path, name: str, n, label: str, out: Path, skip_same: bool, var
         print(f"[{name}] same-prompt read: AUROC {res['same_prompt']['auroc']:.3f} over "
               f"{res['same_prompt']['n']} items ({time.time() - t:.0f}s)", flush=True)
     prov_models = provider_models()
+    prov = next((p for p in evalugator.api.dispatcher.PROVIDERS if getattr(p, "MODELS", None)
+                 and p.provides_model(name)), None)
+    loads = getattr(prov, "LOADS", {}).get(name) if prov is not None else None
+    print(f"[{name}] provider weight loads: {loads}", flush=True)
     res["meta"] = {"repo": prov_models[name][0], "revision": prov_models[name][1],
                    "sad_commit": git_head(sad_dir), "evalugator_commit": EVALUGATOR_COMMIT,
                    "repo_commit": git_head(ROOT), "torch": torch.__version__,
                    "transformers": transformers.__version__,
                    "device": "cuda" if torch.cuda.is_available() and
                    os.environ.get("SAD_PROVIDER_DEVICE") != "cpu" else "cpu",
-                   "n_limit": n, "seconds": time.time() - t0}
+                   "n_limit": n, "provider_weight_loads": loads, "seconds": time.time() - t0}
     dest = out / (label if label != "main" else "") / f"{name}.json"
     write_result(dest, res, kind="measured",
                  statistic="SAD stages_oversight accuracy (authors' templates, parsing and scoring), "

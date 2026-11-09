@@ -24,7 +24,10 @@ import threading
 from evalugator.api.requests import GetTextRequest, GetTextResponse
 
 PINNED_DATE = "01 Jan 2025"
-# name -> (repo, revision), the revisions recorded in the stored probe arrays
+# name -> (repo, revision). Sources, checked by scripts/record_revisions.py and listed with them in
+# results/post_submission/model_revisions.json: Qwen3 and OLMo-2, the meta.revision of the stored
+# probe arrays (results/pod_qwen3/<m>__nothink.npz, results/pod_all/<m>.npz, outside the repository);
+# Qwen3.5, configs/ladders.json and the arrays' meta; Qwen2.5, configs/gstudy_models.json.
 MODELS = {
     "qwen3-0.6b": ("Qwen/Qwen3-0.6B", "c1899de289a04d12100db370d81485cdf75e47ca"),
     "qwen3-1.7b": ("Qwen/Qwen3-1.7B", "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"),
@@ -47,6 +50,7 @@ MODELS = {
     "qwen2.5-7b": ("Qwen/Qwen2.5-7B-Instruct", "a09a35458c702b33eeacc393d103063234e8bc28"),
 }
 _LOADED: dict = {}
+LOADS: dict = {}          # name -> number of weight loads in this process (the run expects one)
 
 
 def template_kwargs(name: str) -> dict:
@@ -69,6 +73,7 @@ def load(name: str):
             repo, revision=rev, dtype=torch.bfloat16, attn_implementation="sdpa",
             device_map=None if cpu else "cuda").eval()
         _LOADED[name] = (tok, model, "cpu" if cpu else "cuda")
+        LOADS[name] = LOADS.get(name, 0) + 1
     return _LOADED[name]
 
 

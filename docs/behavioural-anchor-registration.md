@@ -200,3 +200,31 @@ log and the repository: no item text. A positive control with a `test_oversight.
   result that meets none is reported as "no registered reading applies".
 - Implementation: `scripts/behavioural_anchor.py`, committed with this amendment and tested on
   synthetic files only.
+
+### NOTE to Amendment 1 (2026-11-09, before any registered output)
+
+These notes correct Amendment 1's wording. They change nothing in the analysis or its code.
+
+- **Testing items not in the task.** `oversight.yaml` has 200 testing entries but 196 distinct
+  bodies: four bodies appear twice. 121 entries have a body that is not in the task. The other 79
+  have a body that is: 78 distinct bodies, plus a second copy of one duplicated body. The index
+  matches each task item once, so that second copy stays unmatched. Each Qwen3, Qwen3.5 and OLMo-2
+  array therefore has 122 unmatched testing positions: 121 items not in the task, and one duplicate
+  of a task item's body. The bootstrap's substitution pool is these 122 positions, as implemented.
+- **SAD ids.** SAD ids are not content hashes across files. The 78 bodies shared by
+  `oversight.yaml` and `test_oversight.yaml` carry different ids in the two files. Within one file,
+  identical bodies share an id: four pairs in `oversight.yaml` and one pair in
+  `deploy_oversight.yaml`, which therefore has 199 distinct bodies. The index names every item by
+  position as well as by id, and B is joined by id within the task's own files.
+- **"At the probe arrays' revisions".** Where each revision is recorded:
+  - Qwen3 and OLMo-2: only in the `meta.revision` of the stored probe arrays
+    (`results/pod_qwen3/<model>__nothink.npz` and `results/pod_all/<model>.npz`, outside the
+    repository);
+  - Qwen3.5: `configs/ladders.json` and the arrays' meta;
+  - Qwen2.5: `configs/gstudy_models.json`.
+
+  `scripts/record_revisions.py` checks all 19 revisions in
+  `pod/sad_provider/hf_local_provider.py` against these records. It writes them, with their
+  sources and each array's sha256, to `results/post_submission/model_revisions.json`. All 19 agree.
+- **Execution.** A failed paraphrase-extraction step no longer ends the pod run. The behavioural
+  steps and the other models go on. The two model loops keep their registered order.
