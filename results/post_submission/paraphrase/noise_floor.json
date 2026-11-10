@@ -87,6 +87,114 @@
         "spearman_fold": 0.9963963963963964
       }
     },
+    "qwen3-8b": {
+      "ladder": "qwen3_nothink",
+      "floor_meta": {
+        "repo": "Qwen/Qwen3-8B",
+        "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+        "batch": 16,
+        "n_prompts_run": 1080,
+        "seconds_forward": 24.77817130088806,
+        "gpu": "NVIDIA A100 80GB PCIe",
+        "torch": "2.11.0+cu130",
+        "torch_cuda": "13.0",
+        "transformers": "5.8.0",
+        "framing_rows_sha256": "cfdac25995f0ef68e9c6d833d10ca28a04342321fcab18dadc5b41a3eb5ca8a3",
+        "n_framing_rows": 720,
+        "git_commit": "5d674da876810f881887eed49acb836ebca1fb9a",
+        "git_status_porcelain": ""
+      },
+      "floor_batch": {
+        "max_abs_diff_fold": 0.003899991512298584,
+        "mean_abs_diff_fold": 0.00014097160763210722,
+        "min_direction_cosine": 0.9999045133590698,
+        "spearman_fold": 1.0
+      },
+      "floor_machine": {
+        "max_abs_diff_fold": 0.0,
+        "mean_abs_diff_fold": 0.0,
+        "min_direction_cosine": 0.9999996423721313,
+        "spearman_fold": 1.0
+      },
+      "gate": {
+        "max_abs_diff_fold": 0.003899991512298584,
+        "mean_abs_diff_fold": 0.00014097160763210722,
+        "min_direction_cosine": 0.9999045133590698,
+        "spearman_fold": 1.0
+      }
+    },
+    "qwen3-14b": {
+      "ladder": "qwen3_nothink",
+      "floor_meta": {
+        "repo": "Qwen/Qwen3-14B",
+        "revision": "40c069824f4251a91eefaf281ebe4c544efd3e18",
+        "batch": 16,
+        "n_prompts_run": 1080,
+        "seconds_forward": 41.12373924255371,
+        "gpu": "NVIDIA A100 80GB PCIe",
+        "torch": "2.11.0+cu130",
+        "torch_cuda": "13.0",
+        "transformers": "5.8.0",
+        "framing_rows_sha256": "cfdac25995f0ef68e9c6d833d10ca28a04342321fcab18dadc5b41a3eb5ca8a3",
+        "n_framing_rows": 720,
+        "git_commit": "5d674da876810f881887eed49acb836ebca1fb9a",
+        "git_status_porcelain": "?? results/post_submission/behaviour/"
+      },
+      "floor_batch": {
+        "max_abs_diff_fold": 0.0001499652862548828,
+        "mean_abs_diff_fold": 3.610716925726997e-05,
+        "min_direction_cosine": 0.999927818775177,
+        "spearman_fold": 1.0
+      },
+      "floor_machine": {
+        "max_abs_diff_fold": 0.0,
+        "mean_abs_diff_fold": 0.0,
+        "min_direction_cosine": 0.9999997615814209,
+        "spearman_fold": 1.0
+      },
+      "gate": {
+        "max_abs_diff_fold": 0.0001499652862548828,
+        "mean_abs_diff_fold": 3.610716925726997e-05,
+        "min_direction_cosine": 0.999927818775177,
+        "spearman_fold": 1.0
+      }
+    },
+    "qwen3-32b": {
+      "ladder": "qwen3_nothink",
+      "floor_meta": {
+        "repo": "Qwen/Qwen3-32B",
+        "revision": "9216db5781bf21249d130ec9da846c4624c16137",
+        "batch": 10,
+        "n_prompts_run": 1080,
+        "seconds_forward": 116.05660343170166,
+        "gpu": "NVIDIA A100 80GB PCIe",
+        "torch": "2.11.0+cu130",
+        "torch_cuda": "13.0",
+        "transformers": "5.8.0",
+        "framing_rows_sha256": "cfdac25995f0ef68e9c6d833d10ca28a04342321fcab18dadc5b41a3eb5ca8a3",
+        "n_framing_rows": 720,
+        "git_commit": "5d674da876810f881887eed49acb836ebca1fb9a",
+        "git_status_porcelain": "?? results/post_submission/behaviour/"
+      },
+      "floor_batch": {
+        "max_abs_diff_fold": 0.000800013542175293,
+        "mean_abs_diff_fold": 0.00010902020666334365,
+        "min_direction_cosine": 0.9998581409454346,
+        "spearman_fold": 1.0
+      },
+      "floor_machine": {
+        "max_abs_diff_fold": 0.0,
+        "mean_abs_diff_fold": 0.0,
+        "min_direction_cosine": 0.9999997615814209,
+        "spearman_fold": 1.0
+      },
+      "gate": {
+        "max_abs_diff_fold": 0.000800013542175293,
+        "mean_abs_diff_fold": 0.00010902020666334365,
+        "min_direction_cosine": 0.9998581409454346,
+        "spearman_fold": 1.0
+      }
+    },
     "qwen3.5-0.8b": {
       "ladder": "qwen3.5_nothink",
       "floor_meta": {
@@ -173,6 +281,78 @@
         "min_direction_cosine": 0.9997889995574951,
         "spearman_fold": 0.9956241956241957
       }
+    },
+    "qwen3.5-9b": {
+      "ladder": "qwen3.5_nothink",
+      "floor_meta": {
+        "repo": "Qwen/Qwen3.5-9B",
+        "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+        "batch": 16,
+        "n_prompts_run": 1080,
+        "seconds_forward": 38.10482144355774,
+        "gpu": "NVIDIA A100 80GB PCIe",
+        "torch": "2.11.0+cu130",
+        "torch_cuda": "13.0",
+        "transformers": "5.8.0",
+        "framing_rows_sha256": "cfdac25995f0ef68e9c6d833d10ca28a04342321fcab18dadc5b41a3eb5ca8a3",
+        "n_framing_rows": 720,
+        "git_commit": "5d674da876810f881887eed49acb836ebca1fb9a",
+        "git_status_porcelain": "?? results/post_submission/behaviour/"
+      },
+      "floor_batch": {
+        "max_abs_diff_fold": 0.000599980354309082,
+        "mean_abs_diff_fold": 4.271003935072157e-05,
+        "min_direction_cosine": 0.9999940991401672,
+        "spearman_fold": 1.0
+      },
+      "floor_machine": {
+        "max_abs_diff_fold": 0.0033749938011169434,
+        "mean_abs_diff_fold": 0.00024756458070543077,
+        "min_direction_cosine": 0.9998454451560974,
+        "spearman_fold": 0.9992277992277993
+      },
+      "gate": {
+        "max_abs_diff_fold": 0.0033749938011169434,
+        "mean_abs_diff_fold": 0.00027638673782348633,
+        "min_direction_cosine": 0.9998453259468079,
+        "spearman_fold": 0.9992277992277993
+      }
+    },
+    "qwen3.5-27b": {
+      "ladder": "qwen3.5_nothink",
+      "floor_meta": {
+        "repo": "Qwen/Qwen3.5-27B",
+        "revision": "fc05daec18b0a78c049392ed2e771dde82bdf654",
+        "batch": 16,
+        "n_prompts_run": 1080,
+        "seconds_forward": 111.81719279289246,
+        "gpu": "NVIDIA A100 80GB PCIe",
+        "torch": "2.11.0+cu130",
+        "torch_cuda": "13.0",
+        "transformers": "5.8.0",
+        "framing_rows_sha256": "cfdac25995f0ef68e9c6d833d10ca28a04342321fcab18dadc5b41a3eb5ca8a3",
+        "n_framing_rows": 720,
+        "git_commit": "5d674da876810f881887eed49acb836ebca1fb9a",
+        "git_status_porcelain": "?? results/post_submission/behaviour/"
+      },
+      "floor_batch": {
+        "max_abs_diff_fold": 0.0009000301361083984,
+        "mean_abs_diff_fold": 6.076859103308784e-05,
+        "min_direction_cosine": 0.9999762773513794,
+        "spearman_fold": 1.0
+      },
+      "floor_machine": {
+        "max_abs_diff_fold": 0.0024250149726867676,
+        "mean_abs_diff_fold": 0.00018020802074008517,
+        "min_direction_cosine": 0.9998916387557983,
+        "spearman_fold": 1.0
+      },
+      "gate": {
+        "max_abs_diff_fold": 0.0015249848365783691,
+        "mean_abs_diff_fold": 0.0001652787129084269,
+        "min_direction_cosine": 0.9998642206192017,
+        "spearman_fold": 1.0
+      }
     }
   },
   "registration": "docs/paraphrase-registration.md, amendment 2",
@@ -187,10 +367,15 @@
     "model_population": [
       "qwen3-0.6b",
       "qwen3-1.7b",
+      "qwen3-14b",
+      "qwen3-32b",
       "qwen3-4b",
+      "qwen3-8b",
       "qwen3.5-0.8b",
+      "qwen3.5-27b",
       "qwen3.5-2b",
-      "qwen3.5-4b"
+      "qwen3.5-4b",
+      "qwen3.5-9b"
     ],
     "producer": "scripts/paraphrase_noise_floor.py",
     "producer_sha12": "ace8328ab3b9"
